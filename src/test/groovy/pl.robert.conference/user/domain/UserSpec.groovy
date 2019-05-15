@@ -21,7 +21,7 @@ class UserSpec extends Specification {
 
     def 'Should create user'() {
         when: 'we create an user'
-        db.create(new CreateUserDto(1L, 'James', 'james.gosling@coffee.com'))
+        db.create(1L, new CreateUserDto('James', 'james.gosling@coffee.com'))
 
         then: 'system has this user'
         db.read(1L).name == 'James'
@@ -48,8 +48,8 @@ class UserSpec extends Specification {
 
     def 'Should list users'() {
         given: 'we add two users to system'
-        db.create(new CreateUserDto(1L, 'Rob', 'rob.mee@spring.io'))
-        db.create(new CreateUserDto(2L, 'Linus', 'linus.torvalds@penguin.com'))
+        db.create(1L, new CreateUserDto('Rob', 'rob.mee@spring.io'))
+        db.create(2L, new CreateUserDto('Linus', 'linus.torvalds@penguin.com'))
 
         when: 'we ask for all users'
         Page<UserDto> foundUsers = db.readAll(new PageRequest(0, 5))

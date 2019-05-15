@@ -5,6 +5,7 @@ spring:
     username: postgres
     password: admin
     driverClassName: org.postgresql.Driver
+    initialization-mode: always
 
   jpa:
     hibernate:

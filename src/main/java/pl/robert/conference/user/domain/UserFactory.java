@@ -6,7 +6,6 @@ class UserFactory {
 
     static User create(CreateUserDto dto) {
         return User.builder()
-                .id(dto.getId())
                 .name(dto.getName())
                 .email(dto.getEmail())
                 .build();

@@ -19,8 +19,8 @@ class InMemoryUserRepository {
 
     ConcurrentHashMap<Long, User> map = new ConcurrentHashMap<>();
 
-    void create(CreateUserDto dto) {
-        map.put(dto.getId(), UserFactory.create(dto));
+    void create(Long id, CreateUserDto dto) {
+        map.put(id, UserFactory.create(dto));
     }
 
     UserDto read(Long id) {
