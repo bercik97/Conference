@@ -2,9 +2,13 @@ package pl.robert.conference.user.domain;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+
+import pl.robert.conference.user.domain.dto.CreateUserDto;
+import pl.robert.conference.user.domain.dto.UserDto;
 import pl.robert.conference.user.domain.exception.UserNotFoundException;
 
 import java.util.ArrayList;
@@ -15,16 +19,16 @@ class InMemoryUserRepository {
 
     ConcurrentHashMap<Long, User> map = new ConcurrentHashMap<>();
 
-    void create(User user) {
-        map.put(user.getId(), user);
+    void create(CreateUserDto dto) {
+        map.put(dto.getId(), UserFactory.create(dto));
     }
 
-    User read(Long id) {
+    UserDto read(Long id) {
         User User = map.get(id);
         if (User == null) {
             throw new UserNotFoundException(id);
         }
-        return map.get(id);
+        return map.get(id).dto();
     }
 
     void update(Long id, String name, String email) {
@@ -43,8 +47,8 @@ class InMemoryUserRepository {
         }
     }
 
-    Page<User> readAll(Pageable pageable) {
-        return new PageImpl<>(new ArrayList<>(map.values()), pageable, map.size());
+    Page<UserDto> readAll(Pageable pageable) {
+        return new PageImpl<>(new ArrayList<>(map.values()), pageable, map.size()).map(User::dto);
     }
 
     private boolean isUserIdNotNull(Long id) {

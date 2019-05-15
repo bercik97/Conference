@@ -8,30 +8,34 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import pl.robert.conference.user.domain.dto.CreateUserDto;
+import pl.robert.conference.user.domain.dto.UserDto;
 
+import javax.transaction.Transactional;
+
+@Transactional
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserFacade {
 
-    InMemoryUserRepository repository;
+    UserRepository repository;
 
     public void create(CreateUserDto dto) {
-        repository.create(UserFactory.create(dto));
+        repository.save(UserFactory.create(dto));
     }
 
-    public User read(Long id) {
-        return repository.read(id);
+    public UserDto read(Long id) {
+        return repository.findUserById(id).dto();
     }
 
-    public void update(Long id, String name, String email) {
-        repository.update(id, name, email);
+    public void update(Long id, String email) {
+        repository.findUserById(id).setEmail(email);
     }
 
     public void delete(Long id) {
-        repository.delete(id);
+        repository.delete(repository.findUserById(id));
     }
 
-    public Page<User> readAll(Pageable pageable) {
-        return repository.readAll(pageable);
+    public Page<UserDto> readAll(Pageable pageable) {
+        return repository.findAll(pageable).map(User::dto);
     }
 }

@@ -5,8 +5,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class UserConfiguration {
 
-    UserFacade facade() {
-        InMemoryUserRepository repository = new InMemoryUserRepository();
+    UserFacade facade(UserRepository repository) {
         return new UserFacade(repository);
     }
 }
