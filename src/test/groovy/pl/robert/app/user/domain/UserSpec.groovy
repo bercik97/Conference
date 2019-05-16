@@ -4,8 +4,8 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 
 import pl.robert.app.user.domain.dto.CreateUserDto
-import pl.robert.app.user.domain.dto.UserDto
 import pl.robert.app.user.domain.exception.UserNotFoundException
+import pl.robert.app.user.domain.query.UserQueryDto
 
 import spock.lang.Shared
 import spock.lang.Specification
@@ -52,7 +52,7 @@ class UserSpec extends Specification {
         db.create(2L, new CreateUserDto('Linus', 'linus.torvalds@penguin.com'))
 
         when: 'we ask for all users'
-        Page<UserDto> foundUsers = db.readAll(new PageRequest(0, 5))
+        Page<UserQueryDto> foundUsers = db.readAll(new PageRequest(0, 5))
 
         then: 'system has this users'
         foundUsers.stream().count() == 2

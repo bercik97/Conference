@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import pl.robert.app.shared.NotificationService;
 
 import pl.robert.app.user.domain.dto.CreateUserDto;
-import pl.robert.app.user.domain.dto.UserDto;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -27,8 +27,8 @@ class UserService {
         return repository.findUserByName(name).getId();
     }
 
-    UserDto read(String name) {
-        return repository.findUserByName(name).dto();
+    UserQueryDto read(String name) {
+        return repository.findUserByName(name).query();
     }
 
     void update(Long id, String email) {
@@ -40,7 +40,7 @@ class UserService {
         repository.delete(repository.findUserById(id));
     }
 
-    Page<UserDto> readAll(Pageable pageable) {
-        return repository.findAll(pageable).map(User::dto);
+    Page<UserQueryDto> readAll(Pageable pageable) {
+        return repository.findAll(pageable).map(User::query);
     }
 }

@@ -8,8 +8,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import pl.robert.app.user.domain.dto.CreateUserDto;
-import pl.robert.app.user.domain.dto.UserDto;
 import pl.robert.app.user.domain.exception.UserNotFoundException;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,12 +23,12 @@ class InMemoryUserRepository {
         map.put(id, UserFactory.create(dto));
     }
 
-    UserDto read(Long id) {
+    UserQueryDto read(Long id) {
         User User = map.get(id);
         if (User == null) {
             throw new UserNotFoundException(id);
         }
-        return map.get(id).dto();
+        return map.get(id).query();
     }
 
     void update(Long id, String name, String email) {
@@ -47,8 +47,8 @@ class InMemoryUserRepository {
         }
     }
 
-    Page<UserDto> readAll(Pageable pageable) {
-        return new PageImpl<>(new ArrayList<>(map.values()), pageable, map.size()).map(User::dto);
+    Page<UserQueryDto> readAll(Pageable pageable) {
+        return new PageImpl<>(new ArrayList<>(map.values()), pageable, map.size()).map(User::query);
     }
 
     private boolean isUserIdNotNull(Long id) {

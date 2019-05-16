@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.user.domain.dto.CreateUserDto;
-import pl.robert.app.user.domain.dto.UserDto;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 import javax.transaction.Transactional;
 
@@ -27,7 +27,7 @@ public class UserFacade {
         service.create(dto);
     }
 
-    public UserDto read() {
+    public UserQueryDto read() {
         return service.read(GlobalAuthorizationEntryPoint.name);
     }
 
@@ -45,7 +45,7 @@ public class UserFacade {
         service.delete(id);
     }
 
-    public Page<UserDto> readAll(Pageable pageable) {
+    public Page<UserQueryDto> readAll(Pageable pageable) {
         return service.readAll(pageable);
     }
 

@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.user.domain.dto.UserDto;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 @SpringView(name = "homepage")
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -66,7 +66,7 @@ class HomepageView extends Composite implements View {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
             VerticalLayout layout = new VerticalLayout();
 
-            UserDto dto = facade.read();
+            UserQueryDto dto = facade.read();
 
             Label name = new Label("Twoje imię: " + dto.getName());
             Label email = new Label("Twój adres email: " + dto.getEmail());
