@@ -33,7 +33,7 @@ public class ConferenceQueryDto {
 
     String name;
 
-    String spot;
+    String details;
 
     @Column(name = "number_of_available_places")
     String numberOfAvailablePlaces;

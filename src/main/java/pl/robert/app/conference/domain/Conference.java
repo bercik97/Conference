@@ -37,9 +37,11 @@ class Conference implements QueryConverter<ConferenceQueryDto> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    @Column(nullable = false)
     String name;
 
-    String spot;
+    @Column(nullable = false)
+    String details;
 
     @Column(name = "number_of_available_places")
     String numberOfAvailablePlaces;
@@ -52,6 +54,6 @@ class Conference implements QueryConverter<ConferenceQueryDto> {
 
     @Override
     public ConferenceQueryDto query() {
-        return new ConferenceQueryDto(id, name, spot, numberOfAvailablePlaces, users);
+        return new ConferenceQueryDto(id, name, details, numberOfAvailablePlaces, users);
     }
 }
