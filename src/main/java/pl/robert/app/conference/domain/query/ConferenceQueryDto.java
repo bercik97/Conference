@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.user.domain.query.UserQueryDto;
 
 import javax.persistence.Entity;
@@ -43,4 +44,10 @@ public class ConferenceQueryDto {
             cascade = CascadeType.REMOVE
     )
     Set<UserQueryDto> users;
+
+    @OneToMany(
+            mappedBy = "conference",
+            cascade = CascadeType.REMOVE
+    )
+    Set<LectureQueryDto> lectures;
 }

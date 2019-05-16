@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
+import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.shared.QueryConverter;
 import pl.robert.app.user.domain.query.UserQueryDto;
 
@@ -52,8 +53,14 @@ class Conference implements QueryConverter<ConferenceQueryDto> {
     )
     Set<UserQueryDto> users;
 
+    @OneToMany(
+            mappedBy = "conference",
+            cascade = CascadeType.REMOVE
+    )
+    Set<LectureQueryDto> lectures;
+
     @Override
     public ConferenceQueryDto query() {
-        return new ConferenceQueryDto(id, name, details, numberOfAvailablePlaces, users);
+        return new ConferenceQueryDto(id, name, details, numberOfAvailablePlaces, users, lectures);
     }
 }
