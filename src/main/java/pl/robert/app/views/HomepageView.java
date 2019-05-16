@@ -8,8 +8,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 
-import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
 
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.user.domain.UserFacade;

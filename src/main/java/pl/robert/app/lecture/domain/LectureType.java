@@ -2,8 +2,8 @@ package pl.robert.app.lecture.domain;
 
 import lombok.Getter;
 import lombok.AllArgsConstructor;
-import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
 
 @Getter
 @AllArgsConstructor

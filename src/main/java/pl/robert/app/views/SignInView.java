@@ -10,8 +10,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button;
 
-import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
 
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.user.domain.UserFacade;

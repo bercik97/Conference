@@ -11,8 +11,8 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button;
 
-import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
 
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.shared.NotificationService;

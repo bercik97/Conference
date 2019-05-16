@@ -1,14 +1,30 @@
 package pl.robert.app.lecture.domain.query;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.FetchType;
+
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 import pl.robert.app.lecture.domain.LectureType;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
-import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "lecture")
@@ -35,9 +51,17 @@ public class LectureQueryDto {
     String startTime;
 
     @Column(name = "number_of_places")
-    String numberOfAvailablePlaces;
+    String numberOfPlaces;
 
     @ManyToOne
     @JoinColumn(name = "conference_id")
     ConferenceQueryDto conference;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_lectures",
+            joinColumns = @JoinColumn(name = "lecture_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    Set<UserQueryDto> users;
 }

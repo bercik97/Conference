@@ -5,22 +5,22 @@ import lombok.Setter;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-
-import pl.robert.app.conference.domain.query.ConferenceQueryDto;
-import pl.robert.app.lecture.domain.query.LectureQueryDto;
-import pl.robert.app.shared.QueryConverter;
-import pl.robert.app.user.domain.query.UserQueryDto;
+import lombok.AccessLevel;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
+
+import pl.robert.app.conference.domain.query.ConferenceQueryDto;
+import pl.robert.app.lecture.domain.query.LectureQueryDto;
+import pl.robert.app.shared.QueryConverter;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 import java.util.Set;
 
@@ -44,7 +44,7 @@ class Conference implements QueryConverter<ConferenceQueryDto> {
     @Column(nullable = false)
     String details;
 
-    @Column(name = "number_of_available_places")
+    @Column(name = "number_of_available_places", nullable = false)
     String numberOfAvailablePlaces;
 
     @OneToMany(

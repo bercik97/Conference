@@ -1,7 +1,7 @@
 package pl.robert.app.user.domain;
 
-import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -1,8 +1,8 @@
 package pl.robert.app.user.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
 
 import org.apache.logging.log4j.util.Strings;
 

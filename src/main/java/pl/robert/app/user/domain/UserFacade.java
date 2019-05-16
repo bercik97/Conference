@@ -1,5 +1,7 @@
 package pl.robert.app.user.domain;
 
+import javax.transaction.Transactional;
+
 import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -10,8 +12,6 @@ import org.springframework.data.domain.Pageable;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.user.domain.dto.CreateUserDto;
 import pl.robert.app.user.domain.query.UserQueryDto;
-
-import javax.transaction.Transactional;
 
 @Transactional
 @AllArgsConstructor

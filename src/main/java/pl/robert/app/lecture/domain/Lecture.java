@@ -5,15 +5,28 @@ import lombok.Setter;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.FetchType;
 
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.shared.QueryConverter;
 import pl.robert.app.user.domain.query.UserQueryDto;
 
-import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -30,26 +43,30 @@ class Lecture implements QueryConverter<LectureQueryDto> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    @Column(nullable = false)
     String name;
 
+    @Column(nullable = false)
     String lecturer;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     LectureType type;
 
+    @Column(nullable = false)
     String day;
 
-    @Column(name = "start_time")
+    @Column(name = "start_time", nullable = false)
     String startTime;
 
-    @Column(name = "number_of_places")
+    @Column(name = "number_of_places", nullable = false)
     String numberOfPlaces;
 
     @ManyToOne
-    @JoinColumn(name = "conference_id")
+    @JoinColumn(name = "conference_id", nullable = false)
     ConferenceQueryDto conference;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_lectures",
             joinColumns = @JoinColumn(name = "lecture_id"),
@@ -59,6 +76,6 @@ class Lecture implements QueryConverter<LectureQueryDto> {
 
     @Override
     public LectureQueryDto query() {
-        return new LectureQueryDto(id, name, lecturer, type, day, startTime, numberOfPlaces, conference);
+        return new LectureQueryDto(id, name, lecturer, type, day, startTime, numberOfPlaces, conference, users);
     }
 }

@@ -1,22 +1,22 @@
 package pl.robert.app.conference.domain.query;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import pl.robert.app.lecture.domain.query.LectureQueryDto;
-import pl.robert.app.user.domain.query.UserQueryDto;
+import lombok.AccessLevel;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
+
+import pl.robert.app.lecture.domain.query.LectureQueryDto;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 import java.util.Set;
 
