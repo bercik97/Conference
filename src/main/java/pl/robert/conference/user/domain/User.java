@@ -7,9 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import pl.robert.conference.user.domain.dto.UserDto;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+
+import static pl.robert.conference.user.domain.UserValidator.COL_MAX_LENGTH_NAME;
+
+import pl.robert.conference.user.domain.dto.UserDto;
 
 @Entity
 @Table(name = "users")
@@ -25,8 +33,10 @@ class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    @Column(length = COL_MAX_LENGTH_NAME, unique = true, nullable = false)
     String name;
 
+    @Column(unique = true, nullable = false)
     String email;
 
     UserDto dto() {

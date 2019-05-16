@@ -17,25 +17,27 @@ import javax.transaction.Transactional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserFacade {
 
-    UserRepository repository;
+    UserValidator validator;
+    UserService service;
 
     public void create(CreateUserDto dto) {
-        repository.save(UserFactory.create(dto));
+        validator.checkInputData(dto);
+        service.create(dto);
     }
 
     public UserDto read(Long id) {
-        return repository.findUserById(id).dto();
+        return service.read(id);
     }
 
     public void update(Long id, String email) {
-        repository.findUserById(id).setEmail(email);
+        service.update(id, email);
     }
 
     public void delete(Long id) {
-        repository.delete(repository.findUserById(id));
+        service.delete(id);
     }
 
     public Page<UserDto> readAll(Pageable pageable) {
-        return repository.findAll(pageable).map(User::dto);
+        return service.readAll(pageable);
     }
 }
