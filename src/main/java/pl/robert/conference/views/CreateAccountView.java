@@ -1,44 +1,35 @@
 package pl.robert.conference.views;
 
+import com.vaadin.navigator.View;
+import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-
-import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.Button;
 
 import pl.robert.conference.user.domain.UserFacade;
 import pl.robert.conference.user.domain.dto.CreateUserDto;
 
-@SpringUI
+@SpringView(name = "create-account")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateAccountUI extends UI {
+public class CreateAccountView extends Composite implements View {
 
     VerticalLayout root;
 
     UserFacade facade;
 
-    public CreateAccountUI(UserFacade facade) {
+    public CreateAccountView(UserFacade facade) {
         this.facade = facade;
-    }
 
-    @Override
-    protected void init(VaadinRequest request) {
         setupLayout();
         addHeader();
         addForm();
+        addHrefs();
     }
 
     private void setupLayout() {
         root = new VerticalLayout();
         root.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        setContent(root);
+        setCompositionRoot(root);
     }
 
     private void addHeader() {
@@ -58,5 +49,14 @@ public class CreateAccountUI extends UI {
         formLayout.addComponents(name, email, add);
 
         root.addComponent(formLayout);
+    }
+
+    private void addHrefs() {
+        Button homepage = new Button("Idź do strony głównej");
+
+        homepage.setStyleName("link");
+        homepage.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+
+        root.addComponent(homepage);
     }
 }
