@@ -13,6 +13,7 @@ import com.vaadin.ui.Button;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
+import pl.robert.conference.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.conference.user.domain.UserFacade;
 
 @SpringView(name = "sign-in")
@@ -27,15 +28,22 @@ class SignInView extends Composite implements View {
         this.facade = facade;
 
         setupLayout();
-        addHeader();
-        addForm();
-        addHrefs();
+        unauthorized();
+        authorized();
     }
 
     private void setupLayout() {
         root = new VerticalLayout();
         root.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         setCompositionRoot(root);
+    }
+
+    private void unauthorized() {
+        if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
+            addHeader();
+            addForm();
+            addHomepageHref();
+        }
     }
 
     private void addHeader() {
@@ -55,9 +63,14 @@ class SignInView extends Composite implements View {
         root.addComponent(formLayout);
     }
 
-    private void addHrefs() {
-        Button homepage = new Button("Idź do strony głównej");
+    private void authorized() {
+        if (GlobalAuthorizationEntryPoint.isAuthorized()) {
+            addHomepageHref();
+        }
+    }
 
+    private void addHomepageHref() {
+        Button homepage = new Button("Idź do strony głównej");
         homepage.setStyleName("link");
         homepage.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
 
