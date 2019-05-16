@@ -1,5 +1,6 @@
 package pl.robert.conference.user.domain;
 
+import com.vaadin.ui.Notification;
 import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;

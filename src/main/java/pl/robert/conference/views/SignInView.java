@@ -5,21 +5,15 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import pl.robert.conference.shared.GlobalAuthorizationEntryPoint;
 
-import pl.robert.conference.user.domain.UserFacade;
-import pl.robert.conference.user.domain.dto.CreateUserDto;
-
-@SpringView(name = "create-account")
+@SpringView(name = "sign-in")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateAccountView extends Composite implements View {
-
-    UserFacade facade;
+public class SignInView extends Composite implements View {
 
     VerticalLayout root;
 
-    public CreateAccountView(UserFacade facade) {
-        this.facade = facade;
-
+    public SignInView() {
         setupLayout();
         addHeader();
         addForm();
@@ -33,20 +27,18 @@ public class CreateAccountView extends Composite implements View {
     }
 
     private void addHeader() {
-        root.addComponent(new Label("Stwórz nowe konto"));
+        root.addComponent(new Label("Logowanie"));
     }
 
     private void addForm() {
         HorizontalLayout formLayout = new HorizontalLayout();
 
         TextField name = new TextField("Imię");
-        TextField email = new TextField("Email");
-        Button add = new Button("Stwórz");
+        Button signIn = new Button("Zaloguj");
 
-        add.addClickListener(clickEvent -> facade.create(
-                new CreateUserDto(name.getValue(), email.getValue())));
+        signIn.addClickListener(clickEvent -> GlobalAuthorizationEntryPoint.login(name.getValue()));
 
-        formLayout.addComponents(name, email, add);
+        formLayout.addComponents(name, signIn);
 
         root.addComponent(formLayout);
     }
