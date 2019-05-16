@@ -22,15 +22,17 @@ public class UserFacade {
     UserAuthorizationService authorizationService;
 
     public void create(CreateUserDto dto) {
-        validator.checkInputData(dto);
+        validator.checkInputDto(dto);
         service.create(dto);
     }
 
-    public UserDto read(Long id) {
-        return service.read(id);
+    public long findIdByName(String name) {
+        validator.checkInputName(name);
+        return service.findIdByName(name);
     }
 
     public void update(Long id, String email) {
+        validator.checkInputEmail(email);
         service.update(id, email);
     }
 
@@ -43,7 +45,7 @@ public class UserFacade {
     }
 
     public void login(String name) {
-        validator.checkInputData(name);
+        validator.checkInputName(name);
         authorizationService.login(name);
     }
 

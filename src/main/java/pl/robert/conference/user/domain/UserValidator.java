@@ -21,7 +21,7 @@ class UserValidator {
 
     UserRepository repository;
 
-    void checkInputData(CreateUserDto dto) {
+    void checkInputDto(CreateUserDto dto) {
         InvalidUserException.CAUSE cause = null;
 
         if (Strings.isBlank(dto.getName()) || Strings.isBlank(dto.getEmail())) {
@@ -39,13 +39,27 @@ class UserValidator {
         }
     }
 
-    void checkInputData(String name) throws InvalidUserException {
+    void checkInputName(String name) throws InvalidUserException {
         InvalidUserException.CAUSE cause = null;
 
         if (Strings.isBlank(name)) {
             cause = InvalidUserException.CAUSE.BLANK;
         } else if (repository.findUserByName(name) == null) {
             cause = InvalidUserException.CAUSE.NOT_EXISTS;
+        }
+
+        if (cause != null) {
+            throw new InvalidUserException(cause);
+        }
+    }
+
+    void checkInputEmail(String email) throws InvalidUserException {
+        InvalidUserException.CAUSE cause = null;
+
+        if (Strings.isBlank(email)) {
+            cause = InvalidUserException.CAUSE.BLANK;
+        } else if (!VALID_EMAIL_ADDRESS_REGEX.matcher(email).find()) {
+            cause = InvalidUserException.CAUSE.EMAIL;
         }
 
         if (cause != null) {

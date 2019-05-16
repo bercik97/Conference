@@ -23,12 +23,17 @@ class UserService {
         NotificationService.showHumanizedNotification("Gratulacje! Udało Ci się stworzyć nowe konto!");
     }
 
+    long findIdByName(String name) {
+        return repository.findUserByName(name).getId();
+    }
+
     UserDto read(Long id) {
         return repository.findUserById(id).dto();
     }
 
     void update(Long id, String email) {
         repository.findUserById(id).setEmail(email);
+        NotificationService.showHumanizedNotification("Zmieniłeś swój email!");
     }
 
     void delete(Long id) {

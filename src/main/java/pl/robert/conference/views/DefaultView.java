@@ -27,14 +27,8 @@ public class DefaultView extends Composite implements View {
 
         setupLayout();
         addHeader();
-
-        if (GlobalAuthorizationEntryPoint.isAuthorized()) {
-            Button button = new Button("Wyloguj się");
-
-            button.addClickListener(e -> facade.logout());
-
-            root.addComponent(button);
-        }
+        unauthorized();
+        authorized();
     }
 
     private void setupLayout() {
@@ -45,7 +39,9 @@ public class DefaultView extends Composite implements View {
 
     private void addHeader() {
         root.addComponent(new Label("Witamy w aplikacji do zarządzania konferencjami IT!"));
+    }
 
+    private void unauthorized() {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
             Label label = new Label("Zaloguj się aby uzyskać pełny dostęp do aplikacji");
 
@@ -61,6 +57,22 @@ public class DefaultView extends Composite implements View {
                     label,
                     createNewAccount,
                     signIn
+            );
+        }
+    }
+
+    private void authorized() {
+        if (GlobalAuthorizationEntryPoint.isAuthorized()) {
+            Button changeEmailBtn = new Button("Zmień email");
+            changeEmailBtn.setStyleName("link");
+            changeEmailBtn.addClickListener(e -> getUI().getNavigator().navigateTo("change-email"));
+
+            Button logoutBtn = new Button("Wyloguj się");
+            logoutBtn.addClickListener(e -> facade.logout());
+
+            root.addComponents(
+                    changeEmailBtn,
+                    logoutBtn
             );
         }
     }
