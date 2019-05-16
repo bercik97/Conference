@@ -10,10 +10,11 @@ public class InvalidUserException extends RuntimeException {
     @Getter
     @AllArgsConstructor
     public enum CAUSE {
-        BLANK("Proszę wypełnić puste pole(a)"),
+        BLANK_NAME("Imię użytkownika jest wymagane"),
+        BLANK_EMAIL("Email użytkownika jest wymagany"),
         LENGTH("Imię powinno posiadać od 2 do 15 znaków"),
-        EXISTS("Podany login jest już zajęty"),
-        NOT_EXISTS("Podany login nie istnieje"),
+        EXISTS("Podane imię jest już zajęte"),
+        NOT_EXISTS("Podane imię użytkownika nie istnieje"),
         EMAIL("Proszę wprowadzić poprawny adres email");
 
         String message;

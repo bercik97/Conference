@@ -7,7 +7,7 @@ import com.vaadin.ui.UI;
 
 @SpringUI
 @SpringViewDisplay
-public class VaadinUI extends UI {
+class VaadinUI extends UI {
 
     @Override
     protected void init(VaadinRequest request) {

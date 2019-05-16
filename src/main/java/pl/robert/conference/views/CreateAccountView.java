@@ -19,7 +19,7 @@ import pl.robert.conference.user.domain.dto.CreateUserDto;
 
 @SpringView(name = "create-account")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CreateAccountView extends Composite implements View {
+class CreateAccountView extends Composite implements View {
 
     UserFacade facade;
 

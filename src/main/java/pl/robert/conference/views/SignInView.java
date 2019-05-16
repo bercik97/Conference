@@ -17,7 +17,7 @@ import pl.robert.conference.user.domain.UserFacade;
 
 @SpringView(name = "sign-in")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SignInView extends Composite implements View {
+class SignInView extends Composite implements View {
 
     UserFacade facade;
 

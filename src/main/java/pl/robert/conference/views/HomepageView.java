@@ -16,13 +16,13 @@ import pl.robert.conference.user.domain.UserFacade;
 
 @SpringView(name = "homepage")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class DefaultView extends Composite implements View {
+class HomepageView extends Composite implements View {
 
     UserFacade facade;
 
     VerticalLayout root;
 
-    public DefaultView(UserFacade facade) {
+    public HomepageView(UserFacade facade) {
         this.facade = facade;
 
         setupLayout();

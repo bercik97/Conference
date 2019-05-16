@@ -24,26 +24,26 @@ class UserValidator {
     void checkInputDto(CreateUserDto dto) {
         InvalidUserException.CAUSE cause = null;
 
-        if (Strings.isBlank(dto.getName()) || Strings.isBlank(dto.getEmail())) {
-            cause = InvalidUserException.CAUSE.BLANK;
+        if (Strings.isBlank(dto.getName())) {
+            cause = InvalidUserException.CAUSE.BLANK_NAME;
         } else if (dto.getName().length() < 2 || dto.getName().length() > COL_MAX_LENGTH_NAME) {
             cause = InvalidUserException.CAUSE.LENGTH;
         } else if (repository.findUserByName(dto.getName()) != null) {
             cause = InvalidUserException.CAUSE.EXISTS;
-        } else if (!VALID_EMAIL_ADDRESS_REGEX.matcher(dto.getEmail()).find()) {
-            cause = InvalidUserException.CAUSE.EMAIL;
         }
 
         if (cause != null) {
             throw new InvalidUserException(cause);
         }
+
+        validateEmail(dto.getEmail());
     }
 
     void checkInputName(String name) throws InvalidUserException {
         InvalidUserException.CAUSE cause = null;
 
         if (Strings.isBlank(name)) {
-            cause = InvalidUserException.CAUSE.BLANK;
+            cause = InvalidUserException.CAUSE.BLANK_NAME;
         } else if (repository.findUserByName(name) == null) {
             cause = InvalidUserException.CAUSE.NOT_EXISTS;
         }
@@ -54,10 +54,14 @@ class UserValidator {
     }
 
     void checkInputEmail(String email) throws InvalidUserException {
+        validateEmail(email);
+    }
+
+    private void validateEmail(String email) {
         InvalidUserException.CAUSE cause = null;
 
         if (Strings.isBlank(email)) {
-            cause = InvalidUserException.CAUSE.BLANK;
+            cause = InvalidUserException.CAUSE.BLANK_EMAIL;
         } else if (!VALID_EMAIL_ADDRESS_REGEX.matcher(email).find()) {
             cause = InvalidUserException.CAUSE.EMAIL;
         }
