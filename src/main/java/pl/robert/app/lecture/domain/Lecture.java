@@ -11,8 +11,10 @@ import lombok.experimental.FieldDefaults;
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.shared.QueryConverter;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "lecture")
@@ -46,6 +48,14 @@ class Lecture implements QueryConverter<LectureQueryDto> {
     @ManyToOne
     @JoinColumn(name = "conference_id")
     ConferenceQueryDto conference;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_lectures",
+            joinColumns = @JoinColumn(name = "lecture_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    Set<UserQueryDto> users;
 
     @Override
     public LectureQueryDto query() {

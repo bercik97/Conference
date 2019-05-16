@@ -3,20 +3,16 @@ package pl.robert.app.user.domain;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 import static pl.robert.app.user.domain.UserValidator.COL_MAX_LENGTH_NAME;
 
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
+import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.shared.QueryConverter;
 import pl.robert.app.user.domain.query.UserQueryDto;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -41,6 +37,14 @@ class User implements QueryConverter<UserQueryDto> {
     @ManyToOne
     @JoinColumn(name = "conference_id")
     ConferenceQueryDto conference;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_lectures",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "lecture_id")
+    )
+    Set<LectureQueryDto> lectures;
 
     @Override
     public UserQueryDto query() {
