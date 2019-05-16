@@ -2,30 +2,38 @@ package pl.robert.conference.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Composite;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Label;
+
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+
 import pl.robert.conference.shared.GlobalAuthorizationEntryPoint;
+import pl.robert.conference.user.domain.UserFacade;
 
 @SpringView(name = "homepage")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DefaultView extends Composite implements View {
 
+    UserFacade facade;
+
     VerticalLayout root;
 
-    public DefaultView() {
+    public DefaultView(UserFacade facade) {
+        this.facade = facade;
+
         setupLayout();
         addHeader();
-        addHrefs();
 
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
             Button button = new Button("Wyloguj się");
 
-            button.addClickListener(e -> GlobalAuthorizationEntryPoint.logout());
+            button.addClickListener(e -> facade.logout());
 
             root.addComponent(button);
-        } else {
-            System.out.println("NIEZALOGOWANY");
         }
     }
 
@@ -37,20 +45,23 @@ public class DefaultView extends Composite implements View {
 
     private void addHeader() {
         root.addComponent(new Label("Witamy w aplikacji do zarządzania konferencjami IT!"));
-    }
 
-    private void addHrefs() {
-        Button createNewAccount = new Button("Stwórz nowe konto");
-        Button signIn = new Button("Zaloguj się");
+        if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
+            Label label = new Label("Zaloguj się aby uzyskać pełny dostęp do aplikacji");
 
-        createNewAccount.setStyleName("link");
-        createNewAccount.addClickListener(e -> getUI().getNavigator().navigateTo("create-account"));
-        signIn.setStyleName("link");
-        signIn.addClickListener(e -> getUI().getNavigator().navigateTo("sign-in"));
+            Button createNewAccount = new Button("Stwórz nowe konto");
+            createNewAccount.setStyleName("link");
+            createNewAccount.addClickListener(e -> getUI().getNavigator().navigateTo("create-account"));
 
-        root.addComponents(
-                createNewAccount,
-                signIn
-        );
+            Button signIn = new Button("Zaloguj się");
+            signIn.setStyleName("link");
+            signIn.addClickListener(e -> getUI().getNavigator().navigateTo("sign-in"));
+
+            root.addComponents(
+                    label,
+                    createNewAccount,
+                    signIn
+            );
+        }
     }
 }

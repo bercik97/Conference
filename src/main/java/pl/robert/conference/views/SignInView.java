@@ -2,18 +2,30 @@ package pl.robert.conference.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Composite;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.Button;
+
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import pl.robert.conference.shared.GlobalAuthorizationEntryPoint;
+
+import pl.robert.conference.user.domain.UserFacade;
 
 @SpringView(name = "sign-in")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SignInView extends Composite implements View {
 
+    UserFacade facade;
+
     VerticalLayout root;
 
-    public SignInView() {
+    public SignInView(UserFacade facade) {
+        this.facade = facade;
+
         setupLayout();
         addHeader();
         addForm();
@@ -36,7 +48,7 @@ public class SignInView extends Composite implements View {
         TextField name = new TextField("Imię");
         Button signIn = new Button("Zaloguj");
 
-        signIn.addClickListener(clickEvent -> GlobalAuthorizationEntryPoint.login(name.getValue()));
+        signIn.addClickListener(clickEvent -> facade.login(name.getValue()));
 
         formLayout.addComponents(name, signIn);
 

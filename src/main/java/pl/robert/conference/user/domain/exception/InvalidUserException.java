@@ -2,7 +2,8 @@ package pl.robert.conference.user.domain.exception;
 
 import lombok.Getter;
 import lombok.AllArgsConstructor;
-import com.vaadin.ui.Notification;
+
+import pl.robert.conference.shared.NotificationService;
 
 public class InvalidUserException extends RuntimeException {
 
@@ -12,6 +13,7 @@ public class InvalidUserException extends RuntimeException {
         BLANK("Proszę wypełnić puste pole(a)"),
         LENGTH("Imię powinno posiadać od 2 do 15 znaków"),
         EXISTS("Podany login jest już zajęty"),
+        NOT_EXISTS("Podany login nie istnieje"),
         EMAIL("Proszę wprowadzić poprawny adres email");
 
         String message;
@@ -20,6 +22,6 @@ public class InvalidUserException extends RuntimeException {
     public InvalidUserException(CAUSE cause) {
         super(cause.message, null, false, false);
 
-        Notification.show(cause.message, Notification.Type.ERROR_MESSAGE);
+        NotificationService.showErrorNotification(cause.message);
     }
 }

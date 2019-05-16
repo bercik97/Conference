@@ -1,6 +1,5 @@
 package pl.robert.conference.user.domain;
 
-import com.vaadin.ui.Notification;
 import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -20,6 +19,7 @@ public class UserFacade {
 
     UserValidator validator;
     UserService service;
+    UserAuthorizationService authorizationService;
 
     public void create(CreateUserDto dto) {
         validator.checkInputData(dto);
@@ -40,5 +40,14 @@ public class UserFacade {
 
     public Page<UserDto> readAll(Pageable pageable) {
         return service.readAll(pageable);
+    }
+
+    public void login(String name) {
+        validator.checkInputData(name);
+        authorizationService.login(name);
+    }
+
+    public void logout() {
+        authorizationService.logout();
     }
 }

@@ -4,10 +4,10 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import com.vaadin.ui.Notification;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import pl.robert.conference.shared.NotificationService;
 
 import pl.robert.conference.user.domain.dto.CreateUserDto;
 import pl.robert.conference.user.domain.dto.UserDto;
@@ -20,7 +20,7 @@ class UserService {
 
     void create(CreateUserDto dto) {
         repository.save(UserFactory.create(dto));
-        Notification.show("Gratulacje! Udało Ci się stworzyć konto!");
+        NotificationService.showHumanizedNotification("Gratulacje! Udało Ci się stworzyć nowe konto!");
     }
 
     UserDto read(Long id) {
@@ -38,5 +38,4 @@ class UserService {
     Page<UserDto> readAll(Pageable pageable) {
         return repository.findAll(pageable).map(User::dto);
     }
-
 }

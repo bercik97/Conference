@@ -1,7 +1,7 @@
 package pl.robert.conference.user.domain;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import org.apache.logging.log4j.util.Strings;
@@ -22,10 +22,6 @@ class UserValidator {
     UserRepository repository;
 
     void checkInputData(CreateUserDto dto) {
-        validateRequiredData(dto);
-    }
-
-    private void validateRequiredData(CreateUserDto dto) throws InvalidUserException {
         InvalidUserException.CAUSE cause = null;
 
         if (Strings.isBlank(dto.getName()) || Strings.isBlank(dto.getEmail())) {
@@ -36,6 +32,20 @@ class UserValidator {
             cause = InvalidUserException.CAUSE.EXISTS;
         } else if (!VALID_EMAIL_ADDRESS_REGEX.matcher(dto.getEmail()).find()) {
             cause = InvalidUserException.CAUSE.EMAIL;
+        }
+
+        if (cause != null) {
+            throw new InvalidUserException(cause);
+        }
+    }
+
+    void checkInputData(String name) throws InvalidUserException {
+        InvalidUserException.CAUSE cause = null;
+
+        if (Strings.isBlank(name)) {
+            cause = InvalidUserException.CAUSE.BLANK;
+        } else if (repository.findUserByName(name) == null) {
+            cause = InvalidUserException.CAUSE.NOT_EXISTS;
         }
 
         if (cause != null) {
