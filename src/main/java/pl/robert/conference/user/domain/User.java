@@ -41,7 +41,6 @@ class User {
 
     UserDto dto() {
         return UserDto.builder()
-                .id(id)
                 .name(name)
                 .email(email)
                 .build();

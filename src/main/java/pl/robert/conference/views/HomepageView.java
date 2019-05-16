@@ -13,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 
 import pl.robert.conference.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.conference.user.domain.UserFacade;
+import pl.robert.conference.user.domain.dto.UserDto;
 
 @SpringView(name = "homepage")
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -63,6 +64,20 @@ class HomepageView extends Composite implements View {
 
     private void authorized() {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
+            VerticalLayout layout = new VerticalLayout();
+
+            UserDto dto = facade.read();
+
+            Label name = new Label("Twoje imię: " + dto.getName());
+            Label email = new Label("Twój adres email: " + dto.getEmail());
+
+            layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+
+            layout.addComponents(
+                    name,
+                    email
+            );
+
             Button changeEmailBtn = new Button("Zmień email");
             changeEmailBtn.setStyleName("link");
             changeEmailBtn.addClickListener(e -> getUI().getNavigator().navigateTo("change-email"));
@@ -71,6 +86,7 @@ class HomepageView extends Composite implements View {
             logoutBtn.addClickListener(e -> facade.logout());
 
             root.addComponents(
+                    layout,
                     changeEmailBtn,
                     logoutBtn
             );

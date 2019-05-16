@@ -27,8 +27,8 @@ class UserService {
         return repository.findUserByName(name).getId();
     }
 
-    UserDto read(Long id) {
-        return repository.findUserById(id).dto();
+    UserDto read(String name) {
+        return repository.findUserByName(name).dto();
     }
 
     void update(Long id, String email) {

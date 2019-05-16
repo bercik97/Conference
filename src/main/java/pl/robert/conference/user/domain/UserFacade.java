@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import pl.robert.conference.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.conference.user.domain.dto.CreateUserDto;
 import pl.robert.conference.user.domain.dto.UserDto;
 
@@ -24,6 +25,10 @@ public class UserFacade {
     public void create(CreateUserDto dto) {
         validator.checkInputDto(dto);
         service.create(dto);
+    }
+
+    public UserDto read() {
+        return service.read(GlobalAuthorizationEntryPoint.name);
     }
 
     public long findIdByName(String name) {
