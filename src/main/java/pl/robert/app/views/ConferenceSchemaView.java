@@ -2,30 +2,36 @@ package pl.robert.app.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Composite;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Button;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
 import pl.robert.app.conference.domain.ConferenceFacade;
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
-import pl.robert.app.lecture.domain.query.LectureQueryDto;
+import pl.robert.app.lecture.domain.LectureFacade;
+import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @SpringView(name = "conference-schema")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class ConferenceSchemaView extends Composite implements View {
 
+    LectureFacade lectureFacade;
     ConferenceQueryDto dto;
 
     VerticalLayout root;
 
-    public ConferenceSchemaView(ConferenceFacade facade) {
-        dto = facade.find();
+    public ConferenceSchemaView(LectureFacade lectureFacade,
+                                ConferenceFacade conferenceFacade) {
+        this.lectureFacade = lectureFacade;
+        dto = conferenceFacade.find();
 
         setupLayout();
         addHeader();
@@ -52,39 +58,16 @@ class ConferenceSchemaView extends Composite implements View {
     }
 
     private void addSchema() {
-        List<LectureQueryDto> lectures = dto.getLectures()
-                .stream()
-                .sorted(Comparator.comparing(LectureQueryDto::getId))
-                .collect(Collectors.toList());
+        List<LectureSchemaQueryDto> lectureSchema = lectureFacade.transform(dto.getLectures());
 
-        List<Schema> schemat = new ArrayList<>();
-
-        for (int i = 0; i < (lectures.size() + 1) / 3; i++) {
-            schemat.add(new Schema(
-                    lectures.get(i * 3).getDay() + " / " + lectures.get(i * 3).getTime(),
-                    lectures.get(i * 3).getName() + " - " + lectures.get(i * 3).getLecturer(),
-                    lectures.get(i * 3 + 1).getName() + " - " + lectures.get(i * 3 + 1).getLecturer(),
-                    lectures.get(i * 3 + 2).getName() + " - " + lectures.get(i * 3 + 2).getLecturer()
-            ));
-
-            if (i % 2 == 0) {
-                schemat.add(new Schema(
-                        lectures.get(i * 3).getDay() + " / " + "11:45 - 12:00",
-                        "Przerwa kawowa",
-                        "Przerwa kawowa",
-                        "Przerwa kawowa"
-                ));
-            }
-        }
-
-        Grid<Schema> grid = new Grid<>();
+        Grid<LectureSchemaQueryDto> grid = new Grid<>();
         grid.setSizeFull();
 
-        grid.setItems(schemat);
-        grid.addColumn(Schema::getTerm).setCaption("Dzien / Godzina");
-        grid.addColumn(Schema::getInspirationLectureDetails).setCaption("Ścieżka inspiracji");
-        grid.addColumn(Schema::getTechnologyLectureDetails).setCaption("Ścieżka technologii");
-        grid.addColumn(Schema::getKnowledgeLectureDetails).setCaption("Ścieżka wiedzy");
+        grid.setItems(lectureSchema);
+        grid.addColumn(LectureSchemaQueryDto::getTerm).setCaption("Dzien / Godzina");
+        grid.addColumn(LectureSchemaQueryDto::getInspirationLectureDetails).setCaption("Ścieżka inspiracji");
+        grid.addColumn(LectureSchemaQueryDto::getTechnologyLectureDetails).setCaption("Ścieżka technologii");
+        grid.addColumn(LectureSchemaQueryDto::getKnowledgeLectureDetails).setCaption("Ścieżka wiedzy");
 
         root.addComponent(grid);
     }

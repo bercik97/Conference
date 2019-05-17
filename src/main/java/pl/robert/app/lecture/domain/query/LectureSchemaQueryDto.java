@@ -1,11 +1,11 @@
-package pl.robert.app.views;
+package pl.robert.app.lecture.domain.query;
 
 import lombok.Getter;
 import lombok.AllArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-class Schema {
+public class LectureSchemaQueryDto {
 
     String term;
     String inspirationLectureDetails;
