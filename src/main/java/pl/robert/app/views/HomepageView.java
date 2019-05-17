@@ -30,6 +30,7 @@ class HomepageView extends Composite implements View {
         addHeader();
         unauthorized();
         authorized();
+        addConferenceSchemaHref();
     }
 
     private void setupLayout() {
@@ -91,5 +92,14 @@ class HomepageView extends Composite implements View {
                     logoutBtn
             );
         }
+    }
+
+
+    private void addConferenceSchemaHref() {
+        Button showConferenceSchemaBtn = new Button("Zobacz plan konferencji IT");
+        showConferenceSchemaBtn.setStyleName("link");
+        showConferenceSchemaBtn.addClickListener(e -> getUI().getNavigator().navigateTo("conference-schema"));
+
+        root.addComponent(showConferenceSchemaBtn);
     }
 }
