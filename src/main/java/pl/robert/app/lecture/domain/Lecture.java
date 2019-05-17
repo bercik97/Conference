@@ -56,8 +56,8 @@ class Lecture implements QueryConverter<LectureQueryDto> {
     @Column(nullable = false)
     String day;
 
-    @Column(name = "start_time", nullable = false)
-    String startTime;
+    @Column(nullable = false)
+    String time;
 
     @Column(name = "number_of_places", nullable = false)
     String numberOfPlaces;
@@ -76,6 +76,6 @@ class Lecture implements QueryConverter<LectureQueryDto> {
 
     @Override
     public LectureQueryDto query() {
-        return new LectureQueryDto(id, name, lecturer, type, day, startTime, numberOfPlaces, conference, users);
+        return new LectureQueryDto(id, name, lecturer, type, day, time, numberOfPlaces, conference, users);
     }
 }

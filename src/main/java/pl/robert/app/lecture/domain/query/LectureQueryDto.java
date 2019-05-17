@@ -47,8 +47,7 @@ public class LectureQueryDto {
 
     String day;
 
-    @Column(name = "start_time")
-    String startTime;
+    String time;
 
     @Column(name = "number_of_places")
     String numberOfPlaces;
