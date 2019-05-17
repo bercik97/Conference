@@ -1,6 +1,7 @@
 package pl.robert.app.lecture.domain;
 
 import com.vaadin.ui.UI;
+
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
@@ -9,7 +10,9 @@ import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
 import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.SendEmailService;
 import pl.robert.app.user.domain.UserFacade;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -78,9 +81,12 @@ class LectureService {
 
     void subscribeLecture(Long lectureId) {
         Lecture lecture = repository.findLectureById(lectureId);
-        lecture.getUsers().add(userFacade.read());
+        UserQueryDto dto = userFacade.read();
+        lecture.getUsers().add(dto);
 
         repository.save(lecture);
+
+        SendEmailService.sendSubscribeEmail(dto.getEmail(), dto.getName(), lectureId);
 
         NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " + lectureId);
 
