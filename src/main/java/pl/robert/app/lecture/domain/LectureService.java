@@ -2,6 +2,7 @@ package pl.robert.app.lecture.domain;
 
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
+import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,10 +13,7 @@ import java.util.stream.Collectors;
 class LectureService {
 
     List<LectureSchemaQueryDto> transform(Set<LectureQueryDto> lectures) {
-        List<LectureQueryDto> sortedLectures = lectures
-                .stream()
-                .sorted(Comparator.comparing(LectureQueryDto::getId))
-                .collect(Collectors.toList());
+        List<LectureQueryDto> sortedLectures = prepareSet(lectures);
 
         List<LectureSchemaQueryDto> schema = new ArrayList<>(lectures.size() / 3);
 
@@ -44,5 +42,25 @@ class LectureService {
         }
 
         return schema;
+    }
+
+    List<SubscribeLectureQueryDto> transformIntoSubscribeLecturesSchema(Set<LectureQueryDto> lectures) {
+        return prepareSet(lectures)
+                .stream()
+                .map(lecture -> new SubscribeLectureQueryDto(
+                        lecture.getId(),
+                        lecture.getDay() + " / " + lecture.getTime(),
+                        lecture.getType().getType(),
+                        lecture.getName(),
+                        lecture.getLecturer(),
+                        lecture.getNumberOfPlaces() - lecture.getUsers().size()))
+                .collect(Collectors.toList());
+    }
+
+    private List<LectureQueryDto> prepareSet(Set<LectureQueryDto> lectures) {
+        return lectures
+                .stream()
+                .sorted(Comparator.comparing(LectureQueryDto::getId))
+                .collect(Collectors.toList());
     }
 }

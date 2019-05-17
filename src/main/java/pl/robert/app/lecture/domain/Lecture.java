@@ -60,7 +60,7 @@ class Lecture implements QueryConverter<LectureQueryDto> {
     String time;
 
     @Column(name = "number_of_places", nullable = false)
-    String numberOfPlaces;
+    Integer numberOfPlaces;
 
     @ManyToOne
     @JoinColumn(name = "conference_id", nullable = false)

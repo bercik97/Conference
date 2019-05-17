@@ -83,12 +83,17 @@ class HomepageView extends Composite implements View {
             changeEmailBtn.setStyleName("link");
             changeEmailBtn.addClickListener(e -> getUI().getNavigator().navigateTo("change-email"));
 
+            Button subscribeLecturesBtn = new Button("Zapisz się na wybrane prelekcje");
+            subscribeLecturesBtn.setStyleName("link");
+            subscribeLecturesBtn.addClickListener(e -> getUI().getNavigator().navigateTo("subscribe-lectures"));
+
             Button logoutBtn = new Button("Wyloguj się");
             logoutBtn.addClickListener(e -> facade.logout());
 
             root.addComponents(
                     layout,
                     changeEmailBtn,
+                    subscribeLecturesBtn,
                     logoutBtn
             );
         }

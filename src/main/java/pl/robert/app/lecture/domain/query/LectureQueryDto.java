@@ -50,7 +50,7 @@ public class LectureQueryDto {
     String time;
 
     @Column(name = "number_of_places")
-    String numberOfPlaces;
+    Integer numberOfPlaces;
 
     @ManyToOne
     @JoinColumn(name = "conference_id")

@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
+import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
 
 import java.util.List;
 import java.util.Set;
@@ -18,5 +19,9 @@ public class LectureFacade {
 
     public List<LectureSchemaQueryDto> transform(Set<LectureQueryDto> lectures) {
         return service.transform(lectures);
+    }
+
+    public List<SubscribeLectureQueryDto> transformIntoSubscribeLecturesSchema(Set<LectureQueryDto> lectures) {
+        return service.transformIntoSubscribeLecturesSchema(lectures);
     }
 }
