@@ -30,7 +30,6 @@ class HomepageView extends Composite implements View {
         addHeader();
         unauthorized();
         authorized();
-        addConferenceSchemaHref();
     }
 
     private void setupLayout() {
@@ -47,24 +46,27 @@ class HomepageView extends Composite implements View {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
             Label label = new Label("Zaloguj się aby uzyskać pełny dostęp do aplikacji");
 
-            Button createNewAccount = new Button("Stwórz nowe konto");
-            createNewAccount.setStyleName("link");
-            createNewAccount.addClickListener(e -> getUI().getNavigator().navigateTo("create-account"));
+            Button createNewAccountBtn = new Button("Stwórz nowe konto");
+            createNewAccountBtn.setStyleName("link");
+            createNewAccountBtn.addClickListener(e -> getUI().getNavigator().navigateTo("create-account"));
 
-            Button signIn = new Button("Zaloguj się");
-            signIn.setStyleName("link");
-            signIn.addClickListener(e -> getUI().getNavigator().navigateTo("sign-in"));
+            Button loginBtn = new Button("Zaloguj się");
+            loginBtn.setStyleName("link");
+            loginBtn.addClickListener(e -> getUI().getNavigator().navigateTo("login"));
 
             root.addComponents(
                     label,
-                    createNewAccount,
-                    signIn
+                    getConferenceSchemaHref(),
+                    createNewAccountBtn,
+                    loginBtn
             );
         }
     }
 
     private void authorized() {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
+            root.addComponent(getConferenceSchemaHref());
+
             VerticalLayout layout = new VerticalLayout();
 
             UserQueryDto dto = facade.read();
@@ -72,16 +74,17 @@ class HomepageView extends Composite implements View {
             Label name = new Label("Twoje imię: " + dto.getName());
             Label email = new Label("Twój adres email: " + dto.getEmail());
 
+            Button changeEmailBtn = new Button("Zmień email");
+            changeEmailBtn.setStyleName("link");
+            changeEmailBtn.addClickListener(e -> getUI().getNavigator().navigateTo("change-email"));
+
             layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
             layout.addComponents(
                     name,
-                    email
+                    email,
+                    changeEmailBtn
             );
-
-            Button changeEmailBtn = new Button("Zmień email");
-            changeEmailBtn.setStyleName("link");
-            changeEmailBtn.addClickListener(e -> getUI().getNavigator().navigateTo("change-email"));
 
             Button subscribeLecturesBtn = new Button("Zapisz się na wybrane prelekcje");
             subscribeLecturesBtn.setStyleName("link");
@@ -92,19 +95,18 @@ class HomepageView extends Composite implements View {
 
             root.addComponents(
                     layout,
-                    changeEmailBtn,
                     subscribeLecturesBtn,
                     logoutBtn
             );
         }
     }
 
-
-    private void addConferenceSchemaHref() {
+    private Button getConferenceSchemaHref() {
         Button showConferenceSchemaBtn = new Button("Zobacz plan konferencji IT");
         showConferenceSchemaBtn.setStyleName("link");
         showConferenceSchemaBtn.addClickListener(e -> getUI().getNavigator().navigateTo("conference-schema"));
 
         root.addComponent(showConferenceSchemaBtn);
+        return showConferenceSchemaBtn;
     }
 }

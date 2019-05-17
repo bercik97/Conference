@@ -58,13 +58,13 @@ class ConferenceSchemaView extends Composite implements View {
     }
 
     private void addSchema() {
-        List<LectureSchemaQueryDto> lectureSchema = lectureFacade.transform(dto.getLectures());
+        List<LectureSchemaQueryDto> lectureSchema = lectureFacade.transformIntoLecturesSchema(dto.getLectures());
 
         Grid<LectureSchemaQueryDto> grid = new Grid<>();
         grid.setSizeFull();
 
         grid.setItems(lectureSchema);
-        grid.addColumn(LectureSchemaQueryDto::getTerm).setCaption("Dzien / Godzina");
+        grid.addColumn(LectureSchemaQueryDto::getTerm).setCaption("Dzień / Godzina");
         grid.addColumn(LectureSchemaQueryDto::getInspirationLectureDetails).setCaption("Ścieżka inspiracji");
         grid.addColumn(LectureSchemaQueryDto::getTechnologyLectureDetails).setCaption("Ścieżka technologii");
         grid.addColumn(LectureSchemaQueryDto::getKnowledgeLectureDetails).setCaption("Ścieżka wiedzy");
@@ -73,10 +73,10 @@ class ConferenceSchemaView extends Composite implements View {
     }
 
     private void addHomepageHref() {
-        Button homepage = new Button("Idź do strony głównej");
-        homepage.setStyleName("link");
-        homepage.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+        Button button = new Button("Idź do strony głównej");
+        button.setStyleName("link");
+        button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
 
-        root.addComponent(homepage);
+        root.addComponent(button);
     }
 }

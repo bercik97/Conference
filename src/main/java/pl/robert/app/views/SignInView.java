@@ -16,7 +16,7 @@ import lombok.AccessLevel;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.user.domain.UserFacade;
 
-@SpringView(name = "sign-in")
+@SpringView(name = "login")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class SignInView extends Composite implements View {
 
@@ -54,11 +54,11 @@ class SignInView extends Composite implements View {
         HorizontalLayout formLayout = new HorizontalLayout();
 
         TextField name = new TextField("Imię");
-        Button signIn = new Button("Zaloguj");
+        Button loginBtn = new Button("Zaloguj");
 
-        signIn.addClickListener(clickEvent -> facade.login(name.getValue()));
+        loginBtn.addClickListener(clickEvent -> facade.login(name.getValue()));
 
-        formLayout.addComponents(name, signIn);
+        formLayout.addComponents(name, loginBtn);
 
         root.addComponent(formLayout);
     }
@@ -70,10 +70,10 @@ class SignInView extends Composite implements View {
     }
 
     private void addHomepageHref() {
-        Button homepage = new Button("Idź do strony głównej");
-        homepage.setStyleName("link");
-        homepage.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+        Button button = new Button("Idź do strony głównej");
+        button.setStyleName("link");
+        button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
 
-        root.addComponent(homepage);
+        root.addComponent(button);
     }
 }

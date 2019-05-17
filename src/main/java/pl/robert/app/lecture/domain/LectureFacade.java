@@ -17,8 +17,8 @@ public class LectureFacade {
 
     LectureService service;
 
-    public List<LectureSchemaQueryDto> transform(Set<LectureQueryDto> lectures) {
-        return service.transform(lectures);
+    public List<LectureSchemaQueryDto> transformIntoLecturesSchema(Set<LectureQueryDto> lectures) {
+        return service.transformIntoLecturesSchema(lectures);
     }
 
     public List<SubscribeLectureQueryDto> transformIntoSubscribeLecturesSchema(Set<LectureQueryDto> lectures) {

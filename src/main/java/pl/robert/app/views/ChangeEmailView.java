@@ -57,12 +57,12 @@ class ChangeEmailView extends Composite implements View {
             HorizontalLayout formLayout = new HorizontalLayout();
 
             TextField newEmail = new TextField("Nowy email");
-            Button change = new Button("Zmień");
+            Button changeBtn = new Button("Zmień");
 
-            change.addClickListener(clickEvent -> facade.update(
+            changeBtn.addClickListener(clickEvent -> facade.update(
                     facade.findIdByName(GlobalAuthorizationEntryPoint.name), newEmail.getValue()));
 
-            formLayout.addComponents(newEmail, change);
+            formLayout.addComponents(newEmail, changeBtn);
 
             root.addComponent(formLayout);
             addHomepageHref();
@@ -74,10 +74,10 @@ class ChangeEmailView extends Composite implements View {
     }
 
     private void addHomepageHref() {
-        Button homepage = new Button("Idź do strony głównej");
-        homepage.setStyleName("link");
-        homepage.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+        Button button = new Button("Idź do strony głównej");
+        button.setStyleName("link");
+        button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
 
-        root.addComponent(homepage);
+        root.addComponent(button);
     }
 }
