@@ -1,8 +1,15 @@
 package pl.robert.app.lecture.domain;
 
+import com.vaadin.ui.UI;
+import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
+
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
+import pl.robert.app.shared.NotificationService;
+import pl.robert.app.user.domain.UserFacade;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,7 +17,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class LectureService {
+
+    LectureRepository repository;
+    UserFacade userFacade;
 
     List<LectureSchemaQueryDto> transformIntoLecturesSchema(Set<LectureQueryDto> lectures) {
         List<LectureQueryDto> sortedLectures = prepareSet(lectures);
@@ -62,5 +74,16 @@ class LectureService {
                 .stream()
                 .sorted(Comparator.comparing(LectureQueryDto::getId))
                 .collect(Collectors.toList());
+    }
+
+    void subscribeLecture(Long lectureId) {
+        Lecture lecture = repository.findLectureById(lectureId);
+        lecture.getUsers().add(userFacade.read());
+
+        repository.save(lecture);
+
+        NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " + lectureId);
+
+        UI.getCurrent().getNavigator().navigateTo("subscribe-lectures");
     }
 }

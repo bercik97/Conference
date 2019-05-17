@@ -9,6 +9,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
 
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
@@ -66,6 +68,7 @@ class SubscribeLecturesView extends Composite implements View {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
             addHeader();
             addSchema();
+            addForm();
         }
     }
 
@@ -85,6 +88,23 @@ class SubscribeLecturesView extends Composite implements View {
         grid.addColumn(SubscribeLectureQueryDto::getLeftPlaces).setCaption("Liczba wolnych miejsc");
 
         root.addComponent(grid);
+    }
+
+    private void addForm() {
+        HorizontalLayout layout = new HorizontalLayout();
+
+        TextField conferenceId = new TextField("Identyfikator konferencji");
+        Button button = new Button("Zapisz się");
+
+        button.addClickListener(clickEvent ->
+                lectureFacade.subscribeLecture(Long.parseLong(conferenceId.getValue())));
+
+        layout.addComponents(
+                conferenceId,
+                button
+        );
+
+        root.addComponent(layout);
     }
 
     private void addHomepageHref() {

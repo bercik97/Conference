@@ -24,4 +24,8 @@ public class LectureFacade {
     public List<SubscribeLectureQueryDto> transformIntoSubscribeLecturesSchema(Set<LectureQueryDto> lectures) {
         return service.transformIntoSubscribeLecturesSchema(lectures);
     }
+
+    public void subscribeLecture(Long lectureId) {
+        service.subscribeLecture(lectureId);
+    }
 }
