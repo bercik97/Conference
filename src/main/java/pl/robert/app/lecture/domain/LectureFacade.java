@@ -16,6 +16,7 @@ import java.util.Set;
 public class LectureFacade {
 
     LectureService service;
+    LectureValidator validator;
 
     public List<LectureSchemaQueryDto> transformIntoLecturesSchema(Set<LectureQueryDto> lectures) {
         return service.transformIntoLecturesSchema(lectures);
@@ -25,7 +26,8 @@ public class LectureFacade {
         return service.transformIntoSubscribeLecturesSchema(lectures);
     }
 
-    public void subscribeLecture(Long lectureId) {
-        service.subscribeLecture(lectureId);
+    public void subscribeLecture(String lectureId) {
+        validator.checkInputData(lectureId);
+        service.subscribeLecture(Long.parseLong(lectureId));
     }
 }

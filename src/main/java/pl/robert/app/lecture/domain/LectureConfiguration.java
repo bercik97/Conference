@@ -11,6 +11,7 @@ class LectureConfiguration {
     @Bean
     LectureFacade lectureFacade(LectureRepository repository,
                                 UserFacade userFacade) {
-        return new LectureFacade(new LectureService(repository, userFacade));
+        return new LectureFacade(new LectureService(repository, userFacade),
+                                 new LectureValidator(repository));
     }
 }

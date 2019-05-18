@@ -93,11 +93,10 @@ class SubscribeLecturesView extends Composite implements View {
     private void addForm() {
         HorizontalLayout layout = new HorizontalLayout();
 
-        TextField conferenceId = new TextField("Identyfikator konferencji");
+        TextField conferenceId = new TextField("Identyfikator prelekcji");
         Button button = new Button("Zapisz się");
 
-        button.addClickListener(clickEvent ->
-                lectureFacade.subscribeLecture(Long.parseLong(conferenceId.getValue())));
+        button.addClickListener(clickEvent -> lectureFacade.subscribeLecture(conferenceId.getValue()));
 
         layout.addComponents(
                 conferenceId,
