@@ -42,29 +42,24 @@ class ChangeEmailView extends Composite implements View {
     private void unauthorized() {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
             NotificationService.showErrorNotification("Tylko zalogowani użytkownicy mogą zmienić adres email");
-
-            Label label = new Label("Błąd 403: Odmowa dostępu");
-
-            root.addComponents(label);
+            root.addComponents(new Label("Błąd 403: Odmowa dostępu"));
             addHomepageHref();
         }
+    }
+
+    private void addHomepageHref() {
+        Button button = new Button("Idź do strony głównej");
+
+        button.setStyleName("link");
+        button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+
+        root.addComponent(button);
     }
 
     private void authorized() {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
             addHeader();
-
-            HorizontalLayout formLayout = new HorizontalLayout();
-
-            TextField newEmail = new TextField("Nowy email");
-            Button changeBtn = new Button("Zmień");
-
-            changeBtn.addClickListener(clickEvent -> facade.update(
-                    facade.findIdByName(GlobalAuthorizationEntryPoint.name), newEmail.getValue()));
-
-            formLayout.addComponents(newEmail, changeBtn);
-
-            root.addComponent(formLayout);
+            addForm();
             addUserProfileHref();
         }
     }
@@ -73,18 +68,28 @@ class ChangeEmailView extends Composite implements View {
         root.addComponent(new Label("Zmień email"));
     }
 
-    private void addUserProfileHref() {
-        Button button = new Button("Wróć do profilu użytkownika");
-        button.setStyleName("link");
-        button.addClickListener(e -> getUI().getNavigator().navigateTo("profile"));
+    private void addForm() {
+        HorizontalLayout formLayout = new HorizontalLayout();
 
-        root.addComponent(button);
+        TextField newEmail = new TextField("Nowy email");
+        Button change = new Button("Zmień");
+
+        change.addClickListener(e -> facade.update(
+                facade.findIdByName(GlobalAuthorizationEntryPoint.name), newEmail.getValue()));
+
+        formLayout.addComponents(
+                newEmail,
+                change
+        );
+
+        root.addComponent(formLayout);
     }
 
-    private void addHomepageHref() {
-        Button button = new Button("Idź do strony głównej");
+    private void addUserProfileHref() {
+        Button button = new Button("Wróć do profilu użytkownika");
+
         button.setStyleName("link");
-        button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+        button.addClickListener(e -> getUI().getNavigator().navigateTo("profile"));
 
         root.addComponent(button);
     }

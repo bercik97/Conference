@@ -32,6 +32,7 @@ class CreateAccountView extends Composite implements View {
         setupLayout();
         unauthorized();
         authorized();
+        addHomepageHref();
     }
 
     private void setupLayout() {
@@ -44,7 +45,6 @@ class CreateAccountView extends Composite implements View {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
             addHeader();
             addForm();
-            addHomepageHref();
         }
     }
 
@@ -62,7 +62,11 @@ class CreateAccountView extends Composite implements View {
         add.addClickListener(clickEvent -> facade.create(
                 new CreateUserDto(name.getValue(), email.getValue())));
 
-        formLayout.addComponents(name, email, add);
+        formLayout.addComponents(
+                name,
+                email,
+                add
+        );
 
         root.addComponent(formLayout);
     }
@@ -70,19 +74,16 @@ class CreateAccountView extends Composite implements View {
     private void authorized() {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
             NotificationService.showErrorNotification("Tylko niezalogowani użytkownicy mogą stworzyć nowe konto");
-
-            Label label = new Label("Błąd 403: Odmowa dostępu");
-
-            root.addComponents(label);
-            addHomepageHref();
+            root.addComponents(new Label("Błąd 403: Odmowa dostępu"));
         }
     }
 
     private void addHomepageHref() {
-        Button homepage = new Button("Idź do strony głównej");
-        homepage.setStyleName("link");
-        homepage.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+        Button button = new Button("Idź do strony głównej");
 
-        root.addComponent(homepage);
+        button.setStyleName("link");
+        button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+
+        root.addComponent(button);
     }
 }

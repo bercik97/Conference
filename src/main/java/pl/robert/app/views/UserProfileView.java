@@ -2,9 +2,16 @@ package pl.robert.app.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Composite;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Grid;
+
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+
 import pl.robert.app.lecture.domain.LectureFacade;
 import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
@@ -43,9 +50,7 @@ class UserProfileView extends Composite implements View {
     private void unauthorized() {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
             NotificationService.showErrorNotification("Zaloguj się aby zobaczyć informacje o profilu użytkownika");
-
             root.addComponent(new Label("Błąd 403: Odmowa dostępu"));
-            addHomepageHref();
         }
     }
 
@@ -65,18 +70,16 @@ class UserProfileView extends Composite implements View {
 
         UserQueryDto dto = userFacade.read();
 
-        Label name = new Label("Twoje imię: " + dto.getName());
-        Label email = new Label("Twój adres email: " + dto.getEmail());
-
         Button changeEmailBtn = new Button("Zmień email");
+
         changeEmailBtn.setStyleName("link");
         changeEmailBtn.addClickListener(e -> getUI().getNavigator().navigateTo("change-email"));
 
         layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
         layout.addComponents(
-                name,
-                email,
+                new Label("Twoje imię: " + dto.getName()),
+                new Label("Twój adres email: " + dto.getEmail()),
                 changeEmailBtn
         );
 
@@ -89,9 +92,10 @@ class UserProfileView extends Composite implements View {
                 lectureFacade.findAlreadySubscribedLectures();
 
         Grid<AlreadySubscribedLectureQueryDto> grid = new Grid<>();
-        grid.setSizeFull();
 
+        grid.setSizeFull();
         grid.setItems(alreadySubscribedLecturesSchema);
+
         grid.addColumn(AlreadySubscribedLectureQueryDto::getId).setCaption("Identyfikator");
         grid.addColumn(AlreadySubscribedLectureQueryDto::getName).setCaption("Nazwa");
 
@@ -103,6 +107,7 @@ class UserProfileView extends Composite implements View {
 
     private void addHomepageHref() {
         Button button = new Button("Idź do strony głównej");
+
         button.setStyleName("link");
         button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
 

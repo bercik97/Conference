@@ -29,7 +29,7 @@ class LectureService {
     UserFacade userFacade;
 
     List<LectureSchemaQueryDto> transformIntoLecturesSchema(Set<LectureQueryDto> lectures) {
-        List<LectureQueryDto> sortedLectures = prepareSet(lectures);
+        List<LectureQueryDto> sortedLectures = convertToList(lectures);
 
         List<LectureSchemaQueryDto> schema = new ArrayList<>(lectures.size() / 3);
 
@@ -61,7 +61,7 @@ class LectureService {
     }
 
     List<SubscribeLectureQueryDto> transformIntoSubscribeLecturesSchema(Set<LectureQueryDto> lectures) {
-        return prepareSet(lectures)
+        return convertToList(lectures)
                 .stream()
                 .map(lecture -> new SubscribeLectureQueryDto(
                         lecture.getId(),
@@ -73,7 +73,7 @@ class LectureService {
                 .collect(Collectors.toList());
     }
 
-    private List<LectureQueryDto> prepareSet(Set<LectureQueryDto> lectures) {
+    private List<LectureQueryDto> convertToList(Set<LectureQueryDto> lectures) {
         return lectures
                 .stream()
                 .sorted(Comparator.comparing(LectureQueryDto::getId))
@@ -109,11 +109,11 @@ class LectureService {
 
         repository.save(lecture);
 
-        SendEmailService.sendSubscribeEmail(dto.getEmail(), dto.getName(), lectureId);
+        SendEmailService.send(dto.getEmail(), dto.getName(), "Zapisałeś się", lectureId);
 
         NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " + lectureId);
 
-        UI.getCurrent().getNavigator().navigateTo("subscribe-lectures");
+        UI.getCurrent().getNavigator().navigateTo("manage-lectures");
     }
 
     void unsubscribeLecture(Long lectureId) {
@@ -124,10 +124,10 @@ class LectureService {
 
         repository.deleteLectureByUserId(dto.getId(), lectureId);
 
-        SendEmailService.sendSubscribeEmail(dto.getEmail(), dto.getName(), lectureId);
+        SendEmailService.send(dto.getEmail(), dto.getName(), "Wypisałeś się", lectureId);
 
         NotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " + lectureId);
 
-        UI.getCurrent().getNavigator().navigateTo("subscribe-lectures");
+        UI.getCurrent().getNavigator().navigateTo("manage-lectures");
     }
 }

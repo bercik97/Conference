@@ -43,21 +43,19 @@ class HomepageView extends Composite implements View {
 
     private void unauthorized() {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
-            Label label = new Label("Zaloguj się aby uzyskać pełny dostęp do aplikacji");
+            Button createNewAccountHref = new Button("Stwórz nowe konto");
+            createNewAccountHref.setStyleName("link");
+            createNewAccountHref.addClickListener(e -> getUI().getNavigator().navigateTo("create-account"));
 
-            Button createNewAccountBtn = new Button("Stwórz nowe konto");
-            createNewAccountBtn.setStyleName("link");
-            createNewAccountBtn.addClickListener(e -> getUI().getNavigator().navigateTo("create-account"));
-
-            Button loginBtn = new Button("Zaloguj się");
-            loginBtn.setStyleName("link");
-            loginBtn.addClickListener(e -> getUI().getNavigator().navigateTo("login"));
+            Button loginHref = new Button("Zaloguj się");
+            loginHref.setStyleName("link");
+            loginHref.addClickListener(e -> getUI().getNavigator().navigateTo("login"));
 
             root.addComponents(
-                    label,
+                    new Label("Zaloguj się aby uzyskać pełny dostęp do aplikacji"),
                     getConferenceSchemaHref(),
-                    createNewAccountBtn,
-                    loginBtn
+                    createNewAccountHref,
+                    loginHref
             );
         }
     }
@@ -66,31 +64,31 @@ class HomepageView extends Composite implements View {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
             root.addComponent(getConferenceSchemaHref());
 
-            Button subscribeLecturesBtn = new Button("Zapisz się na wybrane prelekcje");
-            subscribeLecturesBtn.setStyleName("link");
-            subscribeLecturesBtn.addClickListener(e -> getUI().getNavigator().navigateTo("subscribe-lectures"));
+            Button subscribeLecturesHref = new Button("Zapisz się na wybrane prelekcje");
+            subscribeLecturesHref.setStyleName("link");
+            subscribeLecturesHref.addClickListener(e -> getUI().getNavigator().navigateTo("manage-lectures"));
 
-            Button userProfileBtn = new Button("Zobacz informacje o swoim profilu");
-            userProfileBtn.setStyleName("link");
-            userProfileBtn.addClickListener(e -> getUI().getNavigator().navigateTo("profile"));
+            Button userProfileHref = new Button("Zobacz informacje o swoim profilu");
+            userProfileHref.setStyleName("link");
+            userProfileHref.addClickListener(e -> getUI().getNavigator().navigateTo("profile"));
 
-            Button logoutBtn = new Button("Wyloguj się");
-            logoutBtn.addClickListener(e -> facade.logout());
+            Button logout = new Button("Wyloguj się");
+            logout.addClickListener(e -> facade.logout());
 
             root.addComponents(
-                    userProfileBtn,
-                    subscribeLecturesBtn,
-                    logoutBtn
+                    userProfileHref,
+                    subscribeLecturesHref,
+                    logout
             );
         }
     }
 
     private Button getConferenceSchemaHref() {
-        Button showConferenceSchemaBtn = new Button("Zobacz plan konferencji IT");
-        showConferenceSchemaBtn.setStyleName("link");
-        showConferenceSchemaBtn.addClickListener(e -> getUI().getNavigator().navigateTo("conference-schema"));
+        Button button = new Button("Zobacz plan konferencji IT");
 
-        root.addComponent(showConferenceSchemaBtn);
-        return showConferenceSchemaBtn;
+        button.setStyleName("link");
+        button.addClickListener(e -> getUI().getNavigator().navigateTo("conference-schema"));
+
+        return button;
     }
 }

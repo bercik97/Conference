@@ -2,7 +2,6 @@ package pl.robert.app.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
-
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Composite;
 import com.vaadin.ui.Label;
@@ -24,17 +23,17 @@ import pl.robert.app.shared.NotificationService;
 
 import java.util.List;
 
-@SpringView(name = "subscribe-lectures")
+@SpringView(name = "manage-lectures")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-class SubscribeLecturesView extends Composite implements View {
+class ManageLecturesView extends Composite implements View {
 
     LectureFacade lectureFacade;
     ConferenceQueryDto dto;
 
     VerticalLayout root;
 
-    public SubscribeLecturesView(LectureFacade lectureFacade,
-                                 ConferenceFacade conferenceFacade) {
+    public ManageLecturesView(LectureFacade lectureFacade,
+                              ConferenceFacade conferenceFacade) {
         this.lectureFacade = lectureFacade;
         dto = conferenceFacade.find();
 
@@ -50,17 +49,10 @@ class SubscribeLecturesView extends Composite implements View {
         setCompositionRoot(root);
     }
 
-    private void addHeader() {
-        root.addComponent(new Label("Poniżej znajduje się lista wszystkich prelekcji"));
-    }
-
     private void unauthorized() {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
             NotificationService.showErrorNotification("Tylko zalogowani użytkownicy mogą zapisać się na prelekcje");
-
-            Label label = new Label("Błąd 403: Odmowa dostępu");
-
-            root.addComponents(label);
+            root.addComponents(new Label("Błąd 403: Odmowa dostępu"));
         }
     }
 
@@ -68,10 +60,13 @@ class SubscribeLecturesView extends Composite implements View {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
             addHeader();
             addSchema();
-            subscribeLecture();
+            addManageLectures();
             addIdsOfAlreadySubscribedLectures();
-            unsubscribeLecture();
         }
+    }
+
+    private void addHeader() {
+        root.addComponent(new Label("Poniżej znajduje się lista wszystkich prelekcji"));
     }
 
     private void addSchema() {
@@ -79,9 +74,10 @@ class SubscribeLecturesView extends Composite implements View {
                 lectureFacade.transformIntoSubscribeLecturesSchema(dto.getLectures());
 
         Grid<SubscribeLectureQueryDto> grid = new Grid<>();
-        grid.setSizeFull();
 
+        grid.setSizeFull();
         grid.setItems(subscribeLecturesSchema);
+
         grid.addColumn(SubscribeLectureQueryDto::getId).setCaption("Identyfikator");
         grid.addColumn(SubscribeLectureQueryDto::getTerm).setCaption("Dzień / Godzina");
         grid.addColumn(SubscribeLectureQueryDto::getType).setCaption("Ścieżka");
@@ -92,35 +88,21 @@ class SubscribeLecturesView extends Composite implements View {
         root.addComponent(grid);
     }
 
-    private void subscribeLecture() {
+    private void addManageLectures() {
         HorizontalLayout layout = new HorizontalLayout();
 
         TextField conferenceId = new TextField("Identyfikator prelekcji");
-        Button button = new Button("Zapisz się");
 
-        button.addClickListener(clickEvent ->
-                lectureFacade.subscribeLecture(conferenceId.getValue()));
+        Button subscribe = new Button("Zapisz się");
+        subscribe.addClickListener(e -> lectureFacade.subscribeLecture(conferenceId.getValue()));
 
-        layout.addComponents(
-                conferenceId,
-                button
-        );
-
-        root.addComponent(layout);
-    }
-
-    private void unsubscribeLecture() {
-        HorizontalLayout layout = new HorizontalLayout();
-
-        TextField conferenceId = new TextField("Identyfikator prelekcji");
-        Button button = new Button("Wypisz się");
-
-        button.addClickListener(clickEvent ->
-                lectureFacade.unsubscribeLecture(conferenceId.getValue()));
+        Button unsubscribe = new Button("Wypisz się");
+        unsubscribe.addClickListener(e -> lectureFacade.unsubscribeLecture(conferenceId.getValue()));
 
         layout.addComponents(
                 conferenceId,
-                button
+                subscribe,
+                unsubscribe
         );
 
         root.addComponent(layout);
@@ -142,10 +124,11 @@ class SubscribeLecturesView extends Composite implements View {
     }
 
     private void addHomepageHref() {
-        Button homepage = new Button("Idź do strony głównej");
-        homepage.setStyleName("link");
-        homepage.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+        Button button = new Button("Idź do strony głównej");
 
-        root.addComponent(homepage);
+        button.setStyleName("link");
+        button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
+
+        root.addComponent(button);
     }
 }

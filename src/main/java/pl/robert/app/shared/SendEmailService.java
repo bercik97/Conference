@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 public class SendEmailService {
 
-    public static void sendSubscribeEmail(String email, String name, Long conferenceId) {
+    public static void send(String email, String name, String msg, Long conferenceId) {
         log.info("Email notifications file is placed in 'resources' folder");
 
         try {
@@ -26,7 +26,7 @@ public class SendEmailService {
                     "Temat: Konferencja IT | Do: %s | Data wysłania: " +
                             LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
                     "\nWitaj %s!\n" +
-                    "Zapisałeś się na prelekcje o identyfikatorze %d", email, name, conferenceId);
+                    "%s z prelekcji o identyfikatorze:  %d", email, name, msg, conferenceId);
 
         } catch (FileNotFoundException e) {
             log.warn(e.getClass() + " appeared ...");

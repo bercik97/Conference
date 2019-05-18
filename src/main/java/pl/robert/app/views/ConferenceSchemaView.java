@@ -46,24 +46,22 @@ class ConferenceSchemaView extends Composite implements View {
     }
 
     private void addHeader() {
-        Label name = new Label(dto.getName());
-        Label details = new Label(dto.getDetails());
-        Label numberOfAvailablePlaces = new Label("Liczba wolnych miejsc: " + dto.getNumberOfAvailablePlaces());
-
         root.addComponents(
-                name,
-                details,
-                numberOfAvailablePlaces
+                new Label(dto.getName()),
+                new Label(dto.getDetails()),
+                new Label("Liczba wolnych miejsc: " + dto.getNumberOfAvailablePlaces())
         );
     }
 
     private void addSchema() {
-        List<LectureSchemaQueryDto> lectureSchema = lectureFacade.transformIntoLecturesSchema(dto.getLectures());
+        List<LectureSchemaQueryDto> lectureSchema =
+                lectureFacade.transformIntoLecturesSchema(dto.getLectures());
 
         Grid<LectureSchemaQueryDto> grid = new Grid<>();
-        grid.setSizeFull();
 
+        grid.setSizeFull();
         grid.setItems(lectureSchema);
+
         grid.addColumn(LectureSchemaQueryDto::getTerm).setCaption("Dzień / Godzina");
         grid.addColumn(LectureSchemaQueryDto::getInspirationLectureDetails).setCaption("Ścieżka inspiracji");
         grid.addColumn(LectureSchemaQueryDto::getTechnologyLectureDetails).setCaption("Ścieżka technologii");
@@ -74,6 +72,7 @@ class ConferenceSchemaView extends Composite implements View {
 
     private void addHomepageHref() {
         Button button = new Button("Idź do strony głównej");
+
         button.setStyleName("link");
         button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
 

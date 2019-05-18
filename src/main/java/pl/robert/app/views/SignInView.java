@@ -14,6 +14,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
 
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
+import pl.robert.app.shared.NotificationService;
 import pl.robert.app.user.domain.UserFacade;
 
 @SpringView(name = "login")
@@ -30,6 +31,7 @@ class SignInView extends Composite implements View {
         setupLayout();
         unauthorized();
         authorized();
+        addHomepageHref();
     }
 
     private void setupLayout() {
@@ -42,7 +44,6 @@ class SignInView extends Composite implements View {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
             addHeader();
             addForm();
-            addHomepageHref();
         }
     }
 
@@ -54,23 +55,28 @@ class SignInView extends Composite implements View {
         HorizontalLayout formLayout = new HorizontalLayout();
 
         TextField name = new TextField("Imię");
-        Button loginBtn = new Button("Zaloguj");
+        Button login = new Button("Zaloguj");
 
-        loginBtn.addClickListener(clickEvent -> facade.login(name.getValue()));
+        login.addClickListener(e -> facade.login(name.getValue()));
 
-        formLayout.addComponents(name, loginBtn);
+        formLayout.addComponents(
+                name,
+                login
+        );
 
         root.addComponent(formLayout);
     }
 
     private void authorized() {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
-            addHomepageHref();
+            NotificationService.showErrorNotification("Jesteś zalogowany, aby się wylogować przejdź do strony głównej");
+            root.addComponents(new Label("Błąd 403: Odmowa dostępu"));
         }
     }
 
     private void addHomepageHref() {
         Button button = new Button("Idź do strony głównej");
+
         button.setStyleName("link");
         button.addClickListener(e -> getUI().getNavigator().navigateTo("homepage"));
 
