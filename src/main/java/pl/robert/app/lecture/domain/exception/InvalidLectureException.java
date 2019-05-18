@@ -13,7 +13,8 @@ public class InvalidLectureException extends RuntimeException {
         BLANK("Proszę podać identyfikator prelekcji"),
         FORMAT("Proszę podać wartość numeryczną"),
         NOT_EXISTS("Podany identyfikator prelekcji nie istenieje"),
-        FULL("Brak miejsc na wybraną prelekcję");
+        FULL("Brak miejsc na wybraną prelekcję"),
+        UNSUBSCRIBED("Nie możesz wypisać się z konferencji na której nie jesteś zapisany");
 
         String message;
     }

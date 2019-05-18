@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import org.apache.logging.log4j.util.Strings;
 
 import pl.robert.app.lecture.domain.exception.InvalidLectureException;
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
+import pl.robert.app.user.domain.UserFacade;
 
 import java.util.regex.Pattern;
 
@@ -17,25 +19,20 @@ class LectureValidator {
     Pattern VALID_LECTURE_ID_FORMAT_REGEX = Pattern.compile("\\d+", Pattern.CASE_INSENSITIVE);
 
     LectureRepository repository;
+    UserFacade userFacade;
 
     void checkSubscribeData(String lectureId) {
         validateRequiredData(lectureId);
-        validateOtherData(Long.parseLong(lectureId));
+        validateOtherSubscribeData(Long.parseLong(lectureId));
     }
 
-    void checkUnsubscribeData(String lectureId) {
-        validateRequiredData(lectureId);
-    }
-
-    private void validateRequiredData(String lectureId) {
+    private void validateOtherSubscribeData(Long lectureId) {
         InvalidLectureException.CAUSE cause = null;
 
-        if (Strings.isBlank(lectureId)) {
-            cause = InvalidLectureException.CAUSE.BLANK;
-        } else if (!VALID_LECTURE_ID_FORMAT_REGEX.matcher(lectureId).find())  {
-            cause = InvalidLectureException.CAUSE.FORMAT;
-        } else if (!repository.findById(Long.parseLong(lectureId)).isPresent()) {
-            cause = InvalidLectureException.CAUSE.NOT_EXISTS;
+        Lecture lecture = repository.findLectureById(lectureId);
+
+        if (lecture.getUsers().size() == lecture.getNumberOfPlaces()) {
+            cause = InvalidLectureException.CAUSE.FULL;
         }
 
         if (cause != null) {
@@ -43,13 +40,33 @@ class LectureValidator {
         }
     }
 
-    private void validateOtherData(Long lectureId) {
+    void checkUnsubscribeData(String lectureId) {
+        validateRequiredData(lectureId);
+        validateOtherUnsubscribeData(Long.parseLong(lectureId));
+    }
+
+    private void validateOtherUnsubscribeData(Long lectureId) {
         InvalidLectureException.CAUSE cause = null;
 
-        Lecture lecture = repository.findLectureById(lectureId);
+        if (!repository.findAlreadySubscribedLecturesByUsername(
+             userFacade.findIdByName(GlobalAuthorizationEntryPoint.name)).contains(lectureId)) {
+            cause = InvalidLectureException.CAUSE.UNSUBSCRIBED;
+        }
 
-        if (lecture.getUsers().size() == lecture.getNumberOfPlaces()) {
-            cause = InvalidLectureException.CAUSE.FULL;
+        if (cause != null) {
+            throw new InvalidLectureException(cause);
+        }
+    }
+
+    private void validateRequiredData(String lectureId) {
+        InvalidLectureException.CAUSE cause = null;
+
+        if (Strings.isBlank(lectureId)) {
+            cause = InvalidLectureException.CAUSE.BLANK;
+        } else if (!VALID_LECTURE_ID_FORMAT_REGEX.matcher(lectureId).find()) {
+            cause = InvalidLectureException.CAUSE.FORMAT;
+        } else if (!repository.findById(Long.parseLong(lectureId)).isPresent()) {
+            cause = InvalidLectureException.CAUSE.NOT_EXISTS;
         }
 
         if (cause != null) {

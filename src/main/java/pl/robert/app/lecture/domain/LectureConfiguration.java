@@ -12,6 +12,6 @@ class LectureConfiguration {
     LectureFacade lectureFacade(LectureRepository repository,
                                 UserFacade userFacade) {
         return new LectureFacade(new LectureService(repository, userFacade),
-                                 new LectureValidator(repository));
+                                 new LectureValidator(repository, userFacade));
     }
 }

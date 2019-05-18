@@ -109,7 +109,7 @@ class LectureService {
 
         repository.save(lecture);
 
-        SendEmailService.send(dto.getEmail(), dto.getName(), "Zapisałeś się", lectureId);
+        SendEmailService.send(dto.getEmail(), dto.getName(), "Zapisałeś się w", lectureId);
 
         NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " + lectureId);
 
@@ -124,7 +124,7 @@ class LectureService {
 
         repository.deleteLectureByUserId(dto.getId(), lectureId);
 
-        SendEmailService.send(dto.getEmail(), dto.getName(), "Wypisałeś się", lectureId);
+        SendEmailService.send(dto.getEmail(), dto.getName(), "Wypisałeś się z", lectureId);
 
         NotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " + lectureId);
 

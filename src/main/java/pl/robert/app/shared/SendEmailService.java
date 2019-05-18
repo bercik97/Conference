@@ -26,7 +26,7 @@ public class SendEmailService {
                     "Temat: Konferencja IT | Do: %s | Data wysłania: " +
                             LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
                     "\nWitaj %s!\n" +
-                    "%s z prelekcji o identyfikatorze:  %d", email, name, msg, conferenceId);
+                    "%s prelekcji o identyfikatorze:  %d", email, name, msg, conferenceId);
 
         } catch (FileNotFoundException e) {
             log.warn(e.getClass() + " appeared ...");
