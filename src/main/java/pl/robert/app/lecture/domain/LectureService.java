@@ -104,12 +104,29 @@ class LectureService {
     void subscribeLecture(Long lectureId) {
         Lecture lecture = repository.findLectureById(lectureId);
         UserQueryDto dto = userFacade.read();
+
         lecture.getUsers().add(dto);
 
         repository.save(lecture);
+
         SendEmailService.sendSubscribeEmail(dto.getEmail(), dto.getName(), lectureId);
 
         NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " + lectureId);
+
+        UI.getCurrent().getNavigator().navigateTo("subscribe-lectures");
+    }
+
+    void unsubscribeLecture(Long lectureId) {
+        Lecture lecture = repository.findLectureById(lectureId);
+        UserQueryDto dto = userFacade.read();
+
+        lecture.getUsers().remove(dto);
+
+        repository.deleteLectureByUserId(dto.getId(), lectureId);
+
+        SendEmailService.sendSubscribeEmail(dto.getEmail(), dto.getName(), lectureId);
+
+        NotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " + lectureId);
 
         UI.getCurrent().getNavigator().navigateTo("subscribe-lectures");
     }

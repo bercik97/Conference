@@ -68,8 +68,9 @@ class SubscribeLecturesView extends Composite implements View {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
             addHeader();
             addSchema();
-            addForm();
+            subscribeLecture();
             addIdsOfAlreadySubscribedLectures();
+            unsubscribeLecture();
         }
     }
 
@@ -91,7 +92,7 @@ class SubscribeLecturesView extends Composite implements View {
         root.addComponent(grid);
     }
 
-    private void addForm() {
+    private void subscribeLecture() {
         HorizontalLayout layout = new HorizontalLayout();
 
         TextField conferenceId = new TextField("Identyfikator prelekcji");
@@ -99,6 +100,23 @@ class SubscribeLecturesView extends Composite implements View {
 
         button.addClickListener(clickEvent ->
                 lectureFacade.subscribeLecture(conferenceId.getValue()));
+
+        layout.addComponents(
+                conferenceId,
+                button
+        );
+
+        root.addComponent(layout);
+    }
+
+    private void unsubscribeLecture() {
+        HorizontalLayout layout = new HorizontalLayout();
+
+        TextField conferenceId = new TextField("Identyfikator prelekcji");
+        Button button = new Button("Wypisz się");
+
+        button.addClickListener(clickEvent ->
+                lectureFacade.unsubscribeLecture(conferenceId.getValue()));
 
         layout.addComponents(
                 conferenceId,

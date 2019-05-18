@@ -18,9 +18,13 @@ class LectureValidator {
 
     LectureRepository repository;
 
-    void checkInputData(String lectureId) {
+    void checkSubscribeData(String lectureId) {
         validateRequiredData(lectureId);
         validateOtherData(Long.parseLong(lectureId));
+    }
+
+    void checkUnsubscribeData(String lectureId) {
+        validateRequiredData(lectureId);
     }
 
     private void validateRequiredData(String lectureId) {

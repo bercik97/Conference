@@ -36,7 +36,12 @@ public class LectureFacade {
     }
 
     public void subscribeLecture(String lectureId) {
-        validator.checkInputData(lectureId);
+        validator.checkSubscribeData(lectureId);
         service.subscribeLecture(Long.parseLong(lectureId));
+    }
+
+    public void unsubscribeLecture(String lectureId) {
+        validator.checkUnsubscribeData(lectureId);
+        service.unsubscribeLecture(Long.parseLong(lectureId));
     }
 }
