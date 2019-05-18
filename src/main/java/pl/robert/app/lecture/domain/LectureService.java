@@ -101,6 +101,16 @@ class LectureService {
                 .reduce("", String::concat);
     }
 
+    Set<String> findTermsOfAlreadySubscribedLectures() {
+        return repository.findAlreadySubscribedLecturesByUsername(userFacade.read().getId())
+                .stream()
+                .map(repository::findLectureById)
+                .collect(Collectors.toSet())
+                .stream()
+                .map(lecture -> (lecture.getDay() + lecture.getTime()))
+                .collect(Collectors.toSet());
+    }
+
     void subscribeLecture(Long lectureId) {
         Lecture lecture = repository.findLectureById(lectureId);
         UserQueryDto dto = userFacade.read();

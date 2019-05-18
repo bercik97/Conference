@@ -19,6 +19,7 @@ class LectureValidator {
     Pattern VALID_LECTURE_ID_FORMAT_REGEX = Pattern.compile("\\d+", Pattern.CASE_INSENSITIVE);
 
     LectureRepository repository;
+    LectureService service;
     UserFacade userFacade;
 
     void checkSubscribeData(String lectureId) {
@@ -33,6 +34,8 @@ class LectureValidator {
 
         if (lecture.getUsers().size() == lecture.getNumberOfPlaces()) {
             cause = InvalidLectureException.CAUSE.FULL;
+        } else if (service.findTermsOfAlreadySubscribedLectures().contains(lecture.getDay() + lecture.getTime())) {
+            cause = InvalidLectureException.CAUSE.SUBSCRIBED;
         }
 
         if (cause != null) {
