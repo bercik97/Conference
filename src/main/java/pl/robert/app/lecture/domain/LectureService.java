@@ -85,7 +85,6 @@ class LectureService {
         lecture.getUsers().add(dto);
 
         repository.save(lecture);
-
         SendEmailService.sendSubscribeEmail(dto.getEmail(), dto.getName(), lectureId);
 
         NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " + lectureId);

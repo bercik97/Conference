@@ -12,6 +12,7 @@ public class InvalidLectureException extends RuntimeException {
     public enum CAUSE {
         BLANK("Proszę podać identyfikator prelekcji"),
         FORMAT("Proszę podać wartość numeryczną"),
+        NOT_EXISTS("Podany identyfikator prelekcji nie istenieje"),
         FULL("Brak miejsc na wybraną prelekcję");
 
         String message;

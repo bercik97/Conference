@@ -8,9 +8,13 @@ import org.apache.logging.log4j.util.Strings;
 
 import pl.robert.app.lecture.domain.exception.InvalidLectureException;
 
+import java.util.regex.Pattern;
+
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class LectureValidator {
+
+    Pattern VALID_LECTURE_ID_FORMAT_REGEX = Pattern.compile("\\d+", Pattern.CASE_INSENSITIVE);
 
     LectureRepository repository;
 
@@ -24,8 +28,10 @@ class LectureValidator {
 
         if (Strings.isBlank(lectureId)) {
             cause = InvalidLectureException.CAUSE.BLANK;
-        } else if (!lectureId.matches("\\d+"))  {
+        } else if (!VALID_LECTURE_ID_FORMAT_REGEX.matcher(lectureId).find())  {
             cause = InvalidLectureException.CAUSE.FORMAT;
+        } else if (!repository.findById(Long.parseLong(lectureId)).isPresent()) {
+            cause = InvalidLectureException.CAUSE.NOT_EXISTS;
         }
 
         if (cause != null) {

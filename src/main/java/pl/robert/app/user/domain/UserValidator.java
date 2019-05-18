@@ -1,8 +1,6 @@
 package pl.robert.app.user.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
 import org.apache.logging.log4j.util.Strings;
 
@@ -12,11 +10,10 @@ import pl.robert.app.user.domain.exception.InvalidUserException;
 import java.util.regex.Pattern;
 
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class UserValidator {
 
     final static int COL_MAX_LENGTH_NAME = 15;
-    private Pattern VALID_EMAIL_ADDRESS_REGEX =
+    private final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     UserRepository repository;
