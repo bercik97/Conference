@@ -69,6 +69,7 @@ class SubscribeLecturesView extends Composite implements View {
             addHeader();
             addSchema();
             addForm();
+            addIdsOfAlreadySubscribedLectures();
         }
     }
 
@@ -96,7 +97,8 @@ class SubscribeLecturesView extends Composite implements View {
         TextField conferenceId = new TextField("Identyfikator prelekcji");
         Button button = new Button("Zapisz się");
 
-        button.addClickListener(clickEvent -> lectureFacade.subscribeLecture(conferenceId.getValue()));
+        button.addClickListener(clickEvent ->
+                lectureFacade.subscribeLecture(conferenceId.getValue()));
 
         layout.addComponents(
                 conferenceId,
@@ -104,6 +106,21 @@ class SubscribeLecturesView extends Composite implements View {
         );
 
         root.addComponent(layout);
+    }
+
+    private void addIdsOfAlreadySubscribedLectures() {
+        String ids = lectureFacade.findIdsOfAlreadySubscribedLectures();
+
+        Label label = new Label();
+
+        if (ids.isEmpty()) {
+            label.setCaption("Lista identyfikatorów prelekcji na które zapisałeś się: Brak");
+        } else {
+            label.setCaption("Lista identyfikatorów prelekcji na które zapisałeś się: " +
+                    ids.substring(0, ids.length() - 2));
+        }
+
+        root.addComponent(label);
     }
 
     private void addHomepageHref() {

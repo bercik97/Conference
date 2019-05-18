@@ -26,6 +26,10 @@ public class LectureFacade {
         return service.transformIntoSubscribeLecturesSchema(lectures);
     }
 
+    public String findIdsOfAlreadySubscribedLectures() {
+        return service.findIdsOfAlreadySubscribedLectures();
+    }
+
     public void subscribeLecture(String lectureId) {
         validator.checkInputData(lectureId);
         service.subscribeLecture(Long.parseLong(lectureId));

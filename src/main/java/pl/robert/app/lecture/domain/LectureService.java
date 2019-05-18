@@ -15,10 +15,10 @@ import pl.robert.app.user.domain.UserFacade;
 import pl.robert.app.user.domain.query.UserQueryDto;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.Comparator;
 
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -77,6 +77,14 @@ class LectureService {
                 .stream()
                 .sorted(Comparator.comparing(LectureQueryDto::getId))
                 .collect(Collectors.toList());
+    }
+
+    String findIdsOfAlreadySubscribedLectures() {
+        return repository.findAlreadySubscribedLecturesByUsername(userFacade.read().getId())
+                .stream()
+                .sorted()
+                .map(id -> id.toString() + ", ")
+                .reduce("", String::concat);
     }
 
     void subscribeLecture(Long lectureId) {
