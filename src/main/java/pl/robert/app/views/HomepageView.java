@@ -13,7 +13,6 @@ import lombok.AccessLevel;
 
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.user.domain.query.UserQueryDto;
 
 @SpringView(name = "homepage")
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -67,34 +66,19 @@ class HomepageView extends Composite implements View {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
             root.addComponent(getConferenceSchemaHref());
 
-            VerticalLayout layout = new VerticalLayout();
-
-            UserQueryDto dto = facade.read();
-
-            Label name = new Label("Twoje imię: " + dto.getName());
-            Label email = new Label("Twój adres email: " + dto.getEmail());
-
-            Button changeEmailBtn = new Button("Zmień email");
-            changeEmailBtn.setStyleName("link");
-            changeEmailBtn.addClickListener(e -> getUI().getNavigator().navigateTo("change-email"));
-
-            layout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-
-            layout.addComponents(
-                    name,
-                    email,
-                    changeEmailBtn
-            );
-
             Button subscribeLecturesBtn = new Button("Zapisz się na wybrane prelekcje");
             subscribeLecturesBtn.setStyleName("link");
             subscribeLecturesBtn.addClickListener(e -> getUI().getNavigator().navigateTo("subscribe-lectures"));
+
+            Button userProfileBtn = new Button("Zobacz informacje o swoim profilu");
+            userProfileBtn.setStyleName("link");
+            userProfileBtn.addClickListener(e -> getUI().getNavigator().navigateTo("profile"));
 
             Button logoutBtn = new Button("Wyloguj się");
             logoutBtn.addClickListener(e -> facade.logout());
 
             root.addComponents(
-                    layout,
+                    userProfileBtn,
                     subscribeLecturesBtn,
                     logoutBtn
             );

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
 
+import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
@@ -24,6 +25,10 @@ public class LectureFacade {
 
     public List<SubscribeLectureQueryDto> transformIntoSubscribeLecturesSchema(Set<LectureQueryDto> lectures) {
         return service.transformIntoSubscribeLecturesSchema(lectures);
+    }
+
+    public List<AlreadySubscribedLectureQueryDto> findAlreadySubscribedLectures() {
+        return service.findAlreadySubscribedLectures();
     }
 
     public String findIdsOfAlreadySubscribedLectures() {

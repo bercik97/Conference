@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
 
+import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
@@ -76,6 +77,19 @@ class LectureService {
         return lectures
                 .stream()
                 .sorted(Comparator.comparing(LectureQueryDto::getId))
+                .collect(Collectors.toList());
+    }
+
+    List<AlreadySubscribedLectureQueryDto> findAlreadySubscribedLectures() {
+        return repository.findAlreadySubscribedLecturesByUsername(userFacade.read().getId())
+                .stream()
+                .map(repository::findLectureById)
+                .collect(Collectors.toList())
+                .stream()
+                .map(lecture -> new AlreadySubscribedLectureQueryDto(
+                        lecture.getId(),
+                        lecture.getName()
+                ))
                 .collect(Collectors.toList());
     }
 

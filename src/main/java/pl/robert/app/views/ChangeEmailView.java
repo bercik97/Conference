@@ -65,12 +65,20 @@ class ChangeEmailView extends Composite implements View {
             formLayout.addComponents(newEmail, changeBtn);
 
             root.addComponent(formLayout);
-            addHomepageHref();
+            addUserProfileHref();
         }
     }
 
     private void addHeader() {
         root.addComponent(new Label("Zmień email"));
+    }
+
+    private void addUserProfileHref() {
+        Button button = new Button("Wróć do profilu użytkownika");
+        button.setStyleName("link");
+        button.addClickListener(e -> getUI().getNavigator().navigateTo("profile"));
+
+        root.addComponent(button);
     }
 
     private void addHomepageHref() {
