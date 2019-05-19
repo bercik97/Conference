@@ -1,6 +1,6 @@
 package pl.robert.app.shared;
 
-public class GlobalAuthorizationEntryPoint {
+public final class GlobalAuthorizationEntryPoint {
 
     public static String name;
 

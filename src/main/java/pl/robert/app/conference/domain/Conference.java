@@ -9,7 +9,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,13 +28,12 @@ import static pl.robert.app.shared.Constants.Conference.COL_LENGTH_NAME;
 import static pl.robert.app.shared.Constants.Conference.COL_LENGTH_DETAILS;
 
 @Entity
-@Table(name = "conference")
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 class Conference implements QueryConverter<ConferenceQueryDto> {
 
     @Id

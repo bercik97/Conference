@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Slf4j
-public class SendEmailService {
+public final class SendEmailService {
 
     public static void send(String email, String name, String msg, Long conferenceId) {
         log.info("Email notifications file is placed in 'resources' folder");

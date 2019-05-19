@@ -9,7 +9,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,12 +35,11 @@ import static pl.robert.app.shared.Constants.Lecture.COL_LENGTH_DAY;
 import static pl.robert.app.shared.Constants.Lecture.COL_LENGTH_TIME;
 
 @Entity
-@Table(name = "lecture")
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class Lecture implements QueryConverter<LectureQueryDto> {
 

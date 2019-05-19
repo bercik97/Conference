@@ -1,20 +1,21 @@
 package pl.robert.app.shared;
 
 import lombok.NoArgsConstructor;
+import lombok.AccessLevel;
 
 import java.util.regex.Pattern;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Constants {
 
-    @NoArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static final class Conference {
 
         public static final int COL_LENGTH_NAME = 50;
         public static final int COL_LENGTH_DETAILS = 120;
     }
 
-    @NoArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static final class Lecture {
 
         public static final int COL_LENGTH_NAME = 100;
@@ -27,7 +28,7 @@ public final class Constants {
                 Pattern.compile("\\d+", Pattern.CASE_INSENSITIVE);
     }
 
-    @NoArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static final class User {
 
         public static final int COL_MIN_LENGTH_NAME = 2;

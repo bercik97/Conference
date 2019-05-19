@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -30,7 +29,7 @@ import java.util.Set;
 @Entity
 @Table(name = "lecture")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LectureQueryDto {

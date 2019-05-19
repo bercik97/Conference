@@ -22,7 +22,7 @@ import java.util.Set;
 @Entity
 @Table(name = "conference")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ConferenceQueryDto {

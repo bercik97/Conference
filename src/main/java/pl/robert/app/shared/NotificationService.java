@@ -2,7 +2,7 @@ package pl.robert.app.shared;
 
 import com.vaadin.ui.Notification;
 
-public class NotificationService {
+public final class NotificationService {
 
     public static void showErrorNotification(String message) {
         Notification.show(message, Notification.Type.ERROR_MESSAGE).setDelayMsec(3000);

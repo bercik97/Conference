@@ -43,8 +43,8 @@ import static pl.robert.app.shared.Constants.User.COL_MIN_LENGTH_NAME;
 @Builder
 @DynamicInsert
 @DynamicUpdate
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class User implements QueryConverter<UserQueryDto> {
 
