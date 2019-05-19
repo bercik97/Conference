@@ -14,7 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
@@ -46,16 +45,12 @@ class Conference implements QueryConverter<ConferenceQueryDto> {
     @Column(length = COL_LENGTH_DETAILS, nullable = false)
     String details;
 
-    @OneToMany(
-            mappedBy = "conference",
-            cascade = CascadeType.REMOVE
-    )
+    @OneToMany(mappedBy = "conference")
     Set<UserQueryDto> users;
 
     @OneToMany(
             fetch = FetchType.EAGER,
-            mappedBy = "conference",
-            cascade = CascadeType.REMOVE
+            mappedBy = "conference"
     )
     Set<LectureQueryDto> lectures;
 

@@ -90,6 +90,7 @@ class LectureService {
                         lecture.getId(),
                         lecture.getName()
                 ))
+                .sorted(Comparator.comparing(AlreadySubscribedLectureQueryDto::getId))
                 .collect(Collectors.toList());
     }
 

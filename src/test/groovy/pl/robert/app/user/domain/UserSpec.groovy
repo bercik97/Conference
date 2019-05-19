@@ -4,7 +4,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 
 import pl.robert.app.user.domain.dto.CreateUserDto
-import pl.robert.app.user.domain.exception.UserNotFoundException
+import pl.robert.app.user.domain.exception.InvalidUserException
 import pl.robert.app.user.domain.query.UserQueryDto
 
 import spock.lang.Shared
@@ -43,7 +43,7 @@ class UserSpec extends Specification {
         db.read(1L)
 
         then: 'we throw an exception'
-        thrown UserNotFoundException
+        thrown InvalidUserException
     }
 
     def 'Should list users'() {

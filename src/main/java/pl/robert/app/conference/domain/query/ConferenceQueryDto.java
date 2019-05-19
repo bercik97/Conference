@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.user.domain.query.UserQueryDto;
@@ -35,15 +35,11 @@ public class ConferenceQueryDto {
 
     String details;
 
-    @OneToMany(
-            mappedBy = "conference",
-            cascade = CascadeType.REMOVE
-    )
+    @OneToMany(mappedBy = "conference")
     Set<UserQueryDto> users;
 
     @OneToMany(
-            mappedBy = "conference",
-            cascade = CascadeType.REMOVE
-    )
+            fetch = FetchType.EAGER,
+            mappedBy = "conference")
     Set<LectureQueryDto> lectures;
 }

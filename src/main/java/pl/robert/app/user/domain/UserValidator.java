@@ -7,8 +7,7 @@ import org.apache.logging.log4j.util.Strings;
 import pl.robert.app.user.domain.dto.CreateUserDto;
 import pl.robert.app.user.domain.exception.InvalidUserException;
 
-import static pl.robert.app.shared.Constants.User.COL_MIN_LENGTH_NAME;
-import static pl.robert.app.shared.Constants.User.COL_MAX_LENGTH_NAME;
+import static pl.robert.app.shared.Constants.User.COL_LENGTH_NAME;
 import static pl.robert.app.shared.Constants.User.EMAIL_REGEX;
 
 @AllArgsConstructor
@@ -21,9 +20,9 @@ class UserValidator {
 
         if (Strings.isBlank(dto.getName())) {
             cause = InvalidUserException.CAUSE.BLANK_NAME;
-        } else if (dto.getName().length() < COL_MIN_LENGTH_NAME || dto.getName().length() > COL_MAX_LENGTH_NAME) {
+        } else if (dto.getName().length() > COL_LENGTH_NAME) {
             cause = InvalidUserException.CAUSE.NAME_LENGTH;
-        } else if (repository.findUserByName(dto.getName()) != null) {
+        } else if (repository.findUserByName(dto.getName()).isPresent()) {
             cause = InvalidUserException.CAUSE.NAME_EXISTS;
         }
 
@@ -39,7 +38,7 @@ class UserValidator {
 
         if (Strings.isBlank(name)) {
             cause = InvalidUserException.CAUSE.BLANK_NAME;
-        } else if (repository.findUserByName(name) == null) {
+        } else if (!repository.findUserByName(name).isPresent()) {
             cause = InvalidUserException.CAUSE.NAME_NOT_EXISTS;
         }
 
@@ -59,6 +58,8 @@ class UserValidator {
             cause = InvalidUserException.CAUSE.BLANK_EMAIL;
         } else if (!EMAIL_REGEX.matcher(email).find()) {
             cause = InvalidUserException.CAUSE.EMAIL_FORMAT;
+        } else if (repository.findUserByEmail(email).isPresent()) {
+            cause = InvalidUserException.CAUSE.EMAIL_EXISTS;
         }
 
         if (cause != null) {

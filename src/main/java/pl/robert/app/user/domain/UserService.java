@@ -4,12 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import pl.robert.app.shared.NotificationService;
-
 import pl.robert.app.user.domain.dto.CreateUserDto;
+import pl.robert.app.user.domain.exception.InvalidUserException;
 import pl.robert.app.user.domain.query.UserQueryDto;
 
 @AllArgsConstructor
@@ -24,23 +21,19 @@ class UserService {
     }
 
     long findIdByName(String name) {
-        return repository.findUserByName(name).getId();
+        return repository.findUserByName(name)
+                .map(User::getId)
+                .orElseThrow(() -> new InvalidUserException(InvalidUserException.CAUSE.NAME_NOT_EXISTS));
     }
 
     UserQueryDto read(String name) {
-        return repository.findUserByName(name).query();
+        return repository.findUserByName(name)
+                .map(User::query)
+                .orElseThrow(() -> new InvalidUserException(InvalidUserException.CAUSE.NAME_NOT_EXISTS));
     }
 
     void update(Long id, String email) {
         repository.findUserById(id).setEmail(email);
         NotificationService.showHumanizedNotification("Zmieniłeś swój email!");
-    }
-
-    void delete(Long id) {
-        repository.delete(repository.findUserById(id));
-    }
-
-    Page<UserQueryDto> readAll(Pageable pageable) {
-        return repository.findAll(pageable).map(User::query);
     }
 }

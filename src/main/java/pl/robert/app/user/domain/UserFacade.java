@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.user.domain.dto.CreateUserDto;
 import pl.robert.app.user.domain.query.UserQueryDto;
@@ -39,14 +36,6 @@ public class UserFacade {
     public void update(Long id, String email) {
         validator.checkInputEmail(email);
         service.update(id, email);
-    }
-
-    public void delete(Long id) {
-        service.delete(id);
-    }
-
-    public Page<UserQueryDto> readAll(Pageable pageable) {
-        return service.readAll(pageable);
     }
 
     public void login(String name) {

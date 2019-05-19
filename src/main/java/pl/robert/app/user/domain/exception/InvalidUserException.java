@@ -14,6 +14,7 @@ public class InvalidUserException extends RuntimeException {
         BLANK_EMAIL("Email użytkownika jest wymagany"),
         NAME_LENGTH("Imię powinno posiadać od 2 do 30 znaków"),
         NAME_EXISTS("Podane imię jest już zajęte"),
+        EMAIL_EXISTS("Podany adres email jest już zajęty"),
         NAME_NOT_EXISTS("Podane imię użytkownika nie istnieje"),
         EMAIL_FORMAT("Proszę wprowadzić poprawny adres email");
 

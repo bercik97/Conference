@@ -31,8 +31,7 @@ public final class Constants {
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static final class User {
 
-        public static final int COL_MIN_LENGTH_NAME = 2;
-        public static final int COL_MAX_LENGTH_NAME = 15;
+        public static final int COL_LENGTH_NAME = 15;
 
         public static final Pattern EMAIL_REGEX =
                 Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);

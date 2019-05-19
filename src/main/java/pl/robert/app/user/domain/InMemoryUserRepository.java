@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import pl.robert.app.user.domain.dto.CreateUserDto;
-import pl.robert.app.user.domain.exception.UserNotFoundException;
+import pl.robert.app.user.domain.exception.InvalidUserException;
 import pl.robert.app.user.domain.query.UserQueryDto;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ class InMemoryUserRepository {
     UserQueryDto read(Long id) {
         User User = map.get(id);
         if (User == null) {
-            throw new UserNotFoundException(id);
+            throw new InvalidUserException(InvalidUserException.CAUSE.NAME_NOT_EXISTS);
         }
         return map.get(id).query();
     }
@@ -53,7 +53,7 @@ class InMemoryUserRepository {
 
     private boolean isUserIdNotNull(Long id) {
         if (map.get(id) == null) {
-            throw new UserNotFoundException(id);
+            throw new InvalidUserException(InvalidUserException.CAUSE.NAME_NOT_EXISTS);
         }
         return true;
     }
