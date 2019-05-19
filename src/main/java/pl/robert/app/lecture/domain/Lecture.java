@@ -29,6 +29,12 @@ import pl.robert.app.user.domain.query.UserQueryDto;
 
 import java.util.Set;
 
+import static pl.robert.app.shared.Constants.Lecture.COL_LENGTH_NAME;
+import static pl.robert.app.shared.Constants.Lecture.COL_LENGTH_LECTURER;
+import static pl.robert.app.shared.Constants.Lecture.COL_LENGTH_TYPE;
+import static pl.robert.app.shared.Constants.Lecture.COL_LENGTH_DAY;
+import static pl.robert.app.shared.Constants.Lecture.COL_LENGTH_TIME;
+
 @Entity
 @Table(name = "lecture")
 @Getter
@@ -43,20 +49,20 @@ class Lecture implements QueryConverter<LectureQueryDto> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @Column(nullable = false)
+    @Column(length = COL_LENGTH_NAME, unique = true, nullable = false)
     String name;
 
-    @Column(nullable = false)
+    @Column(length = COL_LENGTH_LECTURER, nullable = false)
     String lecturer;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(length = COL_LENGTH_TYPE, nullable = false)
     LectureType type;
 
-    @Column(nullable = false)
+    @Column(length = COL_LENGTH_DAY, nullable = false)
     String day;
 
-    @Column(nullable = false)
+    @Column(length = COL_LENGTH_TIME, nullable = false)
     String time;
 
     @Column(name = "number_of_places", nullable = false)

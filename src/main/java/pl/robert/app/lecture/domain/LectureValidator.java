@@ -10,13 +10,11 @@ import pl.robert.app.lecture.domain.exception.InvalidLectureException;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.user.domain.UserFacade;
 
-import java.util.regex.Pattern;
+import static pl.robert.app.shared.Constants.Lecture.LECTURE_ID_FORMAT_REGEX;
 
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 class LectureValidator {
-
-    Pattern VALID_LECTURE_ID_FORMAT_REGEX = Pattern.compile("\\d+", Pattern.CASE_INSENSITIVE);
 
     LectureRepository repository;
     LectureService service;
@@ -66,7 +64,7 @@ class LectureValidator {
 
         if (Strings.isBlank(lectureId)) {
             cause = InvalidLectureException.CAUSE.BLANK;
-        } else if (!VALID_LECTURE_ID_FORMAT_REGEX.matcher(lectureId).find()) {
+        } else if (!LECTURE_ID_FORMAT_REGEX.matcher(lectureId).find()) {
             cause = InvalidLectureException.CAUSE.FORMAT;
         } else if (!repository.findById(Long.parseLong(lectureId)).isPresent()) {
             cause = InvalidLectureException.CAUSE.NOT_EXISTS;

@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 
@@ -35,9 +34,6 @@ public class ConferenceQueryDto {
     String name;
 
     String details;
-
-    @Column(name = "number_of_available_places")
-    String numberOfAvailablePlaces;
 
     @OneToMany(
             mappedBy = "conference",

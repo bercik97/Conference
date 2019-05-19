@@ -7,14 +7,12 @@ import org.apache.logging.log4j.util.Strings;
 import pl.robert.app.user.domain.dto.CreateUserDto;
 import pl.robert.app.user.domain.exception.InvalidUserException;
 
-import java.util.regex.Pattern;
+import static pl.robert.app.shared.Constants.User.COL_MIN_LENGTH_NAME;
+import static pl.robert.app.shared.Constants.User.COL_MAX_LENGTH_NAME;
+import static pl.robert.app.shared.Constants.User.EMAIL_REGEX;
 
 @AllArgsConstructor
 class UserValidator {
-
-    final static int COL_MAX_LENGTH_NAME = 15;
-    private final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     UserRepository repository;
 
@@ -23,10 +21,10 @@ class UserValidator {
 
         if (Strings.isBlank(dto.getName())) {
             cause = InvalidUserException.CAUSE.BLANK_NAME;
-        } else if (dto.getName().length() < 2 || dto.getName().length() > COL_MAX_LENGTH_NAME) {
-            cause = InvalidUserException.CAUSE.LENGTH;
+        } else if (dto.getName().length() < COL_MIN_LENGTH_NAME || dto.getName().length() > COL_MAX_LENGTH_NAME) {
+            cause = InvalidUserException.CAUSE.NAME_LENGTH;
         } else if (repository.findUserByName(dto.getName()) != null) {
-            cause = InvalidUserException.CAUSE.EXISTS;
+            cause = InvalidUserException.CAUSE.NAME_EXISTS;
         }
 
         if (cause != null) {
@@ -42,7 +40,7 @@ class UserValidator {
         if (Strings.isBlank(name)) {
             cause = InvalidUserException.CAUSE.BLANK_NAME;
         } else if (repository.findUserByName(name) == null) {
-            cause = InvalidUserException.CAUSE.NOT_EXISTS;
+            cause = InvalidUserException.CAUSE.NAME_NOT_EXISTS;
         }
 
         if (cause != null) {
@@ -59,8 +57,8 @@ class UserValidator {
 
         if (Strings.isBlank(email)) {
             cause = InvalidUserException.CAUSE.BLANK_EMAIL;
-        } else if (!VALID_EMAIL_ADDRESS_REGEX.matcher(email).find()) {
-            cause = InvalidUserException.CAUSE.EMAIL;
+        } else if (!EMAIL_REGEX.matcher(email).find()) {
+            cause = InvalidUserException.CAUSE.EMAIL_FORMAT;
         }
 
         if (cause != null) {

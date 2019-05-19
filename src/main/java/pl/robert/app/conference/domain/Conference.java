@@ -25,6 +25,9 @@ import pl.robert.app.user.domain.query.UserQueryDto;
 
 import java.util.Set;
 
+import static pl.robert.app.shared.Constants.Conference.COL_LENGTH_NAME;
+import static pl.robert.app.shared.Constants.Conference.COL_LENGTH_DETAILS;
+
 @Entity
 @Table(name = "conference")
 @Getter
@@ -39,14 +42,11 @@ class Conference implements QueryConverter<ConferenceQueryDto> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @Column(nullable = false)
+    @Column(length = COL_LENGTH_NAME, unique = true, nullable = false)
     String name;
 
-    @Column(nullable = false)
+    @Column(length = COL_LENGTH_DETAILS, nullable = false)
     String details;
-
-    @Column(name = "number_of_available_places", nullable = false)
-    String numberOfAvailablePlaces;
 
     @OneToMany(
             mappedBy = "conference",
@@ -63,6 +63,6 @@ class Conference implements QueryConverter<ConferenceQueryDto> {
 
     @Override
     public ConferenceQueryDto query() {
-        return new ConferenceQueryDto(id, name, details, numberOfAvailablePlaces, users, lectures);
+        return new ConferenceQueryDto(id, name, details, users, lectures);
     }
 }

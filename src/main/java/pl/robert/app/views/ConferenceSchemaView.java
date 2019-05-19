@@ -48,8 +48,7 @@ class ConferenceSchemaView extends Composite implements View {
     private void addHeader() {
         root.addComponents(
                 new Label(dto.getName()),
-                new Label(dto.getDetails()),
-                new Label("Liczba wolnych miejsc: " + dto.getNumberOfAvailablePlaces())
+                new Label(dto.getDetails())
         );
     }
 

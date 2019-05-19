@@ -23,14 +23,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.JoinTable;
 import javax.persistence.FetchType;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.shared.QueryConverter;
 import pl.robert.app.user.domain.query.UserQueryDto;
 
-import static pl.robert.app.user.domain.UserValidator.COL_MAX_LENGTH_NAME;
-
 import java.util.Set;
+
+import static pl.robert.app.shared.Constants.User.COL_MAX_LENGTH_NAME;
+import static pl.robert.app.shared.Constants.User.COL_MIN_LENGTH_NAME;
 
 @Entity
 @Table(name = "users")
@@ -48,7 +52,9 @@ class User implements QueryConverter<UserQueryDto> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    @Column(length = COL_MAX_LENGTH_NAME, unique = true, nullable = false)
+    @Min(value = COL_MIN_LENGTH_NAME)
+    @Max(value = COL_MAX_LENGTH_NAME)
+    @Column(unique = true, nullable = false)
     String name;
 
     @Column(unique = true, nullable = false)

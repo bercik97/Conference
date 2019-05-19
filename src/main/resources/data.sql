@@ -1,5 +1,5 @@
-INSERT INTO conference (name, details, number_of_available_places)
-VALUES ('Lubelskie Dni Informatyki', '1-2 czerwca 2019 Lublin, Lubelski Park Naukowo-Technologiczny', '59');
+INSERT INTO conference (name, details)
+VALUES ('Lubelskie Dni Informatyki', '1-2 czerwca 2019 Lublin, Lubelski Park Naukowo-Technologiczny');
 
 INSERT INTO users (name, email, conference_id)
 VALUES ('Robert', 'coffee@mail.com', 1);
