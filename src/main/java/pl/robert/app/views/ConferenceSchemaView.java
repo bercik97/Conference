@@ -1,20 +1,20 @@
 package pl.robert.app.views;
 
-import com.vaadin.navigator.View;
-import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Composite;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Button;
-
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Composite;
+import com.vaadin.navigator.View;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.spring.annotation.SpringView;
+
+import pl.robert.app.lecture.domain.LectureFacade;
 import pl.robert.app.conference.domain.ConferenceFacade;
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
-import pl.robert.app.lecture.domain.LectureFacade;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 
 import java.util.List;

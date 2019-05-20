@@ -3,11 +3,12 @@ package pl.robert.app.user.domain;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import pl.robert.app.conference.domain.ConferenceFacade;
-import pl.robert.app.user.domain.dto.CreateUserDto;
 
-@AllArgsConstructor
+import pl.robert.app.user.domain.dto.CreateUserDto;
+import pl.robert.app.conference.domain.ConferenceFacade;
+
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 class UserFactory {
 
     ConferenceFacade facade;

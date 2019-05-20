@@ -1,12 +1,12 @@
 package pl.robert.app.shared;
 
-import lombok.Cleanup;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.File;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
+
+import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

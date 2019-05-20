@@ -9,4 +9,3 @@ public abstract class ParameterizedException extends RuntimeException {
         label = message;
     }
 }
-

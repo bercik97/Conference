@@ -1,9 +1,9 @@
 package pl.robert.app.lecture.domain;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Bean;
-
 import pl.robert.app.user.domain.UserFacade;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 class LectureConfiguration {

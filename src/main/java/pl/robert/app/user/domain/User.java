@@ -1,34 +1,34 @@
 package pl.robert.app.user.domain;
 
+import java.util.Set;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
+
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.JoinTable;
-import javax.persistence.FetchType;
-
-import pl.robert.app.conference.domain.query.ConferenceQueryDto;
-import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.shared.QueryConverter;
 import pl.robert.app.user.domain.query.UserQueryDto;
-
-import java.util.Set;
+import pl.robert.app.lecture.domain.query.LectureQueryDto;
+import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 
 import static pl.robert.app.shared.Constants.User.COL_LENGTH_NAME;
 
@@ -39,19 +39,19 @@ import static pl.robert.app.shared.Constants.User.COL_LENGTH_NAME;
 @Builder
 @DynamicInsert
 @DynamicUpdate
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@FieldDefaults(level = AccessLevel.PRIVATE)
 class User implements QueryConverter<UserQueryDto> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
-    @Column(length = COL_LENGTH_NAME, unique = true, nullable = false)
+    @Column(nullable = false, unique = true, length = COL_LENGTH_NAME)
     String name;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     String email;
 
     @ManyToOne

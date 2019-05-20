@@ -2,6 +2,7 @@ package pl.robert.app.user.domain.exception;
 
 import lombok.Getter;
 import lombok.AllArgsConstructor;
+
 import pl.robert.app.shared.ParameterizedException;
 
 public class InvalidUserException extends ParameterizedException {

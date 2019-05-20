@@ -1,24 +1,24 @@
 package pl.robert.app.views;
 
-import com.vaadin.navigator.View;
-import com.vaadin.server.VaadinSession;
-import com.vaadin.spring.annotation.SpringView;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Composite;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.navigator.View;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.server.VaadinSession;
+import com.vaadin.spring.annotation.SpringView;
 
-import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
-
-import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
+import pl.robert.app.user.domain.UserFacade;
 import pl.robert.app.shared.NotificationService;
 import pl.robert.app.shared.ParameterizedException;
-import pl.robert.app.user.domain.UserFacade;
 import pl.robert.app.user.domain.dto.CreateUserDto;
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 
 @SpringView(name = "create-account")
 @FieldDefaults(level = AccessLevel.PRIVATE)

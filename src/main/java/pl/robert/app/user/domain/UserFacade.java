@@ -1,18 +1,18 @@
 package pl.robert.app.user.domain;
 
-import javax.transaction.Transactional;
-
-import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
+import javax.transaction.Transactional;
+
 import pl.robert.app.user.domain.dto.CreateUserDto;
 import pl.robert.app.user.domain.query.UserQueryDto;
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 
 @Transactional
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 public class UserFacade {
 
     UserValidator validator;

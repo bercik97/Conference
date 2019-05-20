@@ -12,10 +12,10 @@ public class InvalidLectureException extends ParameterizedException {
     public enum CAUSE {
         BLANK("Proszę podać identyfikator prelekcji"),
         FORMAT("Proszę podać wartość numeryczną"),
-        NOT_EXISTS("Podany identyfikator prelekcji nie istenieje"),
+        NOT_EXISTS("Podany identyfikator prelekcji nie istnieje"),
         FULL("Brak miejsc na wybraną prelekcję"),
-        SUBSCRIBED("Jesteś już zapisany na inną prelekcję o tej samej godzinie, wypisz się i spróbuj ponownie"),
-        UNSUBSCRIBED("Nie możesz wypisać się z konferencji na której nie jesteś zapisany");
+        SUBSCRIBED("Jesteś już zapisany na inną prelekcję o tej samej godzinie tego samego dnia"),
+        UNSUBSCRIBED("Nie możesz wypisać się z prelekcji na którą nie jesteś zapisany");
 
         String message;
     }

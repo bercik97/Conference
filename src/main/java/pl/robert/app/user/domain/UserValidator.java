@@ -7,8 +7,8 @@ import org.apache.logging.log4j.util.Strings;
 import pl.robert.app.user.domain.dto.CreateUserDto;
 import pl.robert.app.user.domain.exception.InvalidUserException;
 
-import static pl.robert.app.shared.Constants.User.COL_LENGTH_NAME;
 import static pl.robert.app.shared.Constants.User.EMAIL_REGEX;
+import static pl.robert.app.shared.Constants.User.COL_LENGTH_NAME;
 
 @AllArgsConstructor
 class UserValidator {

@@ -1,7 +1,7 @@
 package pl.robert.app.shared;
 
-import lombok.NoArgsConstructor;
 import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.regex.Pattern;
 

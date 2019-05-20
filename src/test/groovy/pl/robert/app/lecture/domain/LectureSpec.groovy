@@ -1,14 +1,18 @@
 package pl.robert.app.lecture.domain
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-
-import pl.robert.app.lecture.domain.exception.InvalidLectureException
-import pl.robert.app.user.domain.UserFacade
-
-import spock.lang.Specification
 import spock.lang.Unroll
+import spock.lang.Specification
 
+import lombok.AccessLevel
+import lombok.experimental.FieldDefaults
+
+import pl.robert.app.user.domain.UserFacade
+import pl.robert.app.lecture.domain.exception.InvalidLectureException
+
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.beans.factory.annotation.Autowired
+
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @SpringBootTest
 class LectureSpec extends Specification {
 

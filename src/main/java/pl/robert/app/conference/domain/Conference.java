@@ -1,27 +1,27 @@
 package pl.robert.app.conference.domain;
 
+import java.util.Set;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
-import javax.persistence.FetchType;
 
-import pl.robert.app.conference.domain.query.ConferenceQueryDto;
-import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.shared.QueryConverter;
 import pl.robert.app.user.domain.query.UserQueryDto;
-
-import java.util.Set;
+import pl.robert.app.lecture.domain.query.LectureQueryDto;
+import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 
 import static pl.robert.app.shared.Constants.Conference.COL_LENGTH_NAME;
 import static pl.robert.app.shared.Constants.Conference.COL_LENGTH_DETAILS;
@@ -37,12 +37,12 @@ class Conference implements QueryConverter<ConferenceQueryDto> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
-    @Column(length = COL_LENGTH_NAME, unique = true, nullable = false)
+    @Column(nullable = false, unique = true, length = COL_LENGTH_NAME)
     String name;
 
-    @Column(length = COL_LENGTH_DETAILS, nullable = false)
+    @Column(nullable = false, length = COL_LENGTH_DETAILS)
     String details;
 
     @OneToMany(mappedBy = "conference")

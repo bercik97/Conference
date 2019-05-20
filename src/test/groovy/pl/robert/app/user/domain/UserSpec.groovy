@@ -1,23 +1,27 @@
 package pl.robert.app.user.domain
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import spock.lang.Unroll
+import spock.lang.Specification
 
-import pl.robert.app.shared.GlobalAuthorizationEntryPoint
+import lombok.AccessLevel
+import lombok.experimental.FieldDefaults
+
 import pl.robert.app.user.domain.dto.CreateUserDto
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint
 import pl.robert.app.user.domain.exception.InvalidUserException
 
-import spock.lang.Specification
-import spock.lang.Unroll
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.beans.factory.annotation.Autowired
 
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @SpringBootTest
 class UserSpec extends Specification {
 
     @Autowired
-    private UserFacade facade
+    UserFacade facade
 
     @Autowired
-    private UserRepository repository
+    UserRepository repository
 
     def 'Should add user'() {
         when: 'we add an user'
@@ -91,7 +95,7 @@ class UserSpec extends Specification {
     }
 
     @Unroll
-    def 'Should throw an exception cause email format = #email'(String email) {
+    def 'Should throw an exception cause email format = [#email]'(String email) {
         when: 'we try to create an user'
         facade.create(new CreateUserDto('Joe', email))
 

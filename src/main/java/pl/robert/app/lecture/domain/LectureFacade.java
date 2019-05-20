@@ -1,16 +1,16 @@
 package pl.robert.app.lecture.domain;
 
+import java.util.Set;
+import java.util.List;
+
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
-import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
-
-import java.util.List;
-import java.util.Set;
+import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)

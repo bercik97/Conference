@@ -1,25 +1,25 @@
 package pl.robert.app.views;
 
-import com.vaadin.navigator.View;
-import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Composite;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 
-import pl.robert.app.lecture.domain.LectureFacade;
-import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
-import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
-import pl.robert.app.shared.NotificationService;
-import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.user.domain.query.UserQueryDto;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Composite;
+import com.vaadin.navigator.View;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.spring.annotation.SpringView;
 
-import java.util.List;
+import pl.robert.app.user.domain.UserFacade;
+import pl.robert.app.shared.NotificationService;
+import pl.robert.app.lecture.domain.LectureFacade;
+import pl.robert.app.user.domain.query.UserQueryDto;
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
+import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 
 @SpringView(name = "profile")
 @FieldDefaults(level = AccessLevel.PRIVATE)

@@ -1,19 +1,19 @@
 package pl.robert.app.lecture.domain;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
+
+import pl.robert.app.user.domain.UserFacade;
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
+import pl.robert.app.lecture.domain.exception.InvalidLectureException;
 
 import org.apache.logging.log4j.util.Strings;
 
-import pl.robert.app.lecture.domain.exception.InvalidLectureException;
-import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
-import pl.robert.app.user.domain.UserFacade;
-
 import static pl.robert.app.shared.Constants.Lecture.LECTURE_ID_FORMAT_REGEX;
 
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 class LectureValidator {
 
     LectureRepository repository;

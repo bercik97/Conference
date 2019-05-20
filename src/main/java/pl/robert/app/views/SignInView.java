@@ -1,24 +1,24 @@
 package pl.robert.app.views;
 
-import com.vaadin.navigator.View;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Button;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinSession;
-import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Composite;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.navigator.View;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.server.VaadinSession;
+import com.vaadin.spring.annotation.SpringView;
 
-import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
-
-import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
+import pl.robert.app.user.domain.UserFacade;
 import pl.robert.app.shared.NotificationService;
 import pl.robert.app.shared.ParameterizedException;
-import pl.robert.app.user.domain.UserFacade;
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 
 @SpringView(name = "login")
 @FieldDefaults(level = AccessLevel.PRIVATE)

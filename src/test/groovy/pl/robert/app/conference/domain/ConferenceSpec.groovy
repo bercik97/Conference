@@ -1,10 +1,14 @@
 package pl.robert.app.conference.domain
 
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import lombok.AccessLevel
+import lombok.experimental.FieldDefaults
 
 import spock.lang.Specification
 
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.beans.factory.annotation.Autowired
+
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @SpringBootTest
 class ConferenceSpec extends Specification {
 

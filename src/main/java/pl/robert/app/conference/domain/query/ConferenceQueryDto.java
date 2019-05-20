@@ -1,35 +1,35 @@
 package pl.robert.app.conference.domain.query;
 
+import java.util.Set;
+
 import lombok.Getter;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.OneToMany;
-import javax.persistence.FetchType;
 
-import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.user.domain.query.UserQueryDto;
-
-import java.util.Set;
+import pl.robert.app.lecture.domain.query.LectureQueryDto;
 
 @Entity
 @Table(name = "conference")
 @Getter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ConferenceQueryDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
     String name;
 
@@ -40,6 +40,7 @@ public class ConferenceQueryDto {
 
     @OneToMany(
             fetch = FetchType.EAGER,
-            mappedBy = "conference")
+            mappedBy = "conference"
+    )
     Set<LectureQueryDto> lectures;
 }

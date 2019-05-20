@@ -1,7 +1,7 @@
 package pl.robert.app.user.domain;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import pl.robert.app.conference.domain.ConferenceFacade;
 

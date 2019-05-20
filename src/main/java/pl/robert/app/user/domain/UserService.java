@@ -1,15 +1,15 @@
 package pl.robert.app.user.domain;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
 import pl.robert.app.user.domain.dto.CreateUserDto;
-import pl.robert.app.user.domain.exception.InvalidUserException;
 import pl.robert.app.user.domain.query.UserQueryDto;
+import pl.robert.app.user.domain.exception.InvalidUserException;
 
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 class UserService {
 
     UserRepository repository;

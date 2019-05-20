@@ -1,19 +1,19 @@
 package pl.robert.app.views;
 
-import com.vaadin.navigator.View;
-import com.vaadin.server.Page;
-import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Composite;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Label;
-
-import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
 
-import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Button;
+import com.vaadin.server.Page;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Composite;
+import com.vaadin.navigator.View;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.spring.annotation.SpringView;
+
 import pl.robert.app.user.domain.UserFacade;
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 
 @SpringView(name = "homepage")
 @FieldDefaults(level = AccessLevel.PRIVATE)

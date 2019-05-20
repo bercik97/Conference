@@ -1,8 +1,10 @@
 package pl.robert.app.conference.domain.exception;
 
-public class ConferenceNotFoundException extends RuntimeException {
+import pl.robert.app.shared.ParameterizedException;
+
+public class ConferenceNotFoundException extends ParameterizedException {
 
     public ConferenceNotFoundException() {
-        super("No conference found", null, false, false);
+        super("No conference found");
     }
 }

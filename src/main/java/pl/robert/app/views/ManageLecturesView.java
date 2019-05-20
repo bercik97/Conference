@@ -1,22 +1,28 @@
 package pl.robert.app.views;
 
-import com.vaadin.navigator.View;
-import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.*;
-
-import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
-
-import pl.robert.app.conference.domain.ConferenceFacade;
-import pl.robert.app.conference.domain.query.ConferenceQueryDto;
-import pl.robert.app.lecture.domain.LectureFacade;
-import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
-import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
-import pl.robert.app.shared.NotificationService;
-import pl.robert.app.shared.SendEmailService;
-import pl.robert.app.user.domain.query.UserQueryDto;
-
 import java.util.List;
+
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
+import com.vaadin.ui.UI;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Composite;
+import com.vaadin.navigator.View;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.spring.annotation.SpringView;
+
+import pl.robert.app.shared.NotificationService;
+import pl.robert.app.lecture.domain.LectureFacade;
+import pl.robert.app.conference.domain.ConferenceFacade;
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
+import pl.robert.app.conference.domain.query.ConferenceQueryDto;
+import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
 
 @SpringView(name = "manage-lectures")
 @FieldDefaults(level = AccessLevel.PRIVATE)

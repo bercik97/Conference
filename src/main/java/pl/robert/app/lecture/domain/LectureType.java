@@ -1,13 +1,13 @@
 package pl.robert.app.lecture.domain;
 
 import lombok.Getter;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
 @Getter
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 public enum LectureType {
 
     INSPIRATION("Ścieżka inspiracji"),

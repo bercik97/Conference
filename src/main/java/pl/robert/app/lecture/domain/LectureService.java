@@ -1,25 +1,25 @@
 package pl.robert.app.lecture.domain;
 
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.stream.Collectors;
+
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
-import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
+import pl.robert.app.user.domain.UserFacade;
+import pl.robert.app.shared.SendEmailService;
+import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
-import pl.robert.app.shared.SendEmailService;
-import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.user.domain.query.UserQueryDto;
+import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.Comparator;
-
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 class LectureService {
 
     LectureRepository repository;

@@ -1,14 +1,14 @@
 package pl.robert.app.conference.domain;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.AccessLevel;
 
-import pl.robert.app.conference.domain.exception.ConferenceNotFoundException;
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
+import pl.robert.app.conference.domain.exception.ConferenceNotFoundException;
 
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 class ConferenceService {
 
     ConferenceRepository repository;
