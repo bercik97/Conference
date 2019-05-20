@@ -56,7 +56,7 @@ public class LectureQueryDto {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "users_lectures",
+            name = "users_lecture",
             joinColumns = @JoinColumn(name = "lecture_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )

@@ -12,7 +12,7 @@ public class InvalidUserException extends ParameterizedException {
     public enum CAUSE {
         BLANK_NAME("Imię użytkownika jest wymagane"),
         BLANK_EMAIL("Email użytkownika jest wymagany"),
-        NAME_LENGTH("Imię powinno posiadać od 2 do 30 znaków"),
+        NAME_LENGTH("Imię powinno posiadać maksymalnie 15 znaków"),
         NAME_EXISTS("Podane imię jest już zajęte"),
         EMAIL_EXISTS("Podany adres email jest już zajęty"),
         NAME_NOT_EXISTS("Podane imię użytkownika nie istnieje"),

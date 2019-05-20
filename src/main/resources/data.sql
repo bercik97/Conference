@@ -23,7 +23,7 @@ VALUES ('Kotlin - napisz raz, uruchom wszędzie',              'John Doe',      
        ('Systemy Zabezpieczeń w Inteligentnych Budynkach',    'Sophie Davies',  'TECHNOLOGY',  '2', '12:00-13:45', '5', 1),
        ('Flutter.io',                                         'Jack Martin',    'KNOWLEDGE',   '2', '12:00-13:45', '5', 1);
 
-INSERT INTO users_lectures
+INSERT INTO users_lecture
 VALUES (2, 2),
        (3, 2),
        (4, 2),
