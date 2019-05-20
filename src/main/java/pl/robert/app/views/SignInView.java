@@ -1,6 +1,8 @@
 package pl.robert.app.views;
 
 import com.vaadin.navigator.View;
+import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Composite;
@@ -15,6 +17,7 @@ import lombok.AccessLevel;
 
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.ParameterizedException;
 import pl.robert.app.user.domain.UserFacade;
 
 @SpringView(name = "login")
@@ -57,7 +60,14 @@ class SignInView extends Composite implements View {
         TextField name = new TextField("Imię");
         Button login = new Button("Zaloguj");
 
-        login.addClickListener(e -> facade.login(name.getValue()));
+        login.addClickListener((clickEvent) -> {
+            facade.login(name.getValue());
+            Page.getCurrent().reload();
+        });
+
+        VaadinSession.getCurrent().setErrorHandler((handler) ->
+            NotificationService.showErrorNotification(ParameterizedException.label)
+        );
 
         formLayout.addComponents(
                 name,

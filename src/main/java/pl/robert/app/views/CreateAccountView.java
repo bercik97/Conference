@@ -1,12 +1,13 @@
 package pl.robert.app.views;
 
 import com.vaadin.navigator.View;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Composite;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Button;
 
@@ -15,6 +16,7 @@ import lombok.AccessLevel;
 
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.ParameterizedException;
 import pl.robert.app.user.domain.UserFacade;
 import pl.robert.app.user.domain.dto.CreateUserDto;
 
@@ -59,8 +61,14 @@ class CreateAccountView extends Composite implements View {
         TextField email = new TextField("Email");
         Button add = new Button("Stwórz");
 
-        add.addClickListener(clickEvent -> facade.create(
-                new CreateUserDto(name.getValue(), email.getValue())));
+        add.addClickListener((clickEvent) -> {
+            facade.create(new CreateUserDto(name.getValue(), email.getValue()));
+            NotificationService.showHumanizedNotification("Gratulacje! Udało Ci się stworzyć nowe konto!");
+        });
+
+        VaadinSession.getCurrent().setErrorHandler((handler) ->
+            NotificationService.showErrorNotification(ParameterizedException.label)
+        );
 
         formLayout.addComponents(
                 name,

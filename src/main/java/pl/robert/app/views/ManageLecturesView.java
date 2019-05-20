@@ -2,14 +2,7 @@ package pl.robert.app.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Composite;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.*;
 
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
@@ -20,6 +13,8 @@ import pl.robert.app.lecture.domain.LectureFacade;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.SendEmailService;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 import java.util.List;
 
@@ -91,16 +86,30 @@ class ManageLecturesView extends Composite implements View {
     private void addManageLectures() {
         HorizontalLayout layout = new HorizontalLayout();
 
-        TextField conferenceId = new TextField("Identyfikator prelekcji");
+        TextField lectureId = new TextField("Identyfikator prelekcji");
 
         Button subscribe = new Button("Zapisz się");
-        subscribe.addClickListener(e -> lectureFacade.subscribeLecture(conferenceId.getValue()));
+        subscribe.addClickListener((clickEvent) -> {
+            lectureFacade.subscribeLecture(lectureId.getValue());
+
+            NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " +
+                    lectureId.getValue());
+
+            UI.getCurrent().getNavigator().navigateTo("manage-lectures");
+        });
 
         Button unsubscribe = new Button("Wypisz się");
-        unsubscribe.addClickListener(e -> lectureFacade.unsubscribeLecture(conferenceId.getValue()));
+        unsubscribe.addClickListener((clickEvent) -> {
+            lectureFacade.unsubscribeLecture(lectureId.getValue());
+
+            NotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " +
+                    lectureId.getValue());
+
+            UI.getCurrent().getNavigator().navigateTo("manage-lectures");
+        });
 
         layout.addComponents(
-                conferenceId,
+                lectureId,
                 subscribe,
                 unsubscribe
         );

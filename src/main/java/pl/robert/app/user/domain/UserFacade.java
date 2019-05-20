@@ -33,9 +33,9 @@ public class UserFacade {
         return service.findIdByName(name);
     }
 
-    public void update(Long id, String email) {
+    public void update(String name, String email) {
         validator.checkInputEmail(email);
-        service.update(id, email);
+        service.update(name, email);
     }
 
     public void login(String name) {

@@ -74,8 +74,10 @@ class ChangeEmailView extends Composite implements View {
         TextField newEmail = new TextField("Nowy email");
         Button change = new Button("Zmień");
 
-        change.addClickListener(e -> facade.update(
-                facade.findIdByName(GlobalAuthorizationEntryPoint.name), newEmail.getValue()));
+        change.addClickListener((event) -> {
+            facade.update(GlobalAuthorizationEntryPoint.name, newEmail.getValue());
+            NotificationService.showHumanizedNotification("Zmieniłeś swój email!");
+        });
 
         formLayout.addComponents(
                 newEmail,

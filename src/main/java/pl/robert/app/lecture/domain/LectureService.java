@@ -1,7 +1,5 @@
 package pl.robert.app.lecture.domain;
 
-import com.vaadin.ui.UI;
-
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
@@ -10,7 +8,6 @@ import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
-import pl.robert.app.shared.NotificationService;
 import pl.robert.app.shared.SendEmailService;
 import pl.robert.app.user.domain.UserFacade;
 import pl.robert.app.user.domain.query.UserQueryDto;
@@ -121,10 +118,6 @@ class LectureService {
         repository.save(lecture);
 
         SendEmailService.send(dto.getEmail(), dto.getName(), "Zapisałeś się w", lectureId);
-
-        NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " + lectureId);
-
-        UI.getCurrent().getNavigator().navigateTo("manage-lectures");
     }
 
     void unsubscribeLecture(Long lectureId) {
@@ -136,9 +129,5 @@ class LectureService {
         repository.deleteLectureByUserId(dto.getId(), lectureId);
 
         SendEmailService.send(dto.getEmail(), dto.getName(), "Wypisałeś się z", lectureId);
-
-        NotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " + lectureId);
-
-        UI.getCurrent().getNavigator().navigateTo("manage-lectures");
     }
 }

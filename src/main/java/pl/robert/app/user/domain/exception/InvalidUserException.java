@@ -2,10 +2,9 @@ package pl.robert.app.user.domain.exception;
 
 import lombok.Getter;
 import lombok.AllArgsConstructor;
+import pl.robert.app.shared.ParameterizedException;
 
-import pl.robert.app.shared.NotificationService;
-
-public class InvalidUserException extends RuntimeException {
+public class InvalidUserException extends ParameterizedException {
 
     @Getter
     @AllArgsConstructor
@@ -22,8 +21,6 @@ public class InvalidUserException extends RuntimeException {
     }
 
     public InvalidUserException(CAUSE cause) {
-        super(cause.message, null, false, false);
-
-        NotificationService.showErrorNotification(cause.message);
+        super(cause.message);
     }
 }
