@@ -12,5 +12,6 @@ class VaadinUI extends UI {
     @Override
     protected void init(VaadinRequest request) {
         getUI().getNavigator().navigateTo("homepage");
+        getNavigator().setErrorView(VaadinUI.getCurrent().getNavigator().getCurrentView());
     }
 }
