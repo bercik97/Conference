@@ -25,7 +25,7 @@ public final class Constants {
         public static final int COL_LENGTH_TIME = 11;
 
         public static final Pattern LECTURE_ID_FORMAT_REGEX =
-                Pattern.compile("\\d+", Pattern.CASE_INSENSITIVE);
+                Pattern.compile("^-?\\d+$", Pattern.CASE_INSENSITIVE);
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
