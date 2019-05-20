@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
 
-import pl.robert.app.shared.NotificationService;
 import pl.robert.app.user.domain.dto.CreateUserDto;
 import pl.robert.app.user.domain.exception.InvalidUserException;
 import pl.robert.app.user.domain.query.UserQueryDto;
@@ -17,7 +16,6 @@ class UserService {
 
     void create(CreateUserDto dto) {
         repository.save(UserFactory.create(dto));
-        NotificationService.showHumanizedNotification("Gratulacje! Udało Ci się stworzyć nowe konto!");
     }
 
     long findIdByName(String name) {
@@ -32,8 +30,12 @@ class UserService {
                 .orElseThrow(() -> new InvalidUserException(InvalidUserException.CAUSE.NAME_NOT_EXISTS));
     }
 
-    void update(Long id, String email) {
-        repository.findUserById(id).setEmail(email);
-        NotificationService.showHumanizedNotification("Zmieniłeś swój email!");
+    void update(String name, String email) {
+        repository.findUserByName(name)
+                .map(user -> {
+                    user.setEmail(email);
+                    return user;
+                })
+                .orElseThrow(() -> new InvalidUserException(InvalidUserException.CAUSE.NAME_NOT_EXISTS));
     }
 }
