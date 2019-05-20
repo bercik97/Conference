@@ -17,6 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <vaadin.version>8.8.0</vaadin.version>
+        <spock.version>1.3-groovy-2.5</spock.version>
     </properties>
 
     <dependencies>
@@ -46,6 +47,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <version>${spock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-spring</artifactId>
+            <version>${spock.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
