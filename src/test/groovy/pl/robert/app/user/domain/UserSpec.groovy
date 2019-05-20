@@ -2,7 +2,7 @@ package pl.robert.app.user.domain
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-
+import pl.robert.app.shared.GlobalAuthorizationEntryPoint
 import pl.robert.app.user.domain.dto.CreateUserDto
 import pl.robert.app.user.domain.exception.InvalidUserException
 
@@ -121,5 +121,22 @@ class UserSpec extends Specification {
         then:
         InvalidUserException exception = thrown()
         exception.message == InvalidUserException.CAUSE.NAME_NOT_EXISTS.message
+    }
+
+    def 'Should login and logout successfully'() {
+        when: 'user is not authorized'
+        !GlobalAuthorizationEntryPoint.isAuthorized()
+
+        and: 'user log in'
+        facade.login('Robert')
+
+        and: 'user is authorized'
+        GlobalAuthorizationEntryPoint.isAuthorized()
+
+        and: 'user log out'
+        facade.logout()
+
+        then: 'user is not authorized'
+        !GlobalAuthorizationEntryPoint.isAuthorized()
     }
 }
