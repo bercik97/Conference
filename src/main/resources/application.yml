@@ -1,20 +1,21 @@
 spring:
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/conference
-    username: postgres
-    password: admin
-    driverClassName: org.postgresql.Driver
+    url: jdbc:h2:~/conference
+    username: admin
+    password:
+    driverClassName: org.h2.Driver
     initialization-mode: always
 
   jpa:
     hibernate:
       ddlAuto: create
     openInView: false
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
 
   banner:
     location: banner.txt
