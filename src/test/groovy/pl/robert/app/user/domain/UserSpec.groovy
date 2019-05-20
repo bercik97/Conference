@@ -2,6 +2,7 @@ package pl.robert.app.user.domain
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint
 import pl.robert.app.user.domain.dto.CreateUserDto
 import pl.robert.app.user.domain.exception.InvalidUserException
@@ -44,11 +45,11 @@ class UserSpec extends Specification {
     }
 
     @Unroll
-    def 'Should throw an exception on null or blank fields = [#name | #email]'(String name, String email) {
-        when:
+    def 'Should throw an exception cause name or email are null or empty = [#name | #email]'(String name, String email) {
+        when: 'we try to create an user'
         facade.create(new CreateUserDto(name, email))
 
-        then:
+        then: 'exception is thrown'
         InvalidUserException exception = thrown()
         exception.message ==
                 InvalidUserException.CAUSE.BLANK_NAME.message || InvalidUserException.CAUSE.BLANK_EMAIL.message
@@ -64,20 +65,20 @@ class UserSpec extends Specification {
     }
 
     def 'Should throw an exception cause length of name'() {
-        when:
+        when: 'we try to create an user'
         facade.create(new CreateUserDto('moreThanFifteenCharacters', 'a@a.com'))
 
-        then:
+        then: 'exception is thrown'
         InvalidUserException exception = thrown()
         exception.message == InvalidUserException.CAUSE.NAME_LENGTH.message
     }
 
     @Unroll
     def 'Should throw an exception cause name and email need to be unique = [#name | #email]'(String name, String email) {
-        when: 'we create an user'
+        when: 'we try to create an user'
         facade.create(new CreateUserDto(name, email))
 
-        then:
+        then: 'exception is thrown'
         InvalidUserException exception = thrown()
         exception.message ==
                 InvalidUserException.CAUSE.NAME_EXISTS.message || InvalidUserException.CAUSE.EMAIL_EXISTS.message
@@ -91,10 +92,10 @@ class UserSpec extends Specification {
 
     @Unroll
     def 'Should throw an exception cause email format = #email'(String email) {
-        when:
+        when: 'we try to create an user'
         facade.create(new CreateUserDto('Joe', email))
 
-        then:
+        then: 'exception is thrown'
         InvalidUserException exception = thrown()
         exception.message == InvalidUserException.CAUSE.EMAIL_FORMAT.message
 
@@ -118,7 +119,7 @@ class UserSpec extends Specification {
         when: 'we try to login into not exist account'
         facade.login('NotExistName')
 
-        then:
+        then: 'exception is thrown'
         InvalidUserException exception = thrown()
         exception.message == InvalidUserException.CAUSE.NAME_NOT_EXISTS.message
     }

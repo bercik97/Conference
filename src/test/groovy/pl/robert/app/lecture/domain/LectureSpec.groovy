@@ -23,27 +23,27 @@ class LectureSpec extends Specification {
     }
 
     def 'Should subscribe lecture'() {
-        when:
+        when: 'we subscribe a lecture'
         facade.subscribeLecture('1')
 
-        then:
+        then: 'user has this lecture'
         facade.findAlreadySubscribedLectures().size() == 1
     }
 
     def 'Should unsubscribe lecture'() {
-        when:
+        when: 'we unsubscribe lecture from test before'
         facade.unsubscribeLecture('1')
 
-        then:
+        then: 'user hasnt got this lecture'
         facade.findAlreadySubscribedLectures().size() == 0
     }
 
     @Unroll
     def 'Should throw an exception cause lecture id is null or blank = [#id]'(String id) {
-        when:
+        when: 'we try to subscribe lecture'
         facade.subscribeLecture(id)
 
-        then:
+        then: 'exception is thrown'
         InvalidLectureException exception = thrown()
         exception.message == InvalidLectureException.CAUSE.BLANK.message
 
@@ -55,10 +55,10 @@ class LectureSpec extends Specification {
 
     @Unroll
     def 'Should throw an exception cause lecture id is wrong format = [#id]'(String id) {
-        when:
+        when: 'we try to subscribe lecture'
         facade.subscribeLecture(id)
 
-        then:
+        then: 'exception is thrown'
         InvalidLectureException exception = thrown()
         exception.message == InvalidLectureException.CAUSE.FORMAT.message
 
@@ -77,10 +77,10 @@ class LectureSpec extends Specification {
 
     @Unroll
     def 'Should throw an exception cause the number of lecture doest not exists = [#id]'(String id) {
-        when:
+        when: 'we try to subscribe lecture'
         facade.subscribeLecture(id)
 
-        then:
+        then: 'exception is thrown'
         InvalidLectureException exception = thrown()
         exception.message == InvalidLectureException.CAUSE.NOT_EXISTS.message
 
@@ -91,22 +91,22 @@ class LectureSpec extends Specification {
     }
 
     def 'Should throw an exception cause the number of left seats is 0'() {
-        when:
+        when: 'we try to subscribe lecture'
         facade.subscribeLecture('2')
 
-        then:
+        then: 'exception is thrown'
         InvalidLectureException exception = thrown()
         exception.message == InvalidLectureException.CAUSE.FULL.message
     }
 
     def 'Should throw an exception cause user already subscribed current lecture'() {
-        when:
+        when: 'we subscribe lecture'
         facade.subscribeLecture('1')
 
-        and:
+        and: 'we try to subscribe lecture again'
         facade.subscribeLecture('1')
 
-        then:
+        then: 'exception is thrown'
         InvalidLectureException exception = thrown()
         exception.message == InvalidLectureException.CAUSE.SUBSCRIBED.message
 
@@ -115,10 +115,10 @@ class LectureSpec extends Specification {
     }
 
     def 'Should throw and exception cause user try to unsubscribed lecture which he didnt subscribed before'() {
-        when:
+        when: 'we try to unsubscribe lecture'
         facade.unsubscribeLecture('3')
 
-        then:
+        then: 'exception is thrown'
         InvalidLectureException exception = thrown()
         exception.message == InvalidLectureException.CAUSE.UNSUBSCRIBED.message
     }
@@ -127,16 +127,16 @@ class LectureSpec extends Specification {
         when: 'actual size of subscribed lectures is 0'
         facade.findAlreadySubscribedLectures().size() == 0
 
-        and:
+        and: 'we subscribe lecture'
         facade.subscribeLecture('1')
 
-        and:
+        and: 'we again subscribe lecture'
         facade.subscribeLecture('4')
 
-        and:
+        and: 'we again subscribe lecture'
         facade.subscribeLecture('7')
 
-        and:
+        and: 'we again subscribe lecture'
         facade.subscribeLecture('10')
 
         then: 'actual size is 4'
@@ -144,7 +144,7 @@ class LectureSpec extends Specification {
     }
 
     def 'Should find ids of already subscribed lectures'() {
-        expect:
+        expect: 'we ask for all ids of subscribed lectures'
         facade.findIdsOfAlreadySubscribedLectures() == '1, 4, 7, 10, '
     }
 }
