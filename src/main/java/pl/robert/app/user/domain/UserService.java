@@ -13,9 +13,10 @@ import pl.robert.app.user.domain.query.UserQueryDto;
 class UserService {
 
     UserRepository repository;
+    UserFactory factory;
 
     void create(CreateUserDto dto) {
-        repository.save(UserFactory.create(dto));
+        repository.save(factory.create(dto));
     }
 
     long findIdByName(String name) {

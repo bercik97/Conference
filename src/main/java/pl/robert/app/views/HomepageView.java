@@ -1,6 +1,7 @@
 package pl.robert.app.views;
 
 import com.vaadin.navigator.View;
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Composite;
@@ -73,7 +74,10 @@ class HomepageView extends Composite implements View {
             userProfileHref.addClickListener(e -> getUI().getNavigator().navigateTo("profile"));
 
             Button logout = new Button("Wyloguj się");
-            logout.addClickListener(e -> facade.logout());
+            logout.addClickListener((clickEvent) -> {
+                facade.logout();
+                Page.getCurrent().reload();
+            });
 
             root.addComponents(
                     userProfileHref,
