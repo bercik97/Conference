@@ -3,9 +3,9 @@ package pl.robert.app.lecture.domain.exception;
 import lombok.Getter;
 import lombok.AllArgsConstructor;
 
-import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.ParameterizedException;
 
-public class InvalidLectureException extends RuntimeException {
+public class InvalidLectureException extends ParameterizedException {
 
     @Getter
     @AllArgsConstructor
@@ -21,8 +21,6 @@ public class InvalidLectureException extends RuntimeException {
     }
 
     public InvalidLectureException(CAUSE cause) {
-        super(cause.message, null, false, false);
-
-        NotificationService.showErrorNotification(cause.message);
+        super(cause.message);
     }
 }

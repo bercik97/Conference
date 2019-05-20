@@ -17,9 +17,3 @@ VALUES ('Kotlin - napisz raz, uruchom wszędzie',              'John Doe',      
        ('Xamarin|React Native|Java|Kotlin|Objective-c|Swift', 'Emily Taylor',   'INSPIRATION', '2', '12:00-13:45', '5', 1),
        ('Systemy Zabezpieczeń w Inteligentnych Budynkach',    'Sophie Davies',  'TECHNOLOGY',  '2', '12:00-13:45', '5', 1),
        ('Flutter.io',                                         'Jack Martin',    'KNOWLEDGE',   '2', '12:00-13:45', '5', 1);
-
-INSERT INTO users_lectures (user_id, lecture_id)
-VALUES (1,  1),
-       (1,  5),
-       (1,  9),
-       (1, 10);
