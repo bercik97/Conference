@@ -3,6 +3,7 @@
 ### Table of Contents
 * [General info](#general-info)
 * [Duration](#duration)
+* [What should I do more](#what-should-i-do-better)
 * [Technologies](#technologies)
 * [Prerequisites](#prerequisites)
 * [Getting started](#getting-started)
@@ -15,8 +16,14 @@ This project is a recruitment task for Junior Java Developer in one of the compa
 ### Duration
 I started to create this web application on 15 May and ended on 20 May. 
 
-### Technologies
+### What should I do better
+* create other in memory db for tests for ex. ConcurrentHashMap
+* implement UUID and hashcode & equals for every Entity which uses Set
 
+I will try to implement some of those concept in other branch called 'develop'.<br/>
+I won't merge develop branch to master until I get answer from the company.
+
+### Technologies
 <b>Back-end</b>
 * Java 8
 * Maven
@@ -37,12 +44,10 @@ I started to create this web application on 15 May and ended on 20 May.
 * IntelliJ IDEA
 
 ### Prerequisites
-
 * Java 8
 * Maven
 
 ### Getting started
-
 Run the following commands:
 ```
 git clone https://github.com/RobertKrzywina/Conference.git
@@ -53,7 +58,6 @@ cd Conference
 After that, go to http://localhost:8080 and see my application.
 
 ### Database
-
 Database can be found at http://localhost:8080/h2
 
 <b>Driver Class:</b> org.h2.Driver<br/>
@@ -64,6 +68,4 @@ Database can be found at http://localhost:8080/h2
 ![ScreenShoot](src/main/resources/database_schema.png)
 
 ### Tests
-
 Left click on src/test/groovy folder and select "Run 'Tests in groovy'"
-
