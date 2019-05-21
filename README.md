@@ -3,7 +3,7 @@
 ### Table of Contents
 * [General info](#general-info)
 * [Duration](#duration)
-* [What should I do more](#what-should-i-do-better)
+* [What should I do better](#what-should-i-do-better)
 * [Technologies](#technologies)
 * [Prerequisites](#prerequisites)
 * [Getting started](#getting-started)
@@ -17,8 +17,8 @@ This project is a recruitment task for Junior Java Developer in one of the compa
 I started to create this web application on 15 May and ended on 20 May. 
 
 ### What should I do better
-* create other in memory db for tests for ex. ConcurrentHashMap
 * implement UUID and hashcode & equals for every Entity which uses Set
+* create other in memory db for tests for ex. ConcurrentHashMap
 
 I will try to implement some of those concept in other branch called 'develop'.<br/>
 I won't merge develop branch to master until I get answer from the company.
