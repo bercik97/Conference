@@ -25,6 +25,7 @@ import javax.persistence.GenerationType;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import pl.robert.app.shared.BaseEntity;
 import pl.robert.app.shared.QueryConverter;
 import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
@@ -42,7 +43,7 @@ import static pl.robert.app.shared.Constants.User.COL_LENGTH_NAME;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-class User implements QueryConverter<UserQueryDto> {
+class User extends BaseEntity implements QueryConverter<UserQueryDto> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,6 +69,6 @@ class User implements QueryConverter<UserQueryDto> {
 
     @Override
     public UserQueryDto query() {
-        return new UserQueryDto(id, name, email, conference, lectures);
+        return new UserQueryDto(getId(), getUuid(), name, email, conference, lectures);
     }
 }

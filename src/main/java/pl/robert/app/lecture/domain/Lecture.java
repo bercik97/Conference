@@ -23,6 +23,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
+import pl.robert.app.shared.BaseEntity;
 import pl.robert.app.shared.QueryConverter;
 import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
@@ -41,7 +42,7 @@ import static pl.robert.app.shared.Constants.Lecture.COL_LENGTH_LECTURER;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-class Lecture implements QueryConverter<LectureQueryDto> {
+class Lecture extends BaseEntity implements QueryConverter<LectureQueryDto> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,6 +81,6 @@ class Lecture implements QueryConverter<LectureQueryDto> {
 
     @Override
     public LectureQueryDto query() {
-        return new LectureQueryDto(id, name, lecturer, type, day, time, numberOfPlaces, conference, users);
+        return new LectureQueryDto(getId(), getUuid(), name, lecturer, type, day, time, numberOfPlaces, conference, users);
     }
 }

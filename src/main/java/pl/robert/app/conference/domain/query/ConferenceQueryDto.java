@@ -5,17 +5,14 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
+import pl.robert.app.shared.BaseQuery;
 import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 
@@ -23,13 +20,8 @@ import pl.robert.app.lecture.domain.query.LectureQueryDto;
 @Table(name = "conference")
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor
-public class ConferenceQueryDto {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+@NoArgsConstructor
+public class ConferenceQueryDto extends BaseQuery {
 
     String name;
 
@@ -43,4 +35,16 @@ public class ConferenceQueryDto {
             mappedBy = "conference"
     )
     Set<LectureQueryDto> lectures;
+
+    public ConferenceQueryDto(Long id, String uuid,
+                              String name,
+                              String details,
+                              Set<UserQueryDto> users,
+                              Set<LectureQueryDto> lectures) {
+        super(id, uuid);
+        this.name = name;
+        this.details = details;
+        this.users = users;
+        this.lectures = lectures;
+    }
 }
