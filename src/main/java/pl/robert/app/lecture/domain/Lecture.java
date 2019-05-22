@@ -81,6 +81,6 @@ class Lecture extends BaseEntity implements QueryConverter<LectureQueryDto> {
 
     @Override
     public LectureQueryDto query() {
-        return new LectureQueryDto(getId(), getUuid(), name, lecturer, type, day, time, numberOfPlaces, conference, users);
+        return new LectureQueryDto(getUuid(), id, name, lecturer, type, day, time, numberOfPlaces, conference, users);
     }
 }

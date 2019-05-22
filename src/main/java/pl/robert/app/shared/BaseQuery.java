@@ -7,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Objects;
 
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @Getter
@@ -16,13 +15,9 @@ import javax.persistence.MappedSuperclass;
 @NoArgsConstructor
 public abstract class BaseQuery {
 
-    @Id
-    Long id;
-
     String uuid;
 
-    public BaseQuery(Long id, String uuid) {
-        this.id = id;
+    public BaseQuery(String uuid) {
         this.uuid = uuid;
     }
 

@@ -1,7 +1,6 @@
 package pl.robert.app.conference.domain;
 
 import java.util.Set;
-import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -58,6 +57,6 @@ class Conference extends BaseEntity implements QueryConverter<ConferenceQueryDto
 
     @Override
     public ConferenceQueryDto query() {
-        return new ConferenceQueryDto(getId(), getUuid(), name, details, users, lectures);
+        return new ConferenceQueryDto(getUuid(), id, name, details, users, lectures);
     }
 }

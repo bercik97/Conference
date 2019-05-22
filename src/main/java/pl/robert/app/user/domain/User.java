@@ -69,6 +69,6 @@ class User extends BaseEntity implements QueryConverter<UserQueryDto> {
 
     @Override
     public UserQueryDto query() {
-        return new UserQueryDto(getId(), getUuid(), name, email, conference, lectures);
+        return new UserQueryDto(getUuid(), id, name, email, conference, lectures);
     }
 }

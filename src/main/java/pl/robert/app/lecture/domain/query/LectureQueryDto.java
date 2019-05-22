@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,6 +17,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 import pl.robert.app.lecture.domain.LectureType;
 import pl.robert.app.shared.BaseQuery;
@@ -28,6 +31,10 @@ import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 public class LectureQueryDto extends BaseQuery {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
     String name;
 
@@ -54,7 +61,8 @@ public class LectureQueryDto extends BaseQuery {
     )
     Set<UserQueryDto> users;
 
-    public LectureQueryDto(Long id, String uuid,
+    public LectureQueryDto(String uuid,
+                           Long id,
                            String name,
                            String lecturer,
                            LectureType type,
@@ -63,7 +71,8 @@ public class LectureQueryDto extends BaseQuery {
                            Integer numberOfPlaces,
                            ConferenceQueryDto conference,
                            Set<UserQueryDto> users) {
-        super(id, uuid);
+        super(uuid);
+        this.id = id;
         this.name = name;
         this.lecturer = lecturer;
         this.type = type;
