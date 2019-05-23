@@ -115,8 +115,6 @@ class LectureService {
 
         lecture.getUsers().add(dto);
 
-        repository.save(lecture);
-
         SendEmailService.send(dto.getEmail(), dto.getName(), "Zapisałeś się w", lectureId);
     }
 
@@ -125,8 +123,6 @@ class LectureService {
         UserQueryDto dto = userFacade.read();
 
         lecture.getUsers().remove(dto);
-
-        repository.deleteLectureByUserId(dto.getId(), lectureId);
 
         SendEmailService.send(dto.getEmail(), dto.getName(), "Wypisałeś się z", lectureId);
     }

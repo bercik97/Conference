@@ -7,11 +7,14 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import javax.transaction.Transactional;
+
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
 import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 
+@Transactional
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LectureFacade {
