@@ -1,21 +1,27 @@
 package pl.robert.app.conference.domain
 
+import spock.lang.Shared
+import spock.lang.Specification
+
 import lombok.AccessLevel
 import lombok.experimental.FieldDefaults
 
-import spock.lang.Specification
-
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.beans.factory.annotation.Autowired
+import java.util.concurrent.ConcurrentHashMap
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@SpringBootTest
 class ConferenceSpec extends Specification {
 
-    @Autowired
+    @Shared
     ConferenceFacade facade
 
-    def 'Should find any conference'()  {
+    @Shared
+    ConcurrentHashMap<Long, Conference> db = new ConcurrentHashMap<>()
+
+    def setupSpec() {
+        facade = new ConferenceConfiguration().conferenceFacade(db)
+    }
+
+    def 'Should find any conference'() {
         expect:
         facade.find() != null
     }

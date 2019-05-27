@@ -33,7 +33,7 @@ import static pl.robert.app.shared.Constants.Conference.COL_LENGTH_DETAILS;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 class Conference extends BaseEntity implements QueryConverter<ConferenceQueryDto> {
 
     @Id
