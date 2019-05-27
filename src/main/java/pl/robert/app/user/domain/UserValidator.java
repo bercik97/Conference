@@ -58,12 +58,18 @@ class UserValidator {
             cause = InvalidUserException.CAUSE.BLANK_EMAIL;
         } else if (!EMAIL_REGEX.matcher(email).find()) {
             cause = InvalidUserException.CAUSE.EMAIL_FORMAT;
-        } else if (repository.findUserByEmail(email).isPresent()) {
+        } else if (isEmailExists(email)) {
             cause = InvalidUserException.CAUSE.EMAIL_EXISTS;
         }
 
         if (cause != null) {
             throw new InvalidUserException(cause);
         }
+    }
+
+    private boolean isEmailExists(String email) {
+        return repository.findAll()
+                .stream()
+                .anyMatch(user -> user.getEmail().equals(email));
     }
 }

@@ -15,4 +15,13 @@ class UserConfiguration {
                               new UserService(repository, new UserFactory(facade)),
                               new UserAuthorizationService());
     }
+
+    UserFacade userFacade(ConferenceFacade facade) {
+
+        InMemoryUserRepository repository = new InMemoryUserRepository();
+
+        return new UserFacade(new UserValidator(repository),
+                              new UserService(repository, new UserFactory(facade)),
+                              new UserAuthorizationService());
+    }
 }
