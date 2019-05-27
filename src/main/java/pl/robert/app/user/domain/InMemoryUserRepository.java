@@ -23,9 +23,9 @@ class InMemoryUserRepository implements UserRepository {
 
     @Override
     public Optional<User> findUserByName(String name) {
-        System.out.println(name);
         return map.entrySet()
                 .stream()
+                .filter(map -> map.getKey().equals(name))
                 .map(Map.Entry::getValue)
                 .findFirst();
     }
