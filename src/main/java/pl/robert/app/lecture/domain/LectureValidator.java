@@ -4,8 +4,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.lecture.domain.exception.InvalidLectureException;
 
 import org.apache.logging.log4j.util.Strings;
@@ -18,21 +16,20 @@ class LectureValidator {
 
     LectureRepository repository;
     LectureService service;
-    UserFacade userFacade;
 
-    void checkSubscribeData(String lectureId) {
+    void checkSubscribeData(String lectureId, Long userId) {
         validateRequiredData(lectureId);
-        validateOtherSubscribeData(Long.parseLong(lectureId));
+        validateOtherSubscribeData(Long.parseLong(lectureId), userId);
     }
 
-    private void validateOtherSubscribeData(Long lectureId) {
+    private void validateOtherSubscribeData(Long lectureId, Long userId) {
         InvalidLectureException.CAUSE cause = null;
 
         Lecture lecture = repository.findLectureById(lectureId);
 
         if (lecture.getUsers().size() == lecture.getNumberOfPlaces()) {
             cause = InvalidLectureException.CAUSE.FULL;
-        } else if (service.findTermsOfAlreadySubscribedLectures().contains(lecture.getDay() + lecture.getTime())) {
+        } else if (service.findTermsOfAlreadySubscribedLectures(userId).contains(lecture.getDay() + lecture.getTime())) {
             cause = InvalidLectureException.CAUSE.SUBSCRIBED;
         }
 
@@ -41,16 +38,15 @@ class LectureValidator {
         }
     }
 
-    void checkUnsubscribeData(String lectureId) {
+    void checkUnsubscribeData(String lectureId, Long userId) {
         validateRequiredData(lectureId);
-        validateOtherUnsubscribeData(Long.parseLong(lectureId));
+        validateOtherUnsubscribeData(Long.parseLong(lectureId), userId);
     }
 
-    private void validateOtherUnsubscribeData(Long lectureId) {
+    private void validateOtherUnsubscribeData(Long lectureId, Long userId) {
         InvalidLectureException.CAUSE cause = null;
 
-        if (!repository.findAlreadySubscribedLecturesByUsername(
-             userFacade.findIdByName(GlobalAuthorizationEntryPoint.name)).contains(lectureId)) {
+        if (!repository.findAlreadySubscribedLecturesByUsername(userId).contains(lectureId)) {
             cause = InvalidLectureException.CAUSE.UNSUBSCRIBED;
         }
 

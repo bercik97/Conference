@@ -10,7 +10,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import pl.robert.app.user.domain.UserFacade;
 import pl.robert.app.shared.SendEmailService;
 import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
@@ -23,7 +22,6 @@ import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 class LectureService {
 
     LectureRepository repository;
-    UserFacade userFacade;
 
     List<LectureSchemaQueryDto> transformIntoLecturesSchema(Set<LectureQueryDto> lectures) {
         List<LectureQueryDto> sortedLectures = convertToList(lectures);
@@ -77,8 +75,8 @@ class LectureService {
                 .collect(Collectors.toList());
     }
 
-    List<AlreadySubscribedLectureQueryDto> findAlreadySubscribedLectures() {
-        return repository.findAlreadySubscribedLecturesByUsername(userFacade.read().getId())
+    List<AlreadySubscribedLectureQueryDto> findAlreadySubscribedLectures(Long userId) {
+        return repository.findAlreadySubscribedLecturesByUsername(userId)
                 .stream()
                 .map(repository::findLectureById)
                 .collect(Collectors.toList())
@@ -91,16 +89,16 @@ class LectureService {
                 .collect(Collectors.toList());
     }
 
-    String findIdsOfAlreadySubscribedLectures() {
-        return repository.findAlreadySubscribedLecturesByUsername(userFacade.read().getId())
+    String findIdsOfAlreadySubscribedLectures(Long userId) {
+        return repository.findAlreadySubscribedLecturesByUsername(userId)
                 .stream()
                 .sorted()
                 .map(id -> id.toString() + ", ")
                 .reduce("", String::concat);
     }
 
-    Set<String> findTermsOfAlreadySubscribedLectures() {
-        return repository.findAlreadySubscribedLecturesByUsername(userFacade.read().getId())
+    Set<String> findTermsOfAlreadySubscribedLectures(Long userId) {
+        return repository.findAlreadySubscribedLecturesByUsername(userId)
                 .stream()
                 .map(repository::findLectureById)
                 .collect(Collectors.toSet())
@@ -109,18 +107,16 @@ class LectureService {
                 .collect(Collectors.toSet());
     }
 
-    void subscribeLecture(Long lectureId) {
+    void subscribeLecture(Long lectureId, UserQueryDto dto) {
         Lecture lecture = repository.findLectureById(lectureId);
-        UserQueryDto dto = userFacade.read();
 
         lecture.getUsers().add(dto);
 
         SendEmailService.send(dto.getEmail(), dto.getName(), "Zapisałeś się w", lectureId);
     }
 
-    void unsubscribeLecture(Long lectureId) {
+    void unsubscribeLecture(Long lectureId, UserQueryDto dto) {
         Lecture lecture = repository.findLectureById(lectureId);
-        UserQueryDto dto = userFacade.read();
 
         lecture.getUsers().remove(dto);
 

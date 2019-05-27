@@ -89,7 +89,7 @@ class UserProfileView extends Composite implements View {
 
     private void addAlreadySubscribedLectures() {
         List<AlreadySubscribedLectureQueryDto> alreadySubscribedLecturesSchema =
-                lectureFacade.findAlreadySubscribedLectures();
+                lectureFacade.findAlreadySubscribedLectures(userFacade.read().getId());
 
         Grid<AlreadySubscribedLectureQueryDto> grid = new Grid<>();
 
