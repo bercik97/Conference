@@ -1,17 +1,20 @@
 package pl.robert.app.user.domain;
 
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-
+import java.util.Set;
+import java.util.Map;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
 class InMemoryUserRepository implements UserRepository {
 
-    ConcurrentHashMap<String, User> map = new ConcurrentHashMap<>();
+    ConcurrentHashMap<String, User> map;
 
     @Override
     public void save(User user) {
@@ -20,7 +23,11 @@ class InMemoryUserRepository implements UserRepository {
 
     @Override
     public Optional<User> findUserByName(String name) {
-        return Optional.of(map.get(name));
+        System.out.println(name);
+        return map.entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .findFirst();
     }
 
     @Override

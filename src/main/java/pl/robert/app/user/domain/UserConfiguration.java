@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 import pl.robert.app.conference.domain.ConferenceFacade;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @Configuration
 class UserConfiguration {
 
@@ -16,12 +18,12 @@ class UserConfiguration {
                               new UserAuthorizationService());
     }
 
-    UserFacade userFacade(ConferenceFacade facade) {
+    UserFacade userFacade(ConcurrentHashMap<String, User> db) {
 
-        InMemoryUserRepository repository = new InMemoryUserRepository();
+        InMemoryUserRepository repository = new InMemoryUserRepository(db);
 
         return new UserFacade(new UserValidator(repository),
-                              new UserService(repository, new UserFactory(facade)),
+                              new UserService(repository, new UserFactory(null)),
                               new UserAuthorizationService());
     }
 }
