@@ -62,7 +62,7 @@ class LectureValidator {
             cause = InvalidLectureException.CAUSE.BLANK;
         } else if (!LECTURE_ID_FORMAT_REGEX.matcher(lectureId).find()) {
             cause = InvalidLectureException.CAUSE.FORMAT;
-        } else if (!repository.findById(Long.parseLong(lectureId)).isPresent()) {
+        } else if (repository.findLectureById(Long.parseLong(lectureId)) == null) {
             cause = InvalidLectureException.CAUSE.NOT_EXISTS;
         }
 
