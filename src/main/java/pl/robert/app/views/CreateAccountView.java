@@ -15,7 +15,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringView;
 
 import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.VaadinNotificationService;
 import pl.robert.app.shared.ParameterizedException;
 import pl.robert.app.user.domain.dto.CreateUserDto;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
@@ -63,11 +63,11 @@ class CreateAccountView extends Composite implements View {
 
         add.addClickListener((clickEvent) -> {
             facade.create(new CreateUserDto(name.getValue(), email.getValue()));
-            NotificationService.showHumanizedNotification("Gratulacje! Udało Ci się stworzyć nowe konto!");
+            VaadinNotificationService.showHumanizedNotification("Gratulacje! Udało Ci się stworzyć nowe konto!");
         });
 
         VaadinSession.getCurrent().setErrorHandler((handler) ->
-            NotificationService.showErrorNotification(ParameterizedException.label)
+            VaadinNotificationService.showErrorNotification(ParameterizedException.label)
         );
 
         formLayout.addComponents(
@@ -81,7 +81,7 @@ class CreateAccountView extends Composite implements View {
 
     private void authorized() {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
-            NotificationService.showErrorNotification("Tylko niezalogowani użytkownicy mogą stworzyć nowe konto");
+            VaadinNotificationService.showErrorNotification("Tylko niezalogowani użytkownicy mogą stworzyć nowe konto");
             root.addComponents(new Label("Błąd 403: Odmowa dostępu"));
         }
     }

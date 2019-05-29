@@ -15,7 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.spring.annotation.SpringView;
 
 import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.VaadinNotificationService;
 import pl.robert.app.lecture.domain.LectureFacade;
 import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
@@ -49,7 +49,7 @@ class UserProfileView extends Composite implements View {
 
     private void unauthorized() {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
-            NotificationService.showErrorNotification("Zaloguj się aby zobaczyć informacje o profilu użytkownika");
+            VaadinNotificationService.showErrorNotification("Zaloguj się aby zobaczyć informacje o profilu użytkownika");
             root.addComponent(new Label("Błąd 403: Odmowa dostępu"));
         }
     }

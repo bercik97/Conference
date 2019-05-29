@@ -18,7 +18,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.spring.annotation.SpringView;
 
 import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.VaadinNotificationService;
 import pl.robert.app.lecture.domain.LectureFacade;
 import pl.robert.app.conference.domain.ConferenceFacade;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
@@ -56,7 +56,7 @@ class ManageLecturesView extends Composite implements View {
 
     private void unauthorized() {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
-            NotificationService.showErrorNotification("Tylko zalogowani użytkownicy mogą zapisać się na prelekcje");
+            VaadinNotificationService.showErrorNotification("Tylko zalogowani użytkownicy mogą zapisać się na prelekcje");
             root.addComponents(new Label("Błąd 403: Odmowa dostępu"));
         }
     }
@@ -102,7 +102,7 @@ class ManageLecturesView extends Composite implements View {
         subscribe.addClickListener((clickEvent) -> {
             lectureFacade.subscribeLecture(lectureId.getValue(), userFacade.read());
 
-            NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " +
+            VaadinNotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " +
                     lectureId.getValue());
 
             UI.getCurrent().getNavigator().navigateTo("manage-lectures");
@@ -112,7 +112,7 @@ class ManageLecturesView extends Composite implements View {
         unsubscribe.addClickListener((clickEvent) -> {
             lectureFacade.unsubscribeLecture(lectureId.getValue(), userFacade.read());
 
-            NotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " +
+            VaadinNotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " +
                     lectureId.getValue());
 
             UI.getCurrent().getNavigator().navigateTo("manage-lectures");

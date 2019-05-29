@@ -112,7 +112,7 @@ class LectureService {
 
         lecture.getUsers().add(dto);
 
-        SendEmailService.send(dto.getEmail(), dto.getName(), "Zapisałeś się w", lectureId);
+        new SendEmailService().send(dto.getEmail(), dto.getName(), "Zapisałeś się", lectureId);
     }
 
     void unsubscribeLecture(Long lectureId, UserQueryDto dto) {
@@ -120,6 +120,6 @@ class LectureService {
 
         lecture.getUsers().remove(dto);
 
-        SendEmailService.send(dto.getEmail(), dto.getName(), "Wypisałeś się z", lectureId);
+        new SendEmailService().send(dto.getEmail(), dto.getName(), "Wypisałeś się z", lectureId);
     }
 }
