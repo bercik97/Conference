@@ -62,4 +62,9 @@ public class UserQueryDto extends BaseQuery {
         this.conference = conference;
         this.lectures = lectures;
     }
+
+    public UserQueryDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

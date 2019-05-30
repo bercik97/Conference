@@ -27,14 +27,7 @@ class LectureSpec extends Specification {
     def setupSpec() {
         facade = new LectureConfiguration().lectureFacade(db)
 
-        dto = new UserQueryDto(
-                null,
-                1L,
-                'Robert',
-                null,
-                null,
-                new HashSet<>(),
-        )
+        dto = new UserQueryDto(1L, 'Robert')
     }
 
     def 'Should subscribe lecture'() {
@@ -42,7 +35,7 @@ class LectureSpec extends Specification {
         facade.subscribeLecture('1', dto)
 
         then: 'user has this lecture'
-        facade.findAlreadySubscribedLectures().size() == 1
+        facade.findAlreadySubscribedLectures(1L).size() == 1
     }
 
     def 'Should unsubscribe lecture'() {
@@ -50,7 +43,7 @@ class LectureSpec extends Specification {
         facade.unsubscribeLecture('1', dto)
 
         then: 'user hasnt got this lecture'
-        facade.findAlreadySubscribedLectures().size() == 0
+        facade.findAlreadySubscribedLectures(1L).size() == 0
     }
 
     @Unroll
@@ -140,7 +133,7 @@ class LectureSpec extends Specification {
 
     def 'Should find already subscribed lectures'() {
         when: 'actual size of subscribed lectures is 0'
-        facade.findAlreadySubscribedLectures().size() == 0
+        facade.findAlreadySubscribedLectures(1L).size() == 0
 
         and: 'we subscribe lecture'
         facade.subscribeLecture('1', dto)
@@ -155,11 +148,11 @@ class LectureSpec extends Specification {
         facade.subscribeLecture('10', dto)
 
         then: 'actual size is 4'
-        facade.findAlreadySubscribedLectures().size() == 4
+        facade.findAlreadySubscribedLectures(1L).size() == 4
     }
 
     def 'Should find ids of already subscribed lectures'() {
         expect: 'we ask for all ids of subscribed lectures'
-        facade.findIdsOfAlreadySubscribedLectures() == '1, 4, 7, 10, '
+        facade.findIdsOfAlreadySubscribedLectures(1L) == '1, 4, 7, 10, '
     }
 }
