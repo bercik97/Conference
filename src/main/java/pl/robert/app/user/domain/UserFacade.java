@@ -28,11 +28,6 @@ public class UserFacade {
         return service.read(GlobalAuthorizationEntryPoint.name);
     }
 
-    public long findIdByName(String name) {
-        validator.checkInputName(name);
-        return service.findIdByName(name);
-    }
-
     public void update(String name, String email) {
         validator.checkInputEmail(email);
         service.update(name, email);

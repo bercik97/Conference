@@ -16,8 +16,8 @@ import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
 import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 
 @Transactional
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 public class LectureFacade {
 
     LectureService service;

@@ -18,10 +18,7 @@ class InMemoryConferenceRepository implements ConferenceRepository {
     }
 
     private void prepareMap() {
-        map.put(
-                1L,
-                new Conference(1L, "Conference", "Fake conference", new HashSet<>(), new HashSet<>())
-        );
+        map.put(1L, new Conference(1L));
     }
 
     @Override

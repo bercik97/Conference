@@ -10,7 +10,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import pl.robert.app.shared.SendEmailService;
 import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
@@ -108,18 +107,10 @@ class LectureService {
     }
 
     void subscribeLecture(Long lectureId, UserQueryDto dto) {
-        Lecture lecture = repository.findLectureById(lectureId);
-
-        lecture.getUsers().add(dto);
-
-        new SendEmailService().send(dto.getEmail(), dto.getName(), "Zapisałeś się", lectureId);
+        repository.findLectureById(lectureId).getUsers().add(dto);
     }
 
     void unsubscribeLecture(Long lectureId, UserQueryDto dto) {
-        Lecture lecture = repository.findLectureById(lectureId);
-
-        lecture.getUsers().remove(dto);
-
-        new SendEmailService().send(dto.getEmail(), dto.getName(), "Wypisałeś się z", lectureId);
+        repository.findLectureById(lectureId).getUsers().remove(dto);
     }
 }

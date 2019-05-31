@@ -17,6 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.spring.annotation.SpringView;
 
+import pl.robert.app.shared.SendEmailService;
 import pl.robert.app.user.domain.UserFacade;
 import pl.robert.app.shared.VaadinNotificationService;
 import pl.robert.app.lecture.domain.LectureFacade;
@@ -24,6 +25,7 @@ import pl.robert.app.conference.domain.ConferenceFacade;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 @SpringView(name = "manage-lectures")
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -100,20 +102,30 @@ class ManageLecturesView extends Composite implements View {
 
         Button subscribe = new Button("Zapisz się");
         subscribe.addClickListener((clickEvent) -> {
-            lectureFacade.subscribeLecture(lectureId.getValue(), userFacade.read());
+            UserQueryDto dto = userFacade.read();
+
+            lectureFacade.subscribeLecture(lectureId.getValue(), dto);
 
             VaadinNotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " +
                     lectureId.getValue());
+
+            new SendEmailService()
+                    .send(dto.getEmail(), dto.getName(), "Zapisałeś się", Long.parseLong(lectureId.getValue()));
 
             UI.getCurrent().getNavigator().navigateTo("manage-lectures");
         });
 
         Button unsubscribe = new Button("Wypisz się");
         unsubscribe.addClickListener((clickEvent) -> {
-            lectureFacade.unsubscribeLecture(lectureId.getValue(), userFacade.read());
+            UserQueryDto dto = userFacade.read();
+
+            lectureFacade.unsubscribeLecture(lectureId.getValue(), dto);
 
             VaadinNotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " +
                     lectureId.getValue());
+
+            new SendEmailService()
+                    .send(dto.getEmail(), dto.getName(), "Wypisałeś się z", Long.parseLong(lectureId.getValue()));
 
             UI.getCurrent().getNavigator().navigateTo("manage-lectures");
         });

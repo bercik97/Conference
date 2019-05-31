@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-import pl.robert.app.shared.BaseQuery;
 import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 
@@ -26,7 +25,7 @@ import pl.robert.app.lecture.domain.query.LectureQueryDto;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ConferenceQueryDto extends BaseQuery {
+public class ConferenceQueryDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,18 +43,4 @@ public class ConferenceQueryDto extends BaseQuery {
             mappedBy = "conference"
     )
     Set<LectureQueryDto> lectures;
-
-    public ConferenceQueryDto(String uuid,
-                              Long id,
-                              String name,
-                              String details,
-                              Set<UserQueryDto> users,
-                              Set<LectureQueryDto> lectures) {
-        super(uuid);
-        this.id = id;
-        this.name = name;
-        this.details = details;
-        this.users = users;
-        this.lectures = lectures;
-    }
 }

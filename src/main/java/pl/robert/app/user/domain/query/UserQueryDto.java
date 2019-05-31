@@ -5,6 +5,7 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Id;
@@ -18,7 +19,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-import pl.robert.app.shared.BaseQuery;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 
@@ -27,7 +27,8 @@ import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class UserQueryDto extends BaseQuery {
+@AllArgsConstructor
+public class UserQueryDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,20 +49,6 @@ public class UserQueryDto extends BaseQuery {
             inverseJoinColumns = @JoinColumn(name = "lecture_id")
     )
     Set<LectureQueryDto> lectures;
-
-    public UserQueryDto(String uuid,
-                        Long id,
-                        String name,
-                        String email,
-                        ConferenceQueryDto conference,
-                        Set<LectureQueryDto> lectures) {
-        super(uuid);
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.conference = conference;
-        this.lectures = lectures;
-    }
 
     public UserQueryDto(Long id, String name) {
         this.id = id;

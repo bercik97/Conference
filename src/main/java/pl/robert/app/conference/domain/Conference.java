@@ -1,5 +1,6 @@
 package pl.robert.app.conference.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import lombok.Getter;
@@ -18,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
-import pl.robert.app.shared.BaseEntity;
 import pl.robert.app.shared.QueryConverter;
 import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
@@ -34,7 +34,7 @@ import static pl.robert.app.shared.Constants.Conference.COL_LENGTH_DETAILS;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-class Conference extends BaseEntity implements QueryConverter<ConferenceQueryDto> {
+class Conference implements QueryConverter<ConferenceQueryDto> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +57,12 @@ class Conference extends BaseEntity implements QueryConverter<ConferenceQueryDto
 
     @Override
     public ConferenceQueryDto query() {
-        return new ConferenceQueryDto(getUuid(), id, name, details, users, lectures);
+        return new ConferenceQueryDto(id, name, details, users, lectures);
+    }
+
+    Conference(Long id) {
+        this.id = id;
+        users = new HashSet<>();
+        lectures = new HashSet<>();
     }
 }
