@@ -46,7 +46,7 @@ class LectureValidator {
     private void validateOtherUnsubscribeData(Long lectureId, Long userId) {
         InvalidLectureException.CAUSE cause = null;
 
-        if (!repository.findAlreadySubscribedLecturesByUsername(userId).contains(lectureId)) {
+        if (!repository.findAlreadySubscribedLecturesByUserId(userId).contains(lectureId)) {
             cause = InvalidLectureException.CAUSE.UNSUBSCRIBED;
         }
 

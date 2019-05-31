@@ -11,5 +11,5 @@ interface LectureRepository extends Repository<Lecture, Long> {
     Lecture findLectureById(Long id);
 
     @Query(value = "SELECT lecture_id FROM users_lecture WHERE user_id = :userId", nativeQuery = true)
-    List<Long> findAlreadySubscribedLecturesByUsername(@Param("userId") Long userId);
+    List<Long> findAlreadySubscribedLecturesByUserId(@Param("userId") Long userId);
 }

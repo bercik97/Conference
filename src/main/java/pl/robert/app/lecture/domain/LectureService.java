@@ -76,7 +76,7 @@ class LectureService {
     }
 
     List<AlreadySubscribedLectureQueryDto> findAlreadySubscribedLectures(Long userId) {
-        return repository.findAlreadySubscribedLecturesByUsername(userId)
+        return repository.findAlreadySubscribedLecturesByUserId(userId)
                 .stream()
                 .map(repository::findLectureById)
                 .collect(Collectors.toList())
@@ -90,7 +90,7 @@ class LectureService {
     }
 
     String findIdsOfAlreadySubscribedLectures(Long userId) {
-        return repository.findAlreadySubscribedLecturesByUsername(userId)
+        return repository.findAlreadySubscribedLecturesByUserId(userId)
                 .stream()
                 .sorted()
                 .map(id -> id.toString() + ", ")
@@ -98,7 +98,7 @@ class LectureService {
     }
 
     Set<String> findTermsOfAlreadySubscribedLectures(Long userId) {
-        return repository.findAlreadySubscribedLecturesByUsername(userId)
+        return repository.findAlreadySubscribedLecturesByUserId(userId)
                 .stream()
                 .map(repository::findLectureById)
                 .collect(Collectors.toSet())

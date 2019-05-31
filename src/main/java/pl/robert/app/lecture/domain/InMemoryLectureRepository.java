@@ -39,7 +39,7 @@ class InMemoryLectureRepository implements LectureRepository {
     }
 
     @Override
-    public List<Long> findAlreadySubscribedLecturesByUsername(Long userId) {
+    public List<Long> findAlreadySubscribedLecturesByUserId(Long userId) {
 
         List<Long> ids = new LinkedList<>();
 
