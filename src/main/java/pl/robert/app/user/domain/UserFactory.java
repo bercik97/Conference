@@ -17,7 +17,7 @@ class UserFactory {
         return User.builder()
                 .name(dto.getName())
                 .email(dto.getEmail())
-                .conference(facade.find())
+                .conference(facade != null ? facade.find() : null)
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package pl.robert.app.conference.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import lombok.Getter;
@@ -32,7 +33,7 @@ import static pl.robert.app.shared.Constants.Conference.COL_LENGTH_DETAILS;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 class Conference implements QueryConverter<ConferenceQueryDto> {
 
     @Id
@@ -57,5 +58,11 @@ class Conference implements QueryConverter<ConferenceQueryDto> {
     @Override
     public ConferenceQueryDto query() {
         return new ConferenceQueryDto(id, name, details, users, lectures);
+    }
+
+    Conference(Long id) {
+        this.id = id;
+        users = new HashSet<>();
+        lectures = new HashSet<>();
     }
 }

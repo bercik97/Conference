@@ -7,13 +7,17 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import javax.transaction.Transactional;
+
+import pl.robert.app.user.domain.query.UserQueryDto;
 import pl.robert.app.lecture.domain.query.LectureQueryDto;
 import pl.robert.app.lecture.domain.query.LectureSchemaQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
 import pl.robert.app.lecture.domain.query.AlreadySubscribedLectureQueryDto;
 
-@AllArgsConstructor
+@Transactional
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@AllArgsConstructor
 public class LectureFacade {
 
     LectureService service;
@@ -27,21 +31,21 @@ public class LectureFacade {
         return service.transformIntoSubscribeLecturesSchema(lectures);
     }
 
-    public List<AlreadySubscribedLectureQueryDto> findAlreadySubscribedLectures() {
-        return service.findAlreadySubscribedLectures();
+    public List<AlreadySubscribedLectureQueryDto> findAlreadySubscribedLectures(Long userId) {
+        return service.findAlreadySubscribedLectures(userId);
     }
 
-    public String findIdsOfAlreadySubscribedLectures() {
-        return service.findIdsOfAlreadySubscribedLectures();
+    public String findIdsOfAlreadySubscribedLectures(Long userId) {
+        return service.findIdsOfAlreadySubscribedLectures(userId);
     }
 
-    public void subscribeLecture(String lectureId) {
-        validator.checkSubscribeData(lectureId);
-        service.subscribeLecture(Long.parseLong(lectureId));
+    public void subscribeLecture(String lectureId, UserQueryDto dto) {
+        validator.checkSubscribeData(lectureId, dto.getId());
+        service.subscribeLecture(Long.parseLong(lectureId), dto);
     }
 
-    public void unsubscribeLecture(String lectureId) {
-        validator.checkUnsubscribeData(lectureId);
-        service.unsubscribeLecture(Long.parseLong(lectureId));
+    public void unsubscribeLecture(String lectureId, UserQueryDto dto) {
+        validator.checkUnsubscribeData(lectureId, dto.getId());
+        service.unsubscribeLecture(Long.parseLong(lectureId), dto);
     }
 }

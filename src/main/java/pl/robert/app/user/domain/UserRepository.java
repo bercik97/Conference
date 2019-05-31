@@ -1,12 +1,15 @@
 package pl.robert.app.user.domain;
 
 import java.util.Optional;
+import java.util.Set;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.Repository;
 
-interface UserRepository extends JpaRepository<User, Long> {
+interface UserRepository extends Repository<User, Long> {
+
+    void save(User user);
 
     Optional<User> findUserByName(String name);
 
-    Optional<User> findUserByEmail(String email);
+    Set<User> findAll();
 }

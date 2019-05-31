@@ -1,34 +1,38 @@
 package pl.robert.app.user.domain
 
+import spock.lang.Shared
 import spock.lang.Unroll
 import spock.lang.Specification
 
 import lombok.AccessLevel
 import lombok.experimental.FieldDefaults
 
+import java.util.concurrent.ConcurrentHashMap
+
 import pl.robert.app.user.domain.dto.CreateUserDto
+
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint
 import pl.robert.app.user.domain.exception.InvalidUserException
 
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.beans.factory.annotation.Autowired
-
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@SpringBootTest
 class UserSpec extends Specification {
 
-    @Autowired
+    @Shared
     UserFacade facade
 
-    @Autowired
-    UserRepository repository
+    @Shared
+    ConcurrentHashMap<String, User> db = new ConcurrentHashMap<>()
+
+    def setupSpec() {
+        facade = new UserConfiguration().userFacade(db)
+    }
 
     def 'Should add user'() {
         when: 'we add an user'
         facade.create(new CreateUserDto('John', 'john@email.com'))
 
         then: 'system has this user'
-        repository.findUserByName('John').isPresent()
+        db.size() == 1
     }
 
     def 'Should update user email'() {
@@ -42,10 +46,10 @@ class UserSpec extends Specification {
         def oldEmail = dto.email
 
         and: 'we update an email'
-        facade.update(dto.name, 'newcody@email.com')
+        facade.update('Cody', 'newcody@email.com')
 
-        then: 'system hasnt got this old email'
-        !repository.findUserByEmail(oldEmail).isPresent()
+        then: 'new user email is not equal to old'
+        db.get(dto.name).email != oldEmail
     }
 
     @Unroll
@@ -129,6 +133,9 @@ class UserSpec extends Specification {
     }
 
     def 'Should login and logout successfully'() {
+        given: 'initialized user'
+        facade.create(new CreateUserDto('Robert', 'robert@mail.com'))
+
         when: 'user is not authorized'
         !GlobalAuthorizationEntryPoint.isAuthorized()
 

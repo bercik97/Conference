@@ -2,10 +2,10 @@ package pl.robert.app.conference.domain.query;
 
 import java.util.Set;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Id;
@@ -23,7 +23,7 @@ import pl.robert.app.lecture.domain.query.LectureQueryDto;
 @Table(name = "conference")
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor
 public class ConferenceQueryDto {
 

@@ -16,7 +16,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringView;
 
 import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.VaadinNotificationService;
 import pl.robert.app.shared.ParameterizedException;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 
@@ -66,7 +66,7 @@ class SignInView extends Composite implements View {
         });
 
         VaadinSession.getCurrent().setErrorHandler((handler) ->
-            NotificationService.showErrorNotification(ParameterizedException.label)
+            VaadinNotificationService.showErrorNotification(ParameterizedException.label)
         );
 
         formLayout.addComponents(
@@ -79,7 +79,7 @@ class SignInView extends Composite implements View {
 
     private void authorized() {
         if (GlobalAuthorizationEntryPoint.isAuthorized()) {
-            NotificationService.showErrorNotification("Jesteś zalogowany, aby się wylogować przejdź do strony głównej");
+            VaadinNotificationService.showErrorNotification("Jesteś zalogowany, aby się wylogować przejdź do strony głównej");
             root.addComponents(new Label("Błąd 403: Odmowa dostępu"));
         }
     }

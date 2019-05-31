@@ -17,25 +17,31 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.spring.annotation.SpringView;
 
-import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.SendEmailService;
+import pl.robert.app.user.domain.UserFacade;
+import pl.robert.app.shared.VaadinNotificationService;
 import pl.robert.app.lecture.domain.LectureFacade;
 import pl.robert.app.conference.domain.ConferenceFacade;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 import pl.robert.app.lecture.domain.query.SubscribeLectureQueryDto;
+import pl.robert.app.user.domain.query.UserQueryDto;
 
 @SpringView(name = "manage-lectures")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 class ManageLecturesView extends Composite implements View {
 
     LectureFacade lectureFacade;
+    UserFacade userFacade;
     ConferenceQueryDto dto;
 
     VerticalLayout root;
 
     public ManageLecturesView(LectureFacade lectureFacade,
+                              UserFacade userFacade,
                               ConferenceFacade conferenceFacade) {
         this.lectureFacade = lectureFacade;
+        this.userFacade = userFacade;
         dto = conferenceFacade.find();
 
         setupLayout();
@@ -52,7 +58,7 @@ class ManageLecturesView extends Composite implements View {
 
     private void unauthorized() {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
-            NotificationService.showErrorNotification("Tylko zalogowani użytkownicy mogą zapisać się na prelekcje");
+            VaadinNotificationService.showErrorNotification("Tylko zalogowani użytkownicy mogą zapisać się na prelekcje");
             root.addComponents(new Label("Błąd 403: Odmowa dostępu"));
         }
     }
@@ -96,20 +102,30 @@ class ManageLecturesView extends Composite implements View {
 
         Button subscribe = new Button("Zapisz się");
         subscribe.addClickListener((clickEvent) -> {
-            lectureFacade.subscribeLecture(lectureId.getValue());
+            UserQueryDto dto = userFacade.read();
 
-            NotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " +
+            lectureFacade.subscribeLecture(lectureId.getValue(), dto);
+
+            VaadinNotificationService.showHumanizedNotification("Zapisałeś się na prelekcje o identyfikatorze: " +
                     lectureId.getValue());
+
+            new SendEmailService()
+                    .send(dto.getEmail(), dto.getName(), "Zapisałeś się", Long.parseLong(lectureId.getValue()));
 
             UI.getCurrent().getNavigator().navigateTo("manage-lectures");
         });
 
         Button unsubscribe = new Button("Wypisz się");
         unsubscribe.addClickListener((clickEvent) -> {
-            lectureFacade.unsubscribeLecture(lectureId.getValue());
+            UserQueryDto dto = userFacade.read();
 
-            NotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " +
+            lectureFacade.unsubscribeLecture(lectureId.getValue(), dto);
+
+            VaadinNotificationService.showHumanizedNotification("Wypisałeś się z prelekcji o identyfikatorze: " +
                     lectureId.getValue());
+
+            new SendEmailService()
+                    .send(dto.getEmail(), dto.getName(), "Wypisałeś się z", Long.parseLong(lectureId.getValue()));
 
             UI.getCurrent().getNavigator().navigateTo("manage-lectures");
         });
@@ -124,7 +140,7 @@ class ManageLecturesView extends Composite implements View {
     }
 
     private void addIdsOfAlreadySubscribedLectures() {
-        String ids = lectureFacade.findIdsOfAlreadySubscribedLectures();
+        String ids = lectureFacade.findIdsOfAlreadySubscribedLectures(userFacade.read().getId());
 
         Label label = new Label();
 

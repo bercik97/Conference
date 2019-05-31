@@ -26,7 +26,7 @@ import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 @Table(name = "users")
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor
 public class UserQueryDto {
 
@@ -49,4 +49,9 @@ public class UserQueryDto {
             inverseJoinColumns = @JoinColumn(name = "lecture_id")
     )
     Set<LectureQueryDto> lectures;
+
+    public UserQueryDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

@@ -19,12 +19,6 @@ class UserService {
         repository.save(factory.create(dto));
     }
 
-    long findIdByName(String name) {
-        return repository.findUserByName(name)
-                .map(User::getId)
-                .orElseThrow(() -> new InvalidUserException(InvalidUserException.CAUSE.NAME_NOT_EXISTS));
-    }
-
     UserQueryDto read(String name) {
         return repository.findUserByName(name)
                 .map(User::query)

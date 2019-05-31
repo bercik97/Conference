@@ -2,8 +2,6 @@
 
 ### Table of Contents
 * [General info](#general-info)
-* [Duration](#duration)
-* [What should I do better](#what-should-i-do-better)
 * [Technologies](#technologies)
 * [Prerequisites](#prerequisites)
 * [Getting started](#getting-started)
@@ -12,16 +10,6 @@
 
 ### General info
 This project is a recruitment task for Junior Java Developer in one of the companies.
-
-### Duration
-I started to create this web application on 15 May and ended on 20 May. 
-
-### What should I do better
-* implement UUID and hashcode & equals for every Entity which uses Set
-* create other in memory db for tests for ex. ConcurrentHashMap
-
-I will try to implement some of those concept in other branch called 'develop'.<br/>
-I won't merge develop branch to master until I get answer from the company.
 
 ### Technologies
 <b>Back-end</b>
@@ -37,7 +25,6 @@ I won't merge develop branch to master until I get answer from the company.
 * Vaadin 8
 
 <b>Tests</b>
-* Groovy
 * Spock
 
 <b>Tools</b>

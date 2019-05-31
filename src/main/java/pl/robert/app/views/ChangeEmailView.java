@@ -14,7 +14,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.spring.annotation.SpringView;
 
 import pl.robert.app.user.domain.UserFacade;
-import pl.robert.app.shared.NotificationService;
+import pl.robert.app.shared.VaadinNotificationService;
 import pl.robert.app.shared.GlobalAuthorizationEntryPoint;
 
 @SpringView(name = "change-email")
@@ -41,7 +41,7 @@ class ChangeEmailView extends Composite implements View {
 
     private void unauthorized() {
         if (!GlobalAuthorizationEntryPoint.isAuthorized()) {
-            NotificationService.showErrorNotification("Tylko zalogowani użytkownicy mogą zmienić adres email");
+            VaadinNotificationService.showErrorNotification("Tylko zalogowani użytkownicy mogą zmienić adres email");
             root.addComponents(new Label("Błąd 403: Odmowa dostępu"));
             addHomepageHref();
         }
@@ -76,7 +76,7 @@ class ChangeEmailView extends Composite implements View {
 
         change.addClickListener((event) -> {
             facade.update(GlobalAuthorizationEntryPoint.name, newEmail.getValue());
-            NotificationService.showHumanizedNotification("Zmieniłeś swój email!");
+            VaadinNotificationService.showHumanizedNotification("Zmieniłeś swój email!");
         });
 
         formLayout.addComponents(

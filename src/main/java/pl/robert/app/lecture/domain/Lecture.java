@@ -1,6 +1,7 @@
 package pl.robert.app.lecture.domain;
 
 import java.util.Set;
+import java.util.HashSet;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +41,7 @@ import static pl.robert.app.shared.Constants.Lecture.COL_LENGTH_LECTURER;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 class Lecture implements QueryConverter<LectureQueryDto> {
 
     @Id
@@ -77,6 +78,15 @@ class Lecture implements QueryConverter<LectureQueryDto> {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     Set<UserQueryDto> users;
+
+    Lecture(Long id, LectureType type, String day, String time, Integer numberOfPlaces) {
+        this.id = id;
+        this.type = type;
+        this.day = day;
+        this.time = time;
+        this.numberOfPlaces = numberOfPlaces;
+        this.users = new HashSet<>();
+    }
 
     @Override
     public LectureQueryDto query() {

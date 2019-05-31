@@ -1,6 +1,10 @@
 package pl.robert.app.conference.domain;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Set;
 
-interface ConferenceRepository extends JpaRepository<Conference, Long> {
+import org.springframework.data.repository.Repository;
+
+interface ConferenceRepository extends Repository<Conference, Long> {
+
+    Set<Conference> findAll();
 }

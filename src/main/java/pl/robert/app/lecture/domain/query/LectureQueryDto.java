@@ -29,7 +29,7 @@ import pl.robert.app.conference.domain.query.ConferenceQueryDto;
 @Table(name = "lecture")
 @Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor
 public class LectureQueryDto {
 
